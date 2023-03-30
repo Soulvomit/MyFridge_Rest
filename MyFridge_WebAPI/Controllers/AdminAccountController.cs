@@ -45,7 +45,7 @@ namespace MyFridge_WebAPI.Controllers
 
             if (admin == null) return new JsonResult(NotFound());
 
-            return new JsonResult((Map.FromAdminAccount(admin)));
+            return new JsonResult(Map.FromAdminAccount(admin));
         }
         //get all
         [HttpGet]
@@ -59,7 +59,7 @@ namespace MyFridge_WebAPI.Controllers
                 dtos.Add(Map.FromAdminAccount(admin)!);
             }
 
-            return new JsonResult((dtos));
+            return new JsonResult(dtos);
         }
         //delete
         [HttpDelete]

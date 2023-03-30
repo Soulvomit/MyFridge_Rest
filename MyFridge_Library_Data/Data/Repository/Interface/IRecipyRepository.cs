@@ -8,6 +8,6 @@ namespace MyFridge_Library_Data.Data.Repository.Interface
     {
         public Task<bool> AddIngredientAsync(int id, Ingredient addEntity, float addAmount);
         public Task<bool> AddIngredientAsync(int id, IngredientAmount addEntity);
-        public Task<bool> RemoveIngredientAsync(int id, int index);
+        public Task<bool> RemoveIngredientAsync(int id, int iaId);
     }
 }

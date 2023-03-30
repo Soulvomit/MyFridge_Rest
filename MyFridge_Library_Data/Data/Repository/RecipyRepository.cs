@@ -84,15 +84,16 @@ namespace MyFridge_Library_Data.Data.Repository
 
             return true;
         }
-        public async Task<bool> RemoveIngredientAsync(int id, int index)
+        public async Task<bool> RemoveIngredientAsync(int id, int iaId)
         {
             Recipy? entityInDb = await GetAsync(id);
-
             if (entityInDb == null) return false;
 
-            IngredientAmount ingredientAmount = entityInDb.IngredientAmounts.ElementAt(index);
-            entityInDb.IngredientAmounts.Remove(ingredientAmount);
-            _context.IngredientAmounts.Remove(ingredientAmount);
+            IngredientAmount? iaEntityInDb = await _context.IngredientAmounts.FindAsync(iaId);
+            if (iaEntityInDb == null) return false;
+
+            entityInDb.IngredientAmounts.Remove(iaEntityInDb);
+            _context.IngredientAmounts.Remove(iaEntityInDb);
 
             return true;
         }

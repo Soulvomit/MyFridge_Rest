@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using MyFridge_Library_Data.Data.Repository.Base;
 using MyFridge_Library_Data.Data.Repository.Interface;
 using MyFridge_Library_Data.Model;
@@ -27,29 +26,5 @@ namespace MyFridge_Library_Data.Data.Repository
 
             return true;
         }
-
-        #region Ingredient
-        public async Task<bool> ChangeIngredientAsync(int id, Ingredient changeEntity)
-        {
-            Task<IngredientAmount?> t1 = GetAsync(id);
-            Task<Ingredient?> t2 = _context.Ingredients
-                .Where(ingredient => ingredient.Id == changeEntity.Id)
-                .FirstOrDefaultAsync();
-
-            await Task.WhenAll(t1, t2);
-
-            IngredientAmount? ingredientAmountEntityInDb = t1.Result;
-            Ingredient? ingredientEntityInDb = t2.Result;
-
-            if (ingredientAmountEntityInDb == null) return false;
-
-            if (ingredientEntityInDb == null)
-                ingredientAmountEntityInDb.Ingredient = changeEntity;
-            else
-                ingredientAmountEntityInDb.Ingredient = ingredientEntityInDb;
-
-            return true;
-        }
-        #endregion
     }
 }

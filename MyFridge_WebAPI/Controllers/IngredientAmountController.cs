@@ -18,7 +18,32 @@ namespace MyFridge_WebAPI.Controllers
             _uow = uow;
             _logger = logger;
         }
-        //get all
+        [HttpPost]
+        public async Task<JsonResult> UpsertAsync([FromBody] IngredientDto dto)
+        {
+            if (!ModelState.IsValid) return new JsonResult(BadRequest());
+
+            if (dto.Id == 0) await _uow.IngredientAmounts.CreateAsync(Map.ToIngredientAmount(dto)!);
+            else
+            {
+                bool success = await _uow.IngredientAmounts.UpdateAsync(Map.ToIngredientAmount(dto)!);
+
+                if (!success) return new JsonResult(NotFound());
+            }
+
+            await _uow.CompleteAsync();
+
+            return new JsonResult(dto);
+        }
+        [HttpGet]
+        public async Task<JsonResult> GetAsync(int id)
+        {
+            IngredientAmount? ia = await _uow.IngredientAmounts.GetAsync(id);
+
+            if (ia == null) return new JsonResult(NotFound());
+
+            return new JsonResult(Map.FromIngredientAmount(ia));
+        }
         [HttpGet]
         public async Task<JsonResult> GetAllAsync()
         {
@@ -31,6 +56,17 @@ namespace MyFridge_WebAPI.Controllers
             }
 
             return new JsonResult(dtos);
+        }
+        [HttpDelete]
+        public async Task<JsonResult> DeleteAsync(int id)
+        {
+            bool success = await _uow.IngredientAmounts.DeleteAsync(id);
+
+            if (!success) return new JsonResult(NotFound());
+
+            await _uow.CompleteAsync();
+
+            return new JsonResult(NoContent());
         }
     }
 }

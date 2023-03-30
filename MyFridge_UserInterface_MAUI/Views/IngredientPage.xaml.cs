@@ -1,11 +1,11 @@
-using MyFridge_Library_MAUI_DataTransfer.DataTransferObject;
 using MyFridge_UserInterface_MAUI.Service;
+using MyFridge_UserInterface_MAUI.ViewModel;
 
 namespace MyFridge_UserInterface_MAUI.Views;
 
 public partial class IngredientPage : ContentPage
 {
-    private List<IngredientDto> ingredients;
+    private List<IngredientViewModel> ingredients;
     public IngredientPage()
     {
         InitializeComponent();
@@ -14,23 +14,25 @@ public partial class IngredientPage : ContentPage
     {
         base.OnAppearing();
 
-        ingredients = await UserService.Instance.IngredientClient.GetAllAsync();
-        IngredientView.ItemsSource = ingredients.OrderBy(i => i.Name);
+
+        ingredients = IngredientViewModel
+            .ConvertIngredientDtos(await UserService.Instance.IngredientClient.GetAllAsync());
+        IngredientView.ItemsSource = ingredients.OrderBy(i => i.Ingredient.Name);
     }
     private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
     {
         if (string.IsNullOrEmpty(e.NewTextValue))
-            IngredientView.ItemsSource = ingredients.OrderBy(i => i.Name);
+            IngredientView.ItemsSource = ingredients.OrderBy(i => i.Ingredient.Name);
         else
             IngredientView.ItemsSource = ingredients
-                .Where(i => i.Name.ToLower()
+                .Where(i => i.Ingredient.Name.ToLower()
                                   .StartsWith(e.NewTextValue
                                   .ToLower()))
-                .OrderBy(i => i.Name);
+                .OrderBy(i => i.Ingredient.Name);
     }
     private async void OnIngredientTapped(object sender, ItemTappedEventArgs e)
     {
-        if (e.Item is IngredientDto selectedIngredient)
+        if (e.Item is IngredientViewModel selectedIngredient)
         {
             bool parsed = uint.TryParse(
                 await DisplayPromptAsync(
@@ -45,8 +47,10 @@ public partial class IngredientPage : ContentPage
                 out uint amount);
             if (parsed)
             {
-                selectedIngredient.Amount = amount;
-                await UserService.Instance.UserClient.AddIngredientAsync(selectedIngredient, UserService.Instance.UserVM.UserAccount.Id);
+                selectedIngredient.Ingredient.Amount = amount;
+                await UserService.Instance.UserClient
+                    .AddIngredientAsync(selectedIngredient.Ingredient, 
+                        UserService.Instance.UserVM.UserAccount.Id);
                 await Navigation.PopAsync();
             }
         }

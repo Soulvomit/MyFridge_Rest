@@ -19,7 +19,6 @@ namespace MyFridge_WebAPI.Controllers
             _logger = logger;
         }
 
-        //create/edit
         [HttpPost]
         public async Task<JsonResult> UpsertAsync([FromBody] AddressDto dto)
         {
@@ -37,7 +36,6 @@ namespace MyFridge_WebAPI.Controllers
 
             return new JsonResult(dto);
         }
-        //get
         [HttpGet]
         public async Task<JsonResult> GetAsync(int id)
         {
@@ -47,7 +45,6 @@ namespace MyFridge_WebAPI.Controllers
 
             return new JsonResult(Map.FromAddress(address));
         }
-        //get all
         [HttpGet]
         public async Task<JsonResult> GetAllAsync() 
         {
@@ -61,7 +58,6 @@ namespace MyFridge_WebAPI.Controllers
 
             return new JsonResult(dtos);
         }
-        //delete
         [HttpDelete]
         public async Task<JsonResult> DeleteAsync(int id)
         {

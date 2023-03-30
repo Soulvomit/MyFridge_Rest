@@ -64,7 +64,7 @@
                                            FontSize="Small"
                                            VerticalOptions="End"
                                            Margin="2"/>
-                                    <Label Text="{Binding Ingredient.UnitStr}"
+                                    <Label Text="{Binding UnitStr}"
                                            TextColor="{Binding AmountColor}"
                                            FontAttributes="Italic"
                                            FontSize="Small"

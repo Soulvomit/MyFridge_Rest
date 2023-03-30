@@ -20,31 +20,30 @@ namespace MyFridge_Library_MAUI_Client
         }
         public async Task<UserAccountDto> GetUserAccountAsync(int id)
         {
-            var response = await _httpClient.GetAsync($"api/UserAccount/GetUserAccount?id={id}");
+            var response = await _httpClient.GetAsync($"api/UserAccount/Get?id={id}");
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<UserAccountDto>();
         }
 
         public async Task<UserAccountDto> GetUserAccountByEmailAsync(string email)
         {
-            var response = await _httpClient.GetAsync($"api/UserAccount/GetUserAccountByEmail?email={email}");
+            var response = await _httpClient.GetAsync($"api/UserAccount/GetByEmail?email={email}");
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<UserAccountDto>();
         }
 
         public async Task<IngredientDto> AddIngredientAsync(IngredientDto dto, int id)
         {
-            var response = await _httpClient.PostAsJsonAsync($"api/UserAccount/AddIngredient?id={id}", dto);
+            var response = await _httpClient.PostAsJsonAsync($"api/UserAccountIngredients/Upsert?id={id}", dto);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<IngredientDto>();
         }
 
-        public async Task<bool> RemoveIngredientAsync(int id, int index)
+        public async Task<bool> RemoveIngredientAsync(int id, int ingredientId)
         {
-            var response = await _httpClient.DeleteAsync($"api/UserAccount/RemoveIngredient?id={id}&index={index}");
+            var response = await _httpClient.DeleteAsync($"api/UserAccountIngredients/Delete?id={id}&index={ingredientId}");
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<bool>();
         }
-        //and so on for the other API endpoints...
     }
 }

@@ -1,24 +1,24 @@
-using MyFridge_Library_MAUI_DataTransfer.DataTransferObject;
+using MyFridge_UserInterface_MAUI.ViewModel;
 
 namespace MyFridge_UserInterface_MAUI.Views;
 
 public partial class UserIngredientDetailPage : ContentPage
 {
-    private IngredientDto _ingredient;
-    public UserIngredientDetailPage(IngredientDto ingredient)
+    private IngredientViewModel _vm;
+    public UserIngredientDetailPage(IngredientViewModel vm)
     {
         InitializeComponent();
 
-        _ingredient = ingredient;
-        BindingContext = _ingredient;
-        Name.Text = _ingredient.Name;
-        UnitStr.Text = _ingredient.UnitStr;
+        _vm = vm;
+        BindingContext = _vm;
+        Name.Text = _vm.Ingredient.Name;
+        UnitStr.Text = _vm.UnitStr;
     }
 
     private async void OnSaveButtonClicked(object sender, EventArgs e)
     {
-        _ingredient.Amount = float.Parse(Amount.Text);
-        _ingredient.ExpirationDate = ExpirationDate.Date;
+        _vm.Ingredient.Amount = float.Parse(Amount.Text);
+        _vm.Ingredient.ExpirationDate = ExpirationDate.Date;
         await Navigation.PopAsync();
     }
 

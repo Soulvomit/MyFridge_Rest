@@ -33,42 +33,17 @@ namespace MyFridge_WebAPI.Controllers
 
             await _uow.CompleteAsync();
 
-            return new JsonResult((dto));
+            return new JsonResult(dto);
         }
-        [HttpPost]
-        public async Task<JsonResult> ChangeIngredientAsync([FromBody] IngredientDto dto, int id)
-        {
-            if (!ModelState.IsValid) return new JsonResult(BadRequest());
-
-            bool success = await _uow.Groceries.ChangeIngredientAsync(id, Map.ToIngredient(dto)!, dto.Amount);
-
-            if (!success) return new JsonResult(NotFound());
-
-            await _uow.CompleteAsync();
-
-            return new JsonResult((dto));
-        }
-        //get
         [HttpGet]
-        public async Task<JsonResult> GetGroceryAsync(int id)
+        public async Task<JsonResult> GetAsync(int id)
         {
             Grocery? grocery = await _uow.Groceries.GetAsync(id);
 
             if (grocery == null) return new JsonResult(NotFound());
 
-            return new JsonResult((Map.FromGrocery(grocery)));
+            return new JsonResult(Map.FromGrocery(grocery));
         }
-        [HttpGet]
-        public async Task<JsonResult> GetIngredientAsync(int id)
-        {
-            Grocery? grocery = await _uow.Groceries.GetAsync(id);
-
-            if (grocery == null) return new JsonResult(NotFound());
-            if (grocery.IngredientAmount == null) return new JsonResult(NotFound());
-
-            return new JsonResult(Map.FromIngredientAmount(grocery.IngredientAmount));
-        }
-        //get all
         [HttpGet]
         public async Task<JsonResult> GetAllAsync()
         {

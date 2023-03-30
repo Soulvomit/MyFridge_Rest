@@ -18,7 +18,6 @@ namespace MyFridge_Library_Data.Data.Repository
             if (updateEntity == null) return false;
 
             Order? entityInDb = await dbSet.FindAsync(updateEntity.Id);
-
             if (entityInDb == null) return false;
 
             entityInDb.Status = updateEntity.Status;
@@ -29,6 +28,8 @@ namespace MyFridge_Library_Data.Data.Repository
         #region Grocery
         public async Task<bool> AddGroceryAsync(int id, Grocery addEntity)
         {
+            if (addEntity == null) return false;
+
             Task<Order?> t1 = GetAsync(id);
             Task<Grocery?> t2 = _context.Groceries
                 .Where(grocery => grocery.Id == addEntity.Id)
@@ -48,14 +49,15 @@ namespace MyFridge_Library_Data.Data.Repository
             return true;
         }
 
-        public async Task<bool> RemoveGroceryAsync(int id, int index)
+        public async Task<bool> RemoveGroceryAsync(int id, int groceryId)
         {
             Order? entityInDb = await GetAsync(id);
-
             if (entityInDb == null) return false;
 
-            Grocery order = entityInDb.Groceries.ElementAt(index);
-            entityInDb.Groceries.Remove(order);
+            Grocery? groceryEntityInDb = await _context.Groceries.FindAsync(groceryId);
+            if (groceryEntityInDb == null) return false;
+
+            entityInDb.Groceries.Remove(groceryEntityInDb);
 
             return true;
         }

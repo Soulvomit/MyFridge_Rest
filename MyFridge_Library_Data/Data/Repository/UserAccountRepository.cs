@@ -42,29 +42,6 @@ namespace MyFridge_Library_Data.Data.Repository
             return entityInDb;
         }
 
-        #region Address
-        public async Task<bool> ChangeAddressAsync(int id, Address changeEntity)
-        {
-            Task<UserAccount?> t1 = GetAsync(id);
-            Task<Address?> t2 = _context.Addresses
-                .Where(address => address.Id == changeEntity.Id).FirstOrDefaultAsync();
-
-            await Task.WhenAll(t1, t2);
-
-            UserAccount? userEntityInDb = t1.Result;
-            Address? addressEntityInDb = t2.Result;
-
-            if (userEntityInDb == null) return false;
-
-            if (addressEntityInDb == null)
-                userEntityInDb.Address = changeEntity;
-            else
-                userEntityInDb.Address = addressEntityInDb;
-
-            return true;
-        }
-        #endregion
-
         #region Ingredients
         public async Task<bool> AddIngredientAsync(int id, Ingredient addEntity, float addAmount)
         {
@@ -116,7 +93,7 @@ namespace MyFridge_Library_Data.Data.Repository
             }
             return true;
         }
-        public async Task<bool> AddIngredientAsync(int id, IngredientAmount addEntity)
+        public async Task<bool> AddIngredientAmountAsync(int id, IngredientAmount addEntity)
         {
             Task<UserAccount?> t1 = GetAsync(id);
             Task<IngredientAmount?> t2 = _context.IngredientAmounts
@@ -134,15 +111,8 @@ namespace MyFridge_Library_Data.Data.Repository
                 userEntityInDb.IngredientAmounts.Add(addEntity);
             else
             {
-                IngredientAmount found = null;
-                foreach (IngredientAmount ia in userEntityInDb.IngredientAmounts) 
-                {
-                    if(ia.IngredientId == addEntity.IngredientId)
-                    {
-                        found = ia;
-                        break;
-                    }
-                }
+                IngredientAmount? found = userEntityInDb.IngredientAmounts.
+                                            FirstOrDefault(ia => ia.Id == addEntity.IngredientId); 
                 if (found != null) 
                     found.Amount += addEntity.Amount;
                 else
@@ -151,45 +121,39 @@ namespace MyFridge_Library_Data.Data.Repository
             return true;
         }
 
-        public async Task<bool> RemoveIngredientAsync(int id, int index)
-        {
-            UserAccount? entityInDb = await GetAsync(id);
-
-            if (entityInDb == null) return false;
-
-            IngredientAmount ingredientAmount = entityInDb.IngredientAmounts.ElementAt(index);
-            entityInDb.IngredientAmounts.Remove(ingredientAmount);
-            _context.IngredientAmounts.Remove(ingredientAmount);
-
-            return true;
-        }
-        public async Task<bool> RemoveAmountAsync(int id, Ingredient updateEntity, float removeAmount, bool forceRemove = true)
+        public async Task<bool> RemoveIngredientAmountAsync(int id, int iaId, float removeAmount, bool forceRemove = true)
         {
             UserAccount? userEntityInDb = await GetAsync(id);
             if (userEntityInDb == null) return false;
 
-            foreach(IngredientAmount ia in userEntityInDb.IngredientAmounts)
+            IngredientAmount? ia = userEntityInDb.IngredientAmounts.FirstOrDefault(ia => ia.Id == iaId);
+            if (ia == null) return false;
+
+            if (ia.Amount - removeAmount > 0)
             {
-                if (ia.IngredientId == updateEntity.Id)
+                ia.Amount -= removeAmount;
+            }
+            else
+            {
+                if (forceRemove)
                 {
-                    if(ia.Amount - removeAmount > 0)
-                        ia.Amount -= removeAmount;
+                    userEntityInDb.IngredientAmounts.Remove(ia);
+                    _context.IngredientAmounts.Remove(ia);
+                }
+                else
+                {
+                    if (ia.Amount - removeAmount == 0)
+                    {
+                        userEntityInDb.IngredientAmounts.Remove(ia);
+                        _context.IngredientAmounts.Remove(ia);
+                    }
                     else
                     {
-                        if (forceRemove)
-                            _context.IngredientAmounts.Remove(ia);
-                        else
-                        {
-                            if (ia.Amount - removeAmount == 0)
-                                _context.IngredientAmounts.Remove(ia);
-                            else
-                                break;
-                        }
+                        return false;
                     }
-                    return true;
                 }
             }
-            return false;
+            return true;
         }
         #endregion
 
@@ -227,156 +191,6 @@ namespace MyFridge_Library_Data.Data.Repository
 
             return true;
         }
-        #endregion
-
-        #region Recipies
-        public async Task<List<Recipy>> GetValidRicipiesAsync(int id)
-        {
-            UserAccount? userEntityInDb = await GetAsync(id);
-            if (userEntityInDb == null) return null;
-
-            List<Recipy> makeable = _context.Recipies.AsEnumerable()
-                .Where(r => r.IngredientAmounts
-                    .All(ria => userEntityInDb.IngredientAmounts
-                        .Any(uia => ria.IngredientId == uia.IngredientId && ria.Amount <= uia.Amount)))
-                .ToList();
-
-            return makeable;
-        }
-        public async Task<bool> MakeRicipiesAsync(int id, Recipy recipy, bool force = false)
-        {
-            UserAccount user = await GetAsync(id);
-            if (user == null) return false;
-
-            if (force)
-            {
-                Recipy? forcedRecipy = await _context.Recipies.FirstOrDefaultAsync(r => r.Id == recipy.Id);
-                if (forcedRecipy == null) return false;
-
-                var matchingIngredients = user.IngredientAmounts
-                    .Join(forcedRecipy.IngredientAmounts,
-                        userIngredient => userIngredient.IngredientId,
-                        recipeIngredient => recipeIngredient.IngredientId,
-                        (userIngredient, recipeIngredient) => (userIngredient, recipeIngredient));
-
-                foreach (var (userIngredient, recipeIngredient) in matchingIngredients)
-                {
-                    await RemoveAmountAsync(id, recipeIngredient.Ingredient, recipeIngredient.Amount, force);
-                }
-                return true;
-            }
-            else
-            {
-                List<Recipy> validRecipies = await GetValidRicipiesAsync(id);
-                Recipy? validRecipy = validRecipies.FirstOrDefault(r => r.Id == recipy.Id);
-                if (validRecipy == null) return false;
-
-                var matchingIngredients = user.IngredientAmounts
-                    .Join(validRecipy.IngredientAmounts,
-                        userIngredient => userIngredient.IngredientId,
-                        recipeIngredient => recipeIngredient.IngredientId,
-                        (userIngredient, recipeIngredient) => (userIngredient, recipeIngredient));
-
-                foreach (var (userIngredient, recipeIngredient) in matchingIngredients)
-                {
-                    await RemoveAmountAsync(id, recipeIngredient.Ingredient, recipeIngredient.Amount, force);
-                }
-                return true;
-            }
-        }
-
-        //public async Task<bool> MakeRicipiesAsync(int id, Recipy recipy, bool force = false)
-        //{
-        //    UserAccount? userEntityInDb = await GetAsync(id);
-        //    if (userEntityInDb == null) return false;
-
-        //    if (force)
-        //    {
-        //        foreach(IngredientAmount uia in userEntityInDb.IngredientAmounts)
-        //        {
-        //            foreach (IngredientAmount ria in recipy.IngredientAmounts) 
-        //            {
-        //                if(ria.IngredientId == uia.IngredientId)
-        //                {
-        //                    await RemoveAmountAsync(id, ria.Ingredient, ria.Amount, force);
-        //                }
-        //            }
-        //        }
-        //        return true;
-        //    }
-        //    else
-        //    {
-        //        List<Recipy> valid = await GetValidRicipiesAsync(id);
-        //        Recipy temp = null;
-        //        foreach(Recipy r in valid)
-        //        {
-        //            if(r.Id == recipy.Id)
-        //            {
-        //                temp = r;
-        //                break;
-        //            }
-        //        }
-        //        if(temp == null)
-        //        {
-        //            return false;
-        //        }
-        //        foreach (IngredientAmount uia in userEntityInDb.IngredientAmounts)
-        //        {
-        //            foreach (IngredientAmount ria in temp.IngredientAmounts)
-        //            {
-        //                if (ria.IngredientId == uia.IngredientId)
-        //                {
-        //                    await RemoveAmountAsync(id, ria.Ingredient, ria.Amount, force);
-        //                }
-        //            }
-        //        }
-        //        return true;
-        //    }
-        //}
-        #endregion
-
-        #region Trash
-        //public List<Recipy> ShowRicipiesAsync(int id)
-        //{
-        //    Task<UserAccount?> t1 = GetAsync(id);
-        //    UserAccount? userEntityInDb = t1.Result;
-        //    if (userEntityInDb == null) return null;
-
-        //    List<Recipy> makeable = _context.Recipies.AsEnumerable()
-        //        .Where(r => r.IngredientAmounts
-        //            .All(ria => userEntityInDb.IngredientAmounts
-        //                .Any(uia => ria.IngredientId == uia.IngredientId && ria.Amount <= uia.Amount)))
-        //        .ToList();
-
-        //    return makeable;
-
-
-        //    //Task<UserAccount?> t1 = GetAsync(id);
-        //    //UserAccount? userEntityInDb = t1.Result;
-
-        //    //List<Recipy> all = _context.Recipies.ToList();
-        //    //List<Recipy> makeable = new List<Recipy>();
-        //    //foreach (Recipy recipy in all)
-        //    //{
-        //    //    bool match = true;
-        //    //    foreach (IngredientAmount ria in recipy.IngredientAmounts)
-        //    //    {
-        //    //        match = false;
-        //    //        foreach (IngredientAmount uia in userEntityInDb.IngredientAmounts)
-        //    //        {
-        //    //            if (ria.IngredientId == uia.IngredientId && ria.Amount < uia.Amount)
-        //    //            {
-        //    //                match = true;
-        //    //                break;
-        //    //            }
-        //    //        }
-        //    //        if (!match) break;
-        //    //    }
-        //    //    if (match) makeable.Add(recipy);
-        //    //}
-
-        //    //return makeable;
-        //}
         #endregion
     }
 }
