@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:MyFridge_UserInterface_MAUI.ViewModel"
+             x:Class="MyFridge_UserInterface_MAUI.Views.UserInfoPage"
+             Title="Your Information">
+
+    <Grid x:Name="UserInformationView"
+          x:DataType="viewModel:UserAccountViewModel">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Label Text="First Name:" 
+           Grid.Row="0" 
+           Grid.Column="0" 
+           HorizontalTextAlignment="End" 
+           Margin="10"/>
+        <Entry Text="{Binding UserAccount.Firstname}" 
+           x:Name="FirstNameEntry" 
+           Grid.Row="0" 
+           Grid.Column="1" 
+           Margin="10"/>
+
+        <Label Text="Last Name:" 
+           Grid.Row="1" 
+           Grid.Column="0" 
+           HorizontalTextAlignment="End" 
+           Margin="10"/>
+        <Entry Text="{Binding UserAccount.Lastname}" 
+           x:Name="LastNameEntry" 
+           Grid.Row="1" 
+           Grid.Column="1" 
+           Margin="10"/>
+
+        <Label Text="Email:" 
+           Grid.Row="2" 
+           Grid.Column="0" 
+           HorizontalTextAlignment="End" 
+           Margin="10"/>
+        <Entry Text="{Binding UserAccount.Email}" 
+           x:Name="EmailEntry" 
+           Grid.Row="2" 
+           Grid.Column="1" 
+           Margin="10"/>
+
+        <Label Text="Password:" 
+           Grid.Row="3" 
+           Grid.Column="0" 
+           HorizontalTextAlignment="End" 
+           Margin="10"/>
+        <Entry Text="{Binding UserAccount.Password}" 
+           IsPassword="True" 
+           x:Name="PasswordEntry" 
+           Grid.Row="3" 
+           Grid.Column="1" 
+           Margin="10"/>
+
+        <Label Text="Phone Number:" 
+           Grid.Row="4" 
+           Grid.Column="0" 
+           HorizontalTextAlignment="End" 
+           Margin="10"/>
+        <Entry Text="{Binding UserAccount.PhoneNumber, StringFormat='{0:d}'}" 
+           x:Name="PhonenumberEntry" 
+           Grid.Row="4" 
+           Grid.Column="1" 
+           Margin="10"/>
+
+        <Label Text="Birthdate:" 
+           Grid.Row="5" 
+           Grid.Column="0" 
+           HorizontalTextAlignment="End" 
+           Margin="10"/>
+        <DatePicker Date="{Binding UserAccount.BirthDate}" 
+                x:Name="BirthdatePicker" 
+                Grid.Row="5" 
+                Grid.Column="1" 
+                Margin="10"/>
+        
+        <StackLayout Margin="10,0" 
+                 Grid.Row="6" 
+                 Grid.Column="1">
+            <Button Text="Save" 
+                Clicked="OnSaveButtonClicked" />
+        </StackLayout>
+    </Grid>
+
+</ContentPage>
