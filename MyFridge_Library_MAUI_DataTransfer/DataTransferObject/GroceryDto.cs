@@ -5,6 +5,8 @@
         public int Id { get; set; }
         public IngredientDto Ingredient { get; set; }
         public string Brand { get; set; }
-        public float SalePriceDKK { get; set; }
+        public string ItemIdentifier { get; set; }
+        public float SalePrice { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

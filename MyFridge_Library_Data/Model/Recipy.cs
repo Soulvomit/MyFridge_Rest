@@ -10,6 +10,8 @@ namespace MyFridge_Library_Data.Model
         public virtual ICollection<IngredientAmount> IngredientAmounts { get; set; } = new List<IngredientAmount>();
         [MaxLength(1800)]
         public string? Description { get; set; } = string.Empty;
+        [MaxLength(50)]
+        public string? ImageUrl { get; set; } = string.Empty:
 
     }
 }

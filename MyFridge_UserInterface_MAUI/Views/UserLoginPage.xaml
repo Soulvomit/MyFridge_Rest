@@ -1,25 +1,55 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyFridge_UserInterface_MAUI.Views.UserLoginPage"
-             Title="User Login">
-    <StackLayout>
+             BackgroundColor="#f0f4f8"
+             Title="User Login"
+             Shell.TabBarIsVisible="False"
+             Shell.FlyoutBehavior="Disabled">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontFamily" Value="Roboto" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="TextColor" Value="#4a4a4a" />
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="FontFamily" Value="Roboto" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="TextColor" Value="#4a4a4a" />
+                <Setter Property="BackgroundColor" Value="#e0e0e0" />
+                <Setter Property="Margin" Value="0,10" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout Padding="20">
         <Label Text="Welcome to MyFridge" 
-               FontSize="Large" 
+               FontFamily="Roboto" 
+               FontSize="24" 
+               TextColor="#4a4a4a" 
                HorizontalOptions="Center" 
                Margin="0,50,0,0" />
         <Entry x:Name="EmailEntry" 
                Placeholder="Email" 
-               Margin="30,50,30,0" />
+               Margin="10" />
         <Entry x:Name="PasswordEntry" 
                Placeholder="Password" 
                IsPassword="True" 
-               Margin="30,20,30,0" />
+               Margin="10" />
         <Button Text="Log in" 
                 Clicked="OnLoginButtonClicked" 
-                Margin="30,30,30,0" />
+                FontFamily="Roboto" 
+                FontSize="16" 
+                TextColor="White" 
+                BackgroundColor="#6ab04c" 
+                CornerRadius="5" 
+                Margin="10,30,10,0" />
         <Label x:Name="LoginResultLabel" 
-               FontSize="Medium" 
+               FontFamily="Roboto" 
+               FontSize="18" 
+               TextColor="#4a4a4a" 
                HorizontalOptions="Center" 
                Margin="0,30,0,0" />
     </StackLayout>

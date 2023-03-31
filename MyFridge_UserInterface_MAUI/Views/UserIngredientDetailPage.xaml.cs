@@ -11,6 +11,7 @@ public partial class UserIngredientDetailPage : ContentPage
 
         _vm = vm;
         BindingContext = _vm;
+
         Name.Text = _vm.Ingredient.Name;
         UnitStr.Text = _vm.UnitStr;
     }

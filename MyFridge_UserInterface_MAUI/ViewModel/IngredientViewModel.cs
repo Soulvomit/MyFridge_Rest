@@ -53,19 +53,19 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
             }
             if (userHas)
             {
-                this.NameColor = Colors.LightGreen;
+                this.NameColor = Color.FromArgb("#4CAF50");
                 if (userHasEnough)
-                    this.AmountColor = Colors.LightGreen;
+                    this.AmountColor = Color.FromArgb("#4CAF50");
                 else
                 {
-                    this.NameColor = Colors.Yellow;
-                    this.AmountColor = Colors.Red;
+                    this.NameColor = Color.FromArgb("#FFC107");
+                    this.AmountColor = Color.FromArgb("#FF6B6B");
                 }
             }
             else
             {
-                this.NameColor = Colors.Red;
-                this.AmountColor = Colors.Red;
+                this.NameColor = Color.FromArgb("#FF6B6B");
+                this.AmountColor = Color.FromArgb("#FF6B6B");
             }
         }
         public static List<IngredientViewModel> ConvertIngredientDtos(List<IngredientDto> dtos)

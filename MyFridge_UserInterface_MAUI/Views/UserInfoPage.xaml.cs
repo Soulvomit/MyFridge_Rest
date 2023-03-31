@@ -8,7 +8,7 @@ public partial class UserInfoPage : ContentPage
     {
         InitializeComponent();
 
-        // Set the text of each label to display the user's information
+        //set the text of each label to display the user's information
         FirstNameEntry.Text = UserService.Instance.UserVM.UserAccount.Firstname;
         LastNameEntry.Text = UserService.Instance.UserVM.UserAccount.Lastname;
         EmailEntry.Text = UserService.Instance.UserVM.UserAccount.Email;

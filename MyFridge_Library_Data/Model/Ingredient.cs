@@ -10,5 +10,7 @@ namespace MyFridge_Library_Data.Model
         public required string Name { get; set; }
         [Required]
         public required EUnit Unit { get; set; } = EUnit.Piece;
+        [MaxLength(50)]
+        public string? ImageUrl { get; set; } = string.Empty;
     }
 }

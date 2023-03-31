@@ -1,11 +1,24 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-          xmlns:viewModel="clr-namespace:MyFridge_UserInterface_MAUI.ViewModel"
-          x:Class="MyFridge_UserInterface_MAUI.Views.UserIngredientDetailPage"
-          Title="User Ingredient Detail">
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:viewModel="clr-namespace:MyFridge_UserInterface_MAUI.ViewModel"
+        x:Class="MyFridge_UserInterface_MAUI.Views.UserIngredientDetailPage"
+        BackgroundColor="#f0f4f8"
+        Title="User Ingredient Detail"
+        Shell.FlyoutBehavior="Flyout">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontFamily" Value="Roboto" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="TextColor" Value="#4a4a4a" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
-        <StackLayout Padding="10" 
+        <StackLayout Padding="20" 
                      x:DataType="viewModel:IngredientViewModel">
             <StackLayout Orientation="Horizontal">
                 <Image x:Name="Image"
@@ -20,37 +33,42 @@
                            Text="{Binding Ingredient.Name}"
                            FontSize="Large"
                            FontAttributes="Bold"/>
-                    <StackLayout Spacing="10">
-                        <Label Text="Amount:" 
+
+                </StackLayout>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal"
+                         Spacing="10"
+                         Margin="0,10,0,0">
+                <Label Text="Amount:" 
                                FontAttributes="Bold" 
                                FontSize="Medium"/>
-                        <StackLayout Orientation="Horizontal">
-                            <Label x:Name="Amount"
+                <Label x:Name="Amount"
                                Text="{Binding Ingredient.Amount}"
                                FontSize="Medium"/>
-                            <Label x:Name="UnitStr"
+                <Label x:Name="UnitStr"
                                Text="{Binding UnitStr}"
                                FontSize="Medium"
                                FontAttributes="Bold"/>
-                        </StackLayout>
-                    </StackLayout>
-                </StackLayout>
             </StackLayout>
-            <HorizontalStackLayout>
+            <StackLayout Orientation="Horizontal"
+                         Spacing="10"
+                         Margin="0,10,0,0">
                 <Label Text="Expires:" 
                        FontSize="Medium" 
-                       FontAttributes="Bold" 
-                       Margin="0, 10, 0, 0"/>
+                       FontAttributes="Bold"/>
                 <DatePicker x:Name="ExpirationDate"
                             Date="{Binding Ingredient.ExpirationDate}"
-                            FontSize="Medium"
-                            Margin="0, 0, 0, 10"/>
-            </HorizontalStackLayout>
+                            FontSize="Medium" 
+                            TextColor="#4a4a4a"/>
+            </StackLayout>
             <Button Text="Save"
                     Clicked="OnSaveButtonClicked"
-                    BackgroundColor="#2196F3"
+                    BackgroundColor="#6ab04c"
                     TextColor="White"
-                    FontSize="Large"/>
+                    FontSize="Large"
+                    FontFamily="Roboto"
+                    CornerRadius="5"
+                    Margin="10,20,10,0"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -23,6 +23,7 @@ namespace MyFridge_Library_Data.Data.Repository
 
             entityInDb.Name = updateEntity.Name;
             entityInDb.Description = updateEntity.Description;
+            entityInDb.ImageUrl = updateEntity.ImageUrl;
 
             return true;
         }

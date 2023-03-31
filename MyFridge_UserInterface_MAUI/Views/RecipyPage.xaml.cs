@@ -1,5 +1,3 @@
-using MyFridge_Library_MAUI_DataTransfer.DataTransferObject;
-using MyFridge_UserInterface_MAUI.Service;
 using MyFridge_UserInterface_MAUI.ViewModel;
 
 namespace MyFridge_UserInterface_MAUI.Views;

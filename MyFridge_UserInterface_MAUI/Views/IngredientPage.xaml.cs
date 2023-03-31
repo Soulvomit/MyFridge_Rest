@@ -43,7 +43,7 @@ public partial class IngredientPage : ContentPage
                     "0", 
                     -1, 
                     Keyboard.Numeric, 
-                    "1"), 
+                    ""), 
                 out uint amount);
             if (parsed)
             {

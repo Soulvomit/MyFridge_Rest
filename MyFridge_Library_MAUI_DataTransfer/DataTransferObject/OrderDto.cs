@@ -13,7 +13,7 @@
                 float total = 0;
 
                 foreach (var item in Groceries)
-                    total += item.SalePriceDKK;
+                    total += item.SalePrice;
 
                 return total;
             }

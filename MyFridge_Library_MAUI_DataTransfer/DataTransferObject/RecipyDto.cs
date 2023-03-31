@@ -6,5 +6,6 @@
         public string Name { get; set; }
         public virtual ICollection<IngredientDto> Ingredients { get; set; } = new List<IngredientDto>();
         public string Description { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

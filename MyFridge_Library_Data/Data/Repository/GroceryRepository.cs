@@ -21,7 +21,9 @@ namespace MyFridge_Library_Data.Data.Repository
             if (entityInDb == null) return false;
 
             entityInDb.Brand = updateEntity.Brand;
-            entityInDb.SalePriceDKK = updateEntity.SalePriceDKK;
+            entityInDb.SalePrice = updateEntity.SalePrice;
+            entityInDb.ItemIdentifier = updateEntity.ItemIdentifier;
+            entityInDb.ImageUrl = updateEntity.ImageUrl;
 
             return true;
         }

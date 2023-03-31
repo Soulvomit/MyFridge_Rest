@@ -28,7 +28,7 @@ namespace MyFridge_Library_Data.Data
                 new Grocery()
                 {
                     Brand = "VeggiesCo",
-                    SalePriceDKK = 12,
+                    SalePrice = 12,
                     IngredientAmount = new IngredientAmount
                     {
                         Amount = 750,
@@ -42,7 +42,7 @@ namespace MyFridge_Library_Data.Data
                 new Grocery()
                 {
                     Brand = "Meat N Greet",
-                    SalePriceDKK = 40,
+                    SalePrice = 40,
                     IngredientAmount = new IngredientAmount
                     {
                         Amount = 500,
@@ -56,7 +56,7 @@ namespace MyFridge_Library_Data.Data
                 new Grocery()
                 {
                     Brand = "Arla",
-                    SalePriceDKK = 7,
+                    SalePrice = 7,
                     IngredientAmount = new IngredientAmount
                     {
                         Amount = 1000,

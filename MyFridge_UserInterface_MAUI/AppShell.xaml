@@ -5,23 +5,39 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MyFridge_UserInterface_MAUI"
     xmlns:views="clr-namespace:MyFridge_UserInterface_MAUI.Views"
-    Shell.FlyoutBehavior="Flyout">
+    BackgroundColor="#FFFFFF"
+    Shell.BackgroundColor="#4CAF50"
+    Shell.TitleColor="#FFFFFF"
+    Shell.DisabledColor="#BDBDBD"
+    Shell.UnselectedColor="#E0E0E0"
+    Shell.FlyoutBehavior="Flyout"
+    Shell.FlyoutBackgroundColor = "#8BC34A"
+    Shell.TabBarBackgroundColor="#8BC34A"
+    Shell.TabBarTitleColor="#FFFFFF"
+    Shell.TabBarUnselectedColor="#E0E0E0"
+    Shell.TabBarDisabledColor="#BDBDBD"
+    Shell.TabBarIsVisible="True"
+    Shell.NavBarIsVisible="False">
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
         <ShellContent
             Title="Login"
+            Icon="dotnet_bot.png"
             ContentTemplate="{DataTemplate views:UserLoginPage}"
             Route="UserLoginPage" />
         <ShellContent
             Title="Information"
+            Icon="dotnet_bot.png"
             ContentTemplate="{DataTemplate views:UserInfoPage}"
             Route="UserInfoPage" />
         <ShellContent
             Title="Ingredients"
+            Icon="dotnet_bot.png"
             ContentTemplate="{DataTemplate views:UserIngredientPage}"
             Route="UserIngredientPage" />
         <ShellContent
             Title="Recipies"
+            Icon="dotnet_bot.png"
             ContentTemplate="{DataTemplate views:RecipyPage}"
             Route="RecipyPage" />
     </FlyoutItem>
