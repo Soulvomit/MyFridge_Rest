@@ -11,7 +11,7 @@ namespace MyFridge_Library_Data.Model
         [MaxLength(1800)]
         public string? Description { get; set; } = string.Empty;
         [MaxLength(50)]
-        public string? ImageUrl { get; set; } = string.Empty:
+        public string? ImageUrl { get; set; } = string.Empty;
 
     }
 }

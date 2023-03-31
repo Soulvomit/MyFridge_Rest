@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using MyFridge_Library_Data.Data.Repository.Base;
 using MyFridge_Library_Data.Data.Repository.Interface;
 using MyFridge_Library_Data.Model;
