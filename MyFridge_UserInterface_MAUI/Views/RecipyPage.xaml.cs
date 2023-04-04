@@ -1,21 +1,25 @@
+using MyFridge_UserInterface_MAUI.Service;
 using MyFridge_UserInterface_MAUI.ViewModel;
 
 namespace MyFridge_UserInterface_MAUI.Views;
 
 public partial class RecipyPage : ContentPage
 {
+    private readonly UserService _userService;
     private List<RecipyViewModel> all;
     private List<RecipyViewModel> makeable;
-    public RecipyPage()
+    public RecipyPage(UserService userService)
     {
         InitializeComponent();
+
+        _userService = userService;
     }
     protected override async void OnAppearing()
     {
         base.OnAppearing();
 
-        all = await RecipyViewModel.GetAllRecipiesFromDB();
-        makeable = RecipyViewModel.GetMakeableRecipies(all);
+        all = await RecipyViewModel.GetAllRecipiesFromDB(_userService);
+        makeable = RecipyViewModel.GetMakeableRecipies(all, _userService);
 
         OnRemoveFilterToggled(null, null);
     }

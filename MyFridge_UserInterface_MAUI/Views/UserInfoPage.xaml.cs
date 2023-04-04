@@ -4,57 +4,56 @@ namespace MyFridge_UserInterface_MAUI.Views;
 
 public partial class UserInfoPage : ContentPage
 {
-    public UserInfoPage()
+    private readonly UserService _userService;
+    public UserInfoPage(UserService userService)
     {
         InitializeComponent();
 
+        _userService = userService;
+
         //set the text of each label to display the user's information
-        FirstNameEntry.Text = UserService.Instance.UserVM.UserAccount.Firstname;
-        LastNameEntry.Text = UserService.Instance.UserVM.UserAccount.Lastname;
-        EmailEntry.Text = UserService.Instance.UserVM.UserAccount.Email;
-        PasswordEntry.Text = UserService.Instance.UserVM.UserAccount.Password;
-        PhonenumberEntry.Text = UserService.Instance.UserVM.UserAccount.PhoneNumber.ToString();
-        BirthdatePicker.Date = UserService.Instance.UserVM.UserAccount.BirthDate.Date;
+        FirstNameEntry.Text = _userService.User.Firstname;
+        LastNameEntry.Text = _userService.User.Lastname;
+        EmailEntry.Text = _userService.User.Email;
+        PasswordEntry.Text = _userService.User.Password;
+        PhonenumberEntry.Text = _userService.User.PhoneNumber.ToString();
+        BirthdatePicker.Date = _userService.User.BirthDate.Date;
     }
 
     private async void OnSaveButtonClicked(object sender, EventArgs e)
     {
-        string newFirstName = UserService.Instance.UserVM.UserAccount.Firstname;
+        string newFirstName = FirstNameEntry.Text;
         if (!string.IsNullOrEmpty(newFirstName))
         {
-            UserService.Instance.UserVM.UserAccount.Firstname = newFirstName;
+            _userService.User.Firstname = newFirstName;
             FirstNameEntry.Text = newFirstName;
         }
-        string newLastName = UserService.Instance.UserVM.UserAccount.Lastname;
+        string newLastName = LastNameEntry.Text;
         if (!string.IsNullOrEmpty(newLastName))
         {
-            UserService.Instance.UserVM.UserAccount.Lastname = newLastName;
+            _userService.User.Lastname = newLastName;
             LastNameEntry.Text = newLastName;
         }
-        string newEmail = UserService.Instance.UserVM.UserAccount.Email;
+        string newEmail = EmailEntry.Text;
         if (!string.IsNullOrEmpty(newEmail))
         {
-            UserService.Instance.UserVM.UserAccount.Email = newEmail;
+            _userService.User.Email = newEmail;
             EmailEntry.Text = newEmail;
         }
-        string newPassword = UserService.Instance.UserVM.UserAccount.Password;
+        string newPassword = PasswordEntry.Text;
         if (!string.IsNullOrEmpty(newPassword))
         {
-            UserService.Instance.UserVM.UserAccount.Password = newPassword;
+            _userService.User.Password = newPassword;
             PasswordEntry.Text = newPassword;
         }
-        string newPhonenum = UserService.Instance.UserVM.UserAccount.PhoneNumber.ToString();
+        string newPhonenum = PasswordEntry.Text;
         if (ulong.TryParse(newPhonenum, out ulong phonenum))
         {
-            UserService.Instance.UserVM.UserAccount.PhoneNumber = phonenum;
-            PhonenumberEntry.Text = phonenum.ToString();
+            _userService.User.PhoneNumber = phonenum;
+            PasswordEntry.Text = phonenum.ToString();
         }
-        string newBirthdate = UserService.Instance.UserVM.UserAccount.BirthDate.ToShortDateString();
-        if (DateTime.TryParse(newBirthdate, out DateTime birthdate))
-        {
-            UserService.Instance.UserVM.UserAccount.BirthDate = birthdate;
-            BirthdatePicker.Date = birthdate.Date;
-        }
-        await UserService.Instance.UserClient.UpsertUserAccountAsync(UserService.Instance.UserVM.UserAccount);
+        _userService.User.BirthDate = BirthdatePicker.Date;
+ 
+        await _userService.UserClient.UpsertUserAccountAsync(_userService.User);
     }
 }

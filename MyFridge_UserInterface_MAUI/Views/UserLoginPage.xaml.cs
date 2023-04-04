@@ -5,37 +5,34 @@ namespace MyFridge_UserInterface_MAUI.Views
 {
     public partial class UserLoginPage : ContentPage
     {
-        public UserLoginPage()
+        private readonly UserService _userService;
+        public UserLoginPage(UserService userService)
         {
             InitializeComponent();
 
-            if (Shell.Current is AppShell appShell)
-            {
-                appShell.FlyoutBehavior = FlyoutBehavior.Disabled;
-            }
+            _userService = userService;
+        }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
 
             EmailEntry.Text = "email@email.com";
             PasswordEntry.Text = "password";
         }
-
         private async void OnLoginButtonClicked(object sender, EventArgs e)
         {
             string email = EmailEntry.Text;
             string password = PasswordEntry.Text;
 
-            UserAccountDto user = await UserService.Instance.UserClient.GetUserAccountByEmailAsync(email);
+            UserAccountDto user = await _userService.UserClient.GetUserAccountByEmailAsync(email);
 
             if (user != null)
             {
                 if (password == user.Password)
                 {
-                    UserService.Instance.UserVM = new()
-                    {
-                        UserAccount = user
-                    };
+                    _userService.User = user;
 
-                    await Navigation.PushAsync(new UserLogoutPage());
-                    //await Shell.Current.GoToAsync(nameof(UserIngredientPage));
+                    await Shell.Current.GoToAsync($"//" + nameof(UserInfoPage));
                 }
                 else
                     LoginResultLabel.Text = "Invalid email or password";

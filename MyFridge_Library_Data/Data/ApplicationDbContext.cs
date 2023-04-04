@@ -22,6 +22,8 @@ namespace MyFridge_Library_Data.Data
             modelBuilder.Entity<UserAccount>()
                 .HasIndex(ua => ua.Email)
                 .IsUnique();
+            //modelBuilder.Entity<Ingredient>()
+            //    .HasKey(i => new { i.Name, i.Unit });
         }
     }
 }

@@ -5,21 +5,73 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MyFridge_UserInterface_MAUI"
     xmlns:views="clr-namespace:MyFridge_UserInterface_MAUI.Views"
-    BackgroundColor="#FFFFFF"
-    Shell.BackgroundColor="#4CAF50"
-    Shell.TitleColor="#FFFFFF"
+    BackgroundColor="#f0f4f8"
+    Shell.BackgroundColor="#f0f4f8"
+    Shell.TitleColor="#f0f4f8"
     Shell.DisabledColor="#BDBDBD"
     Shell.UnselectedColor="#E0E0E0"
     Shell.FlyoutBehavior="Flyout"
     Shell.FlyoutBackgroundColor = "#8BC34A"
     Shell.TabBarBackgroundColor="#8BC34A"
-    Shell.TabBarTitleColor="#FFFFFF"
+    Shell.TabBarTitleColor="#f0f4f8"
     Shell.TabBarUnselectedColor="#E0E0E0"
     Shell.TabBarDisabledColor="#BDBDBD"
     Shell.TabBarIsVisible="True"
     Shell.NavBarIsVisible="False">
 
+    <Shell.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontFamily" Value="Roboto" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="TextColor" Value="#4a4a4a" />
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="FontFamily" Value="Roboto" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="TextColor" Value="#4a4a4a" />
+                <Setter Property="BackgroundColor" Value="#e0e0e0" />
+                <Setter Property="Margin" Value="0,10" />
+            </Style>
+            <Style TargetType="SearchBar">
+                <Setter Property="FontFamily" Value="Roboto" />
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="TextColor" Value="#4a4a4a" />
+                <Setter Property="BackgroundColor" Value="#e0e0e0" />
+                <Setter Property="Margin" Value="0,10" />
+            </Style>
+        </ResourceDictionary>
+    </Shell.Resources>
+
+    <ShellItem Route="UserLoginPage" FlyoutItemIsVisible="False">
+        <ShellContent ContentTemplate="{DataTemplate views:UserLoginPage}"/>
+    </ShellItem>
+
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
+        <!--<ShellContent
+            Title="Login"
+            Icon="dotnet_bot.png"
+            ContentTemplate="{DataTemplate views:UserLoginPage}"
+            Route="UserLoginPage" />-->
+        <ShellContent
+            Title="Information"
+            Icon="dotnet_bot.png"
+            ContentTemplate="{DataTemplate views:UserInfoPage}"
+            Route="UserInfoPage" />
+        <ShellContent
+            Title="Ingredients"
+            Icon="dotnet_bot.png"
+            ContentTemplate="{DataTemplate views:UserIngredientPage}"
+            Route="UserIngredientPage" />
+        <ShellContent
+            Title="Recipies"
+            Icon="dotnet_bot.png"
+            ContentTemplate="{DataTemplate views:RecipyPage}"
+            Route="RecipyPage" />
+    </FlyoutItem>
+    
+    <!--<TabBar
+        x:Name="Tabby">
         <ShellContent
             Title="Login"
             Icon="dotnet_bot.png"
@@ -40,5 +92,5 @@
             Icon="dotnet_bot.png"
             ContentTemplate="{DataTemplate views:RecipyPage}"
             Route="RecipyPage" />
-    </FlyoutItem>
+    </TabBar>-->
 </Shell>

@@ -3,29 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel="clr-namespace:MyFridge_UserInterface_MAUI.ViewModel"
              x:Class="MyFridge_UserInterface_MAUI.Views.UserInfoPage"
-             BackgroundColor="#f0f4f8"
              Title="Your Information"
-             Shell.FlyoutBehavior="Flyout">
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style TargetType="Label">
-                <Setter Property="FontFamily" Value="Roboto" />
-                <Setter Property="FontSize" Value="16" />
-                <Setter Property="TextColor" Value="#4a4a4a" />
-            </Style>
-            <Style TargetType="Entry">
-                <Setter Property="FontFamily" Value="Roboto" />
-                <Setter Property="FontSize" Value="16" />
-                <Setter Property="TextColor" Value="#4a4a4a" />
-                <Setter Property="BackgroundColor" Value="#e0e0e0" />
-                <Setter Property="Margin" Value="0,10" />
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
+             BackgroundColor="#f0f4f8">
 
     <Grid x:Name="UserInformationView"
-          x:DataType="viewModel:UserAccountViewModel"
+          x:DataType="viewModel:UserViewModel"
           Padding="20">
         <!-- Grid Column and Row Definitions -->
         <Grid.ColumnDefinitions>
@@ -49,7 +31,7 @@
            Grid.Column="0" 
            HorizontalTextAlignment="End" 
            Margin="10"/>
-        <Entry Text="{Binding UserAccount.Firstname}" 
+        <Entry Text="{Binding User.Firstname}" 
            x:Name="FirstNameEntry" 
            Grid.Row="0" 
            Grid.Column="1" 
@@ -60,7 +42,7 @@
            Grid.Column="0" 
            HorizontalTextAlignment="End" 
            Margin="10"/>
-        <Entry Text="{Binding UserAccount.Lastname}" 
+        <Entry Text="{Binding User.Lastname}" 
            x:Name="LastNameEntry" 
            Grid.Row="1" 
            Grid.Column="1" 
@@ -71,7 +53,7 @@
            Grid.Column="0" 
            HorizontalTextAlignment="End" 
            Margin="10"/>
-        <Entry Text="{Binding UserAccount.Email}" 
+        <Entry Text="{Binding User.Email}" 
            x:Name="EmailEntry" 
            Grid.Row="2" 
            Grid.Column="1" 
@@ -82,7 +64,7 @@
            Grid.Column="0" 
            HorizontalTextAlignment="End" 
            Margin="10"/>
-        <Entry Text="{Binding UserAccount.Password}" 
+        <Entry Text="{Binding User.Password}" 
            IsPassword="True" 
            x:Name="PasswordEntry" 
            Grid.Row="3" 
@@ -94,7 +76,7 @@
            Grid.Column="0" 
            HorizontalTextAlignment="End" 
            Margin="10"/>
-        <Entry Text="{Binding UserAccount.PhoneNumber, StringFormat='{0:d}'}" 
+        <Entry Text="{Binding User.PhoneNumber, StringFormat='{0:d}'}" 
            x:Name="PhonenumberEntry" 
            Grid.Row="4" 
            Grid.Column="1" 
@@ -104,7 +86,7 @@
                Grid.Column="0" 
                HorizontalTextAlignment="End" 
                Margin="10"/>
-        <DatePicker Date="{Binding UserAccount.BirthDate}" 
+        <DatePicker Date="{Binding User.BirthDate}" 
                     x:Name="BirthdatePicker" 
                     Grid.Row="5" 
                     Grid.Column="1" 

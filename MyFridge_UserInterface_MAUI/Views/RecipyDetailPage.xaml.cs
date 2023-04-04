@@ -1,4 +1,3 @@
-using MyFridge_UserInterface_MAUI.Service;
 using MyFridge_UserInterface_MAUI.ViewModel;
 
 namespace MyFridge_UserInterface_MAUI.Views;
@@ -24,7 +23,7 @@ public partial class RecipyDetailPage : ContentPage
 
         foreach(IngredientViewModel ivm in ingredientsVms)
         {
-            ivm.SetColor(UserService.Instance.UserVM);
+            ivm.SetColor();
         }
 
         IngredientView.ItemsSource = ingredientsVms

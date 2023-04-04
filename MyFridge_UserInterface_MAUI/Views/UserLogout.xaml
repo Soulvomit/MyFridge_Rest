@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:MyFridge_UserInterface_MAUI.ViewModel"
              x:Class="MyFridge_UserInterface_MAUI.Views.UserLogoutPage"
-             BackgroundColor="#f0f4f8"
              Title="User Logout"
-             NavigationPage.HasBackButton="False"
+             BackgroundColor="#f0f4f8"
              Shell.TabBarIsVisible="False"
-             Shell.FlyoutBehavior="Locked">
-    
+             Shell.FlyoutBehavior="Disabled">
+
     <Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False"/>
     </Shell.BackButtonBehavior>
@@ -30,8 +30,10 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
-        <Label x:Name="EmailLabel"
+    <StackLayout VerticalOptions="CenterAndExpand" 
+                 HorizontalOptions="CenterAndExpand">
+        <Label x:DataType="viewModel:UserViewModel"
+               Text="{Binding User.Email}"
                FontFamily="Roboto" 
                FontSize="24" 
                TextColor="#4a4a4a" 

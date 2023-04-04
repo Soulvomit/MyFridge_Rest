@@ -4,29 +4,10 @@
              xmlns:view="clr-namespace:MyFridge_UserInterface_MAUI.Views"
              xmlns:viewModel="clr-namespace:MyFridge_UserInterface_MAUI.ViewModel"
              x:Class="MyFridge_UserInterface_MAUI.Views.UserIngredientPage"
-             x:Name="UIP"
-             BackgroundColor="#f0f4f8"
              Title="Your Ingredients"
-             Shell.FlyoutBehavior="Flyout">
+             BackgroundColor="#f0f4f8">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style TargetType="Label">
-                <Setter Property="FontFamily" Value="Roboto" />
-                <Setter Property="FontSize" Value="16" />
-                <Setter Property="TextColor" Value="#4a4a4a" />
-            </Style>
-            <Style TargetType="SearchBar">
-                <Setter Property="FontFamily" Value="Roboto" />
-                <Setter Property="FontSize" Value="16" />
-                <Setter Property="TextColor" Value="#4a4a4a" />
-                <Setter Property="BackgroundColor" Value="#e0e0e0" />
-                <Setter Property="Margin" Value="0,10" />
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
-    <StackLayout BindingContext="{x:Reference Name=UIP}" Padding="20">
+    <StackLayout Padding="20">
         <StackLayout VerticalOptions="Start">
             <SearchBar x:Name="SearchBar" 
                        Placeholder="Search"                  
@@ -42,14 +23,16 @@
         </StackLayout>
         <ListView x:Name="IngredientView"
                   x:DataType="view:UserIngredientPage"
-                  ItemTapped="OnIngredientTapped">
+                  ItemTapped="OnIngredientTapped"
+                  SeparatorVisibility="Default">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="viewModel:IngredientViewModel">
                     <ViewCell>
                         <Grid Padding="10"
                               ColumnSpacing="10"
                               RowSpacing="5"
-                              Margin="10">
+                              Margin="0, 5"
+                              BackgroundColor="#e0e0e0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>

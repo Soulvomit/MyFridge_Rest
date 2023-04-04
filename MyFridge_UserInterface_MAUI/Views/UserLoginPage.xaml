@@ -2,27 +2,10 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyFridge_UserInterface_MAUI.Views.UserLoginPage"
-             BackgroundColor="#f0f4f8"
              Title="User Login"
              Shell.TabBarIsVisible="False"
-             Shell.FlyoutBehavior="Disabled">
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style TargetType="Label">
-                <Setter Property="FontFamily" Value="Roboto" />
-                <Setter Property="FontSize" Value="16" />
-                <Setter Property="TextColor" Value="#4a4a4a" />
-            </Style>
-            <Style TargetType="Entry">
-                <Setter Property="FontFamily" Value="Roboto" />
-                <Setter Property="FontSize" Value="16" />
-                <Setter Property="TextColor" Value="#4a4a4a" />
-                <Setter Property="BackgroundColor" Value="#e0e0e0" />
-                <Setter Property="Margin" Value="0,10" />
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
+             Shell.FlyoutBehavior="Disabled"
+             BackgroundColor="#f0f4f8">
 
     <StackLayout Padding="20">
         <Label Text="Welcome to MyFridge" 
@@ -38,7 +21,7 @@
                Placeholder="Password" 
                IsPassword="True" 
                Margin="10" />
-        <Button Text="Log in" 
+        <Button Text="Login" 
                 Clicked="OnLoginButtonClicked" 
                 FontFamily="Roboto" 
                 FontSize="16" 

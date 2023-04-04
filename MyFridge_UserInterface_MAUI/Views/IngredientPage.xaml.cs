@@ -5,10 +5,13 @@ namespace MyFridge_UserInterface_MAUI.Views;
 
 public partial class IngredientPage : ContentPage
 {
+    private readonly UserService _userService;
     private List<IngredientViewModel> ingredients;
-    public IngredientPage()
+    public IngredientPage(UserService userService)
     {
         InitializeComponent();
+
+        _userService = userService;
     }
     protected override async void OnAppearing()
     {
@@ -16,7 +19,7 @@ public partial class IngredientPage : ContentPage
 
 
         ingredients = IngredientViewModel
-            .ConvertIngredientDtos(await UserService.Instance.IngredientClient.GetAllAsync());
+            .ConvertIngredientDtos(await _userService.IngredientClient.GetAllAsync(), _userService);
         IngredientView.ItemsSource = ingredients.OrderBy(i => i.Ingredient.Name);
     }
     private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
@@ -48,9 +51,8 @@ public partial class IngredientPage : ContentPage
             if (parsed)
             {
                 selectedIngredient.Ingredient.Amount = amount;
-                await UserService.Instance.UserClient
-                    .AddIngredientAsync(selectedIngredient.Ingredient, 
-                        UserService.Instance.UserVM.UserAccount.Id);
+                await _userService.UserClient
+                    .AddIngredientAsync(selectedIngredient.Ingredient, _userService.User.Id);
                 await Navigation.PopAsync();
             }
         }

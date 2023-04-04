@@ -1,9 +1,11 @@
 ﻿using MyFridge_Library_MAUI_DataTransfer.DataTransferObject;
+using MyFridge_UserInterface_MAUI.Service;
 
 namespace MyFridge_UserInterface_MAUI.ViewModel
 {
     public class IngredientViewModel
     {
+        private readonly UserService _userService;
         public Color NameColor { get; set; } = Colors.White;
         public Color AmountColor { get; set; } = Colors.White;
         public IngredientDto Ingredient { get; set; }
@@ -35,11 +37,17 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
                     return "grams";
             }
         }
-        public void SetColor(UserAccountViewModel vm)
+
+        public IngredientViewModel(UserService userService)
+        {
+            _userService = userService;
+        }
+
+        public void SetColor()
         {
             bool userHas = false;
             bool userHasEnough = false;
-            foreach (IngredientDto userIngredient in vm.UserAccount.Ingredients)
+            foreach (IngredientDto userIngredient in _userService.User.Ingredients)
             {
                 if (userIngredient.Id == this.Ingredient.Id)
                 {
@@ -68,12 +76,12 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
                 this.AmountColor = Color.FromArgb("#FF6B6B");
             }
         }
-        public static List<IngredientViewModel> ConvertIngredientDtos(List<IngredientDto> dtos)
+        public static List<IngredientViewModel> ConvertIngredientDtos(List<IngredientDto> dtos, UserService userService)
         {
             List<IngredientViewModel> viewModels = new();
             foreach (IngredientDto dto in dtos)
             {
-                IngredientViewModel viewModel = new()
+                IngredientViewModel viewModel = new(userService)
                 {
                     Ingredient = dto
                 };
