@@ -17,7 +17,7 @@
                   ItemTapped="OnIngredientTapped"
                   SeparatorVisibility="Default">
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="viewModel:IngredientViewModel">
+                <DataTemplate x:DataType="viewModel:UserIngredientDetailViewModel">
                     <ViewCell>
                         <Grid Padding="10"
                               ColumnSpacing="10"

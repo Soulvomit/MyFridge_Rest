@@ -1,40 +1,130 @@
 ﻿using MyFridge_Library_MAUI_DataTransfer.DataTransferObject;
 using MyFridge_UserInterface_MAUI.Service;
+using System.ComponentModel;
 
 namespace MyFridge_UserInterface_MAUI.ViewModel
 {
-    public class UserViewModel
+    public class UserViewModel : INotifyPropertyChanged
     {
-        private readonly UserService _userService;
-        public UserAccountDto User { get; private set; }
+        private readonly CurrentUserService _cUserService;
 
-        public UserViewModel(UserService userService)
+        public UserAccountDto User { get; private set; }
+        public string Firstname
         {
-            _userService = userService;
-            User = _userService.User;
+            get => User.Firstname;
+            set
+            {
+                if (string.IsNullOrEmpty(value)) return;
+
+                User.Firstname = value;
+                OnPropertyChanged(nameof(Firstname));
+            }
+        }
+        public string Lastname
+        {
+            get => User.Lastname;
+            set
+            {
+                if (string.IsNullOrEmpty(value)) return;
+
+                User.Lastname = value;
+                OnPropertyChanged(nameof(Lastname));
+            }
         }
 
-        public List<IngredientViewModel> ConvertIngredientDtos()
+        public string Email
         {
-            List<IngredientViewModel> viewModels = new();
+            get => User.Email;
+            set
+            {
+                if (string.IsNullOrEmpty(value)) return;
+
+                User.Email = value;
+                OnPropertyChanged(nameof(Email));
+            }
+        }
+
+        public string Password
+        {
+            get => User.Password;
+            set
+            {
+                if (string.IsNullOrEmpty(value)) return;
+
+                User.Password = value;
+                OnPropertyChanged(nameof(Password));
+            }
+        }
+        public ulong PhoneNumber
+        {
+            get => User.PhoneNumber;
+            set
+            {
+                if (!ulong.TryParse(User.PhoneNumber.ToString(), out ulong phonenum)) return;
+
+                User.PhoneNumber = value;
+                OnPropertyChanged(nameof(PhoneNumber));
+            }
+        }
+
+        public DateTime BirthDate
+        {
+            get => User.BirthDate;
+            set
+            {
+                User.BirthDate = value;
+                OnPropertyChanged(nameof(BirthDate));
+            }
+        }
+
+        public UserViewModel(CurrentUserService cUserService)
+        {
+            _cUserService = cUserService;          
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public async Task Initialize(int userId)
+        {
+            _cUserService.CurrentUserId = userId;
+            User = await _cUserService.GetUserAsync();
+        }
+
+        public async Task Reinitialize()
+        {
+            UserAccountDto user = await _cUserService.GetUserLazyAsync();
+            Firstname = user.Firstname;
+            Lastname = user.Lastname;
+            Email = user.Email;
+            Password = user.Password;
+            PhoneNumber = user.PhoneNumber;
+            BirthDate = user.BirthDate;
+            User = user;
+        }
+
+        public async Task Commit()
+        {
+            if (string.IsNullOrEmpty(User.Firstname)) return;
+            if (string.IsNullOrEmpty(User.Lastname)) return;
+            if (string.IsNullOrEmpty(User.Email)) return;
+            if (string.IsNullOrEmpty(User.Password)) return;
+            if (!ulong.TryParse(User.PhoneNumber.ToString(), out ulong phonenum)) return;
+
+            await _cUserService.UserClient.UpsertAsync(User);
+        }
+
+        public List<UserIngredientDetailViewModel> ConvertIngredientDtos()
+        {
+            List<UserIngredientDetailViewModel> viewModels = new();
             foreach (IngredientDto dto in User.Ingredients)
             {
-                IngredientViewModel viewModel = new(_userService)
+                UserIngredientDetailViewModel viewModel = new(_cUserService)
                 {
                     Ingredient = dto
-                };
-                viewModels.Add(viewModel);
-            }
-            return viewModels;
-        }
-        public static List<UserViewModel> ConvertUserAccountDtos(List<UserAccountDto> dtos, UserService userService)
-        {
-            List<UserViewModel> viewModels = new();
-            foreach (UserAccountDto dto in dtos)
-            {
-                UserViewModel viewModel = new(userService)
-                {
-                    User = dto
                 };
                 viewModels.Add(viewModel);
             }

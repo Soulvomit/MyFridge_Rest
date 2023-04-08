@@ -4,8 +4,8 @@ namespace MyFridge_UserInterface_MAUI.Views;
 
 public partial class UserIngredientDetailPage : ContentPage
 {
-    private IngredientViewModel _vm;
-    public UserIngredientDetailPage(IngredientViewModel vm)
+    private UserIngredientDetailViewModel _vm;
+    public UserIngredientDetailPage(UserIngredientDetailViewModel vm)
     {
         InitializeComponent();
 

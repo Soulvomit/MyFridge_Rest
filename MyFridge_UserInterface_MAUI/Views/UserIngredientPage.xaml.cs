@@ -1,49 +1,41 @@
-using MyFridge_UserInterface_MAUI.Service;
 using MyFridge_UserInterface_MAUI.ViewModel;
 
 namespace MyFridge_UserInterface_MAUI.Views;
 
 public partial class UserIngredientPage : ContentPage
 {
-    private readonly UserService _userService;
-    public UserIngredientPage(UserService userService)
+    private readonly UserIngredientViewModel _vm;
+    public UserIngredientPage(UserIngredientViewModel vm)
     {
         InitializeComponent();
 
-        _userService = userService;
+        _vm = vm;
+        BindingContext = _vm;
     }
     protected override async void OnAppearing()
     {
         base.OnAppearing();
 
-        _userService.User = await _userService.UserClient.GetUserAccountAsync(_userService.User.Id);
-        IngredientView.ItemsSource = 
-            IngredientViewModel.ConvertIngredientDtos(
-                    _userService.User.Ingredients.OrderBy(i => i.Name).ToList(), _userService);
+        _vm.UpdateDetails(await _vm.GetIngredientDetailsAsync());
     }
-    private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+    private async void OnSearchTextChanged(object sender, TextChangedEventArgs e)
     {
         if (string.IsNullOrEmpty(e.NewTextValue))
-            IngredientView.ItemsSource =
-                IngredientViewModel.ConvertIngredientDtos(
-                        _userService.User.Ingredients.OrderBy(i => i.Name).ToList(), _userService);
+            _vm.UpdateDetails(await _vm.GetIngredientDetailsLazyAsync());
         else
-            IngredientView.ItemsSource = 
-                IngredientViewModel.ConvertIngredientDtos(
-                        _userService.User.Ingredients
-                            .Where(i => i.Name.ToLower().StartsWith(e.NewTextValue.ToLower()))
-                                .OrderBy(i => i.Name).ToList(), _userService);
+            _vm.UpdateDetails(await _vm.GetIngredientDetailsFilteredLazyAsync(e.NewTextValue));
     }
-    private async void OnIngredientTapped(object sender, ItemTappedEventArgs e)
+    private async void OnIngredientSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (e.Item is IngredientViewModel selectedIngredient)
+        if (e.CurrentSelection.FirstOrDefault() is UserIngredientDetailViewModel selectedIngredient)
             await Navigation.PushAsync(new UserIngredientDetailPage(selectedIngredient));
+
         //deselect the item
-        IngredientView.SelectedItem = null;
+        //IngredientView.SelectedItem = null;
     }
 
     private async void OnAddClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new IngredientPage(_userService));
+        await Navigation.PushAsync(new IngredientPage(_vm.IngredientService, _vm.CUserService));
     }
 }

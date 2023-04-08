@@ -4,8 +4,8 @@ namespace MyFridge_UserInterface_MAUI.Views;
 
 public partial class RecipyDetailPage : ContentPage
 {
-	private readonly RecipyViewModel _vm; 
-	public RecipyDetailPage(RecipyViewModel vm)
+	private readonly RecipyDetailViewModel _vm; 
+	public RecipyDetailPage(RecipyDetailViewModel vm)
 	{
 		InitializeComponent();
 
@@ -19,9 +19,9 @@ public partial class RecipyDetailPage : ContentPage
         Name.Text = _vm.Recipy.Name;
         Description.Text = _vm.Recipy.Description;
 
-        List<IngredientViewModel> ingredientsVms = _vm.ConvertIngredientDtos();
+        List<UserIngredientDetailViewModel> ingredientsVms = _vm.ConvertIngredientDtos();
 
-        foreach(IngredientViewModel ivm in ingredientsVms)
+        foreach(UserIngredientDetailViewModel ivm in ingredientsVms)
         {
             ivm.SetColor();
         }

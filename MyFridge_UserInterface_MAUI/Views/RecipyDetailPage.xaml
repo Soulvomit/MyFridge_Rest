@@ -14,7 +14,7 @@
     
     <ContentPage.Content>
         <StackLayout Padding="20" 
-                     x:DataType="viewModel:RecipyViewModel">
+                     x:DataType="viewModel:RecipyDetailViewModel">
             <StackLayout Orientation="Horizontal">
                 <Image x:Name="Image"
                        Source="dotnet_bot.png"
@@ -38,7 +38,7 @@
                       ItemTapped="OnIngredientTapped"
                       SeparatorVisibility="Default">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="viewModel:IngredientViewModel">
+                    <DataTemplate x:DataType="viewModel:UserIngredientDetailViewModel">
                         <ViewCell>
                             <Grid Padding="10"
                               ColumnSpacing="10"

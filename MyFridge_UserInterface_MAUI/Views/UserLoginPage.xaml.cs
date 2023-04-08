@@ -1,44 +1,24 @@
-﻿using MyFridge_Library_MAUI_DataTransfer.DataTransferObject;
-using MyFridge_UserInterface_MAUI.Service;
+﻿using MyFridge_UserInterface_MAUI.ViewModel;
 
 namespace MyFridge_UserInterface_MAUI.Views
 {
     public partial class UserLoginPage : ContentPage
     {
-        private readonly UserService _userService;
-        public UserLoginPage(UserService userService)
+        private readonly UserLoginViewModel _vm;
+        public UserLoginPage(UserLoginViewModel vm)
         {
             InitializeComponent();
 
-            _userService = userService;
-        }
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            EmailEntry.Text = "email@email.com";
-            PasswordEntry.Text = "password";
+            _vm = vm;
+            BindingContext = _vm;
         }
         private async void OnLoginButtonClicked(object sender, EventArgs e)
         {
-            string email = EmailEntry.Text;
-            string password = PasswordEntry.Text;
-
-            UserAccountDto user = await _userService.UserClient.GetUserAccountByEmailAsync(email);
-
-            if (user != null)
+            bool success = await _vm.Login();
+            if (success) 
             {
-                if (password == user.Password)
-                {
-                    _userService.User = user;
-
-                    await Shell.Current.GoToAsync($"//" + nameof(UserInfoPage));
-                }
-                else
-                    LoginResultLabel.Text = "Invalid email or password";
+                await Shell.Current.GoToAsync($"//" + nameof(UserInfoPage));
             }
-            else
-                LoginResultLabel.Text = "No user with that email exists";
         }
     }
 }

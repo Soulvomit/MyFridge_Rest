@@ -5,21 +5,23 @@ namespace MyFridge_UserInterface_MAUI.Views;
 
 public partial class IngredientPage : ContentPage
 {
-    private readonly UserService _userService;
-    private List<IngredientViewModel> ingredients;
-    public IngredientPage(UserService userService)
+    private readonly CurrentUserService _cUserService;
+    private readonly IngredientService _ingredientService;
+    private List<UserIngredientDetailViewModel> ingredients;
+    public IngredientPage(IngredientService ingredientService, CurrentUserService cUserService)
     {
         InitializeComponent();
 
-        _userService = userService;
+        _ingredientService = ingredientService;
+        _cUserService = cUserService;
     }
     protected override async void OnAppearing()
     {
         base.OnAppearing();
 
 
-        ingredients = IngredientViewModel
-            .ConvertIngredientDtos(await _userService.IngredientClient.GetAllAsync(), _userService);
+        ingredients = UserIngredientDetailViewModel
+            .ConvertIngredientDtos(await _ingredientService.GetIngredientsLazy(), _cUserService);
         IngredientView.ItemsSource = ingredients.OrderBy(i => i.Ingredient.Name);
     }
     private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
@@ -35,7 +37,7 @@ public partial class IngredientPage : ContentPage
     }
     private async void OnIngredientTapped(object sender, ItemTappedEventArgs e)
     {
-        if (e.Item is IngredientViewModel selectedIngredient)
+        if (e.Item is UserIngredientDetailViewModel selectedIngredient)
         {
             bool parsed = uint.TryParse(
                 await DisplayPromptAsync(
@@ -51,8 +53,8 @@ public partial class IngredientPage : ContentPage
             if (parsed)
             {
                 selectedIngredient.Ingredient.Amount = amount;
-                await _userService.UserClient
-                    .AddIngredientAsync(selectedIngredient.Ingredient, _userService.User.Id);
+                await _cUserService.UserClient
+                    .AddIngredientAsync(selectedIngredient.Ingredient, _cUserService.CurrentUserId);
                 await Navigation.PopAsync();
             }
         }

@@ -4,108 +4,47 @@
              xmlns:viewModel="clr-namespace:MyFridge_UserInterface_MAUI.ViewModel"
              x:Class="MyFridge_UserInterface_MAUI.Views.UserInfoPage"
              Title="Your Information"
-             BackgroundColor="#f0f4f8">
+             BackgroundColor="#f0f4f8"
+             x:DataType="viewModel:UserViewModel">
+    
+    <ScrollView>
+        <StackLayout Padding="10">
+        
+            <Label Text="First Name:" 
+                   Margin="10"/>
+            <Entry Text="{Binding Firstname}"
+                   Margin="10"/>
 
-    <Grid x:Name="UserInformationView"
-          x:DataType="viewModel:UserViewModel"
-          Padding="20">
-        <!-- Grid Column and Row Definitions -->
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+            <Label Text="Last Name:" 
+                   Margin="10"/>
+            <Entry Text="{Binding Lastname}" 
+                   Margin="10"/>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <!-- Labels and Entries -->
+            <Label Text="Email:" 
+                   Margin="10"/>
+            <Entry Text="{Binding Email}" 
+                   Margin="10"/>
 
-        <Label Text="First Name:" 
-           Grid.Row="0" 
-           Grid.Column="0" 
-           HorizontalTextAlignment="End" 
-           Margin="10"/>
-        <Entry Text="{Binding User.Firstname}" 
-           x:Name="FirstNameEntry" 
-           Grid.Row="0" 
-           Grid.Column="1" 
-           Margin="10"/>
+            <Label Text="Password:" 
+                   Margin="10"/>
+            <Entry Text="{Binding Password}" 
+                   IsPassword="True" 
+                   Margin="10"/>
 
-        <Label Text="Last Name:" 
-           Grid.Row="1" 
-           Grid.Column="0" 
-           HorizontalTextAlignment="End" 
-           Margin="10"/>
-        <Entry Text="{Binding User.Lastname}" 
-           x:Name="LastNameEntry" 
-           Grid.Row="1" 
-           Grid.Column="1" 
-           Margin="10"/>
-
-        <Label Text="Email:" 
-           Grid.Row="2" 
-           Grid.Column="0" 
-           HorizontalTextAlignment="End" 
-           Margin="10"/>
-        <Entry Text="{Binding User.Email}" 
-           x:Name="EmailEntry" 
-           Grid.Row="2" 
-           Grid.Column="1" 
-           Margin="10"/>
-
-        <Label Text="Password:" 
-           Grid.Row="3" 
-           Grid.Column="0" 
-           HorizontalTextAlignment="End" 
-           Margin="10"/>
-        <Entry Text="{Binding User.Password}" 
-           IsPassword="True" 
-           x:Name="PasswordEntry" 
-           Grid.Row="3" 
-           Grid.Column="1" 
-           Margin="10"/>
-
-        <Label Text="Phone Number:" 
-           Grid.Row="4" 
-           Grid.Column="0" 
-           HorizontalTextAlignment="End" 
-           Margin="10"/>
-        <Entry Text="{Binding User.PhoneNumber, StringFormat='{0:d}'}" 
-           x:Name="PhonenumberEntry" 
-           Grid.Row="4" 
-           Grid.Column="1" 
-           Margin="10"/>
-        <Label Text="Birthdate:" 
-               Grid.Row="5" 
-               Grid.Column="0" 
-               HorizontalTextAlignment="End" 
-               Margin="10"/>
-        <DatePicker Date="{Binding User.BirthDate}" 
-                    x:Name="BirthdatePicker" 
-                    Grid.Row="5" 
-                    Grid.Column="1" 
-                    Margin="10" 
-                    FontFamily="Roboto" 
-                    BackgroundColor="#e0e0e0" 
-                    TextColor="#4a4a4a"/>
-
-        <StackLayout Margin="10,0" 
-                     Grid.Row="6" 
-                     Grid.Column="1">
+            <Label Text="Phone Number:" 
+                   Margin="10"/>
+            <Entry Text="{Binding PhoneNumber, StringFormat='{0:d}'}" 
+                   Margin="10"/>
+        
+            <Label Text="Birthdate:" 
+                   Margin="10"/>
+            <DatePicker Date="{Binding BirthDate}" 
+                        Margin="10"/>
+        
             <Button Text="Save" 
-                    Clicked="OnSaveButtonClicked" 
-                    FontFamily="Roboto" 
-                    FontSize="16" 
-                    TextColor="White" 
-                    BackgroundColor="#6ab04c" 
-                    CornerRadius="5"/>
+                    Clicked="OnSaveButtonClicked"
+                    Margin="10"/>
         </StackLayout>
-    </Grid>
-
+    </ScrollView>
+    
 </ContentPage>
