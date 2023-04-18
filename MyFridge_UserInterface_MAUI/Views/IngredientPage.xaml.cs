@@ -1,64 +1,54 @@
-using MyFridge_UserInterface_MAUI.Service;
 using MyFridge_UserInterface_MAUI.ViewModel;
 
 namespace MyFridge_UserInterface_MAUI.Views;
 
 public partial class IngredientPage : ContentPage
 {
-    private readonly CurrentUserService _cUserService;
-    private readonly IngredientService _ingredientService;
-    private List<UserIngredientDetailViewModel> ingredients;
-    public IngredientPage(IngredientService ingredientService, CurrentUserService cUserService)
+    private readonly IngredientViewModel _vm;
+    public IngredientPage(IngredientViewModel vm)
     {
         InitializeComponent();
 
-        _ingredientService = ingredientService;
-        _cUserService = cUserService;
+        _vm = vm;
+        BindingContext = _vm;
     }
     protected override async void OnAppearing()
     {
         base.OnAppearing();
 
-
-        ingredients = UserIngredientDetailViewModel
-            .ConvertIngredientDtos(await _ingredientService.GetIngredientsLazy(), _cUserService);
-        IngredientView.ItemsSource = ingredients.OrderBy(i => i.Ingredient.Name);
+        await _vm.GetIngredientDetailsAsync();
     }
     private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
     {
         if (string.IsNullOrEmpty(e.NewTextValue))
-            IngredientView.ItemsSource = ingredients.OrderBy(i => i.Ingredient.Name);
+            _vm.GetIngredientDetailsLazyAsync();
         else
-            IngredientView.ItemsSource = ingredients
-                .Where(i => i.Ingredient.Name.ToLower()
-                                  .StartsWith(e.NewTextValue
-                                  .ToLower()))
-                .OrderBy(i => i.Ingredient.Name);
+            _vm.GetIngredientDetailsFilteredLazyAsync(e.NewTextValue);
     }
-    private async void OnIngredientTapped(object sender, ItemTappedEventArgs e)
+    private async void OnIngredientSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (e.Item is UserIngredientDetailViewModel selectedIngredient)
+        if (e.CurrentSelection.FirstOrDefault() is UserIngredientDetailViewModel selectedIngredient)
         {
             bool parsed = uint.TryParse(
                 await DisplayPromptAsync(
-                    "Add Amount", 
-                    "Enter the amount", 
-                    "OK", 
-                    "Cancel", 
-                    "0", 
-                    -1, 
-                    Keyboard.Numeric, 
-                    ""), 
+                    "Add Amount",
+                    "Enter the amount",
+                    "OK",
+                    "Cancel",
+                    "0",
+                    -1,
+                    Keyboard.Numeric,
+                    ""),
                 out uint amount);
             if (parsed)
             {
                 selectedIngredient.Ingredient.Amount = amount;
-                await _cUserService.UserClient
-                    .AddIngredientAsync(selectedIngredient.Ingredient, _cUserService.CurrentUserId);
+                await _vm._cUserService.UserClient
+                    .AddIngredientAsync(selectedIngredient.Ingredient, _vm._cUserService.CurrentUserId);
                 await Navigation.PopAsync();
             }
         }
         //deselect the item
-        IngredientView.SelectedItem = null;
+        (sender as CollectionView).SelectedItem = null;
     }
 }

@@ -7,6 +7,7 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
     public class UserViewModel : INotifyPropertyChanged
     {
         private readonly CurrentUserService _cUserService;
+        private readonly IngredientAmountService _iaService;
 
         public UserAccountDto User { get; private set; }
         public string Firstname
@@ -77,7 +78,7 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
             }
         }
 
-        public UserViewModel(CurrentUserService cUserService)
+        public UserViewModel(CurrentUserService cUserService, IngredientAmountService iaService)
         {
             _cUserService = cUserService;          
         }
@@ -122,7 +123,7 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
             List<UserIngredientDetailViewModel> viewModels = new();
             foreach (IngredientDto dto in User.Ingredients)
             {
-                UserIngredientDetailViewModel viewModel = new(_cUserService)
+                UserIngredientDetailViewModel viewModel = new(_cUserService, _iaService)
                 {
                     Ingredient = dto
                 };

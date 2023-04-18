@@ -16,14 +16,14 @@ public partial class UserIngredientPage : ContentPage
     {
         base.OnAppearing();
 
-        _vm.UpdateDetails(await _vm.GetIngredientDetailsAsync());
+        await _vm.GetIngredientDetailsAsync();
     }
     private async void OnSearchTextChanged(object sender, TextChangedEventArgs e)
     {
         if (string.IsNullOrEmpty(e.NewTextValue))
-            _vm.UpdateDetails(await _vm.GetIngredientDetailsLazyAsync());
+            await _vm.GetIngredientDetailsLazyAsync();
         else
-            _vm.UpdateDetails(await _vm.GetIngredientDetailsFilteredLazyAsync(e.NewTextValue));
+            await _vm.GetIngredientDetailsFilteredLazyAsync(e.NewTextValue);
     }
     private async void OnIngredientSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
@@ -31,11 +31,11 @@ public partial class UserIngredientPage : ContentPage
             await Navigation.PushAsync(new UserIngredientDetailPage(selectedIngredient));
 
         //deselect the item
-        //IngredientView.SelectedItem = null;
+        (sender as CollectionView).SelectedItem = null;
     }
 
     private async void OnAddClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new IngredientPage(_vm.IngredientService, _vm.CUserService));
+        await Navigation.PushAsync(new IngredientPage(new IngredientViewModel(_vm._cUserService, _vm._ingredientService, _vm._iaService)));
     }
 }

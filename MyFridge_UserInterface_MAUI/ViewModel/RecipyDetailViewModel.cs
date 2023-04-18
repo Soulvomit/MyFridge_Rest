@@ -7,13 +7,18 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
     {
         private readonly RecipyService _recipyService;
         private readonly CurrentUserService _cUserService;
+        private readonly IngredientAmountService _iaService;
         public Color TextColor { get; set; } = Colors.White;
         public RecipyDto Recipy { get; set; }
 
-        public RecipyDetailViewModel(RecipyService recipyService, CurrentUserService cUserService)
+        public RecipyDetailViewModel(
+            RecipyService recipyService, 
+            CurrentUserService cUserService,
+            IngredientAmountService iaService)
         {
             _recipyService = recipyService;
             _cUserService = cUserService;
+            _iaService = iaService;
         }
 
         public bool IsMakable(UserAccountDto user)
@@ -28,7 +33,7 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
             List<UserIngredientDetailViewModel> viewModels = new();
             foreach (IngredientDto dto in Recipy.Ingredients)
             {
-                UserIngredientDetailViewModel viewModel = new(_cUserService)
+                UserIngredientDetailViewModel viewModel = new(_cUserService, _iaService)
                 {
                     Ingredient = dto
                 };
@@ -39,12 +44,13 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
         public static List<RecipyDetailViewModel> ConvertRecipyDtos(
             List<RecipyDto> dtos, 
             CurrentUserService cUserService, 
-            RecipyService recipyService)
+            RecipyService recipyService,
+            IngredientAmountService iaService)
         {
             List<RecipyDetailViewModel> viewModels = new();
             foreach (RecipyDto dto in dtos)
             {
-                RecipyDetailViewModel viewModel = new(recipyService, cUserService)
+                RecipyDetailViewModel viewModel = new(recipyService, cUserService, iaService)
                 {
                     Recipy = dto
                 };
@@ -54,11 +60,12 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
         }
         public static async Task<List<RecipyDetailViewModel>> GetAllRecipiesFromDB(
             RecipyService recipyService, 
-            CurrentUserService cUserService)
+            CurrentUserService cUserService, 
+            IngredientAmountService iaService)
         {
             List<RecipyDto> dtos = await recipyService.GetRecipiesAsync();
 
-            return ConvertRecipyDtos(dtos, cUserService, recipyService);
+            return ConvertRecipyDtos(dtos, cUserService, recipyService, iaService);
         }
         public async static Task<List<RecipyDetailViewModel>> GetMakeableRecipies(
             List<RecipyDetailViewModel> vms, 

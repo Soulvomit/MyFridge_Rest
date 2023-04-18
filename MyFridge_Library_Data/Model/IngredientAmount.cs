@@ -9,7 +9,7 @@ namespace MyFridge_Library_Data.Model
         [Required]
         public int IngredientId { get; set; }
         [Required, ForeignKey("IngredientId")]
-        public required virtual Ingredient? Ingredient { get; set; }
+        public virtual Ingredient? Ingredient { get; set; }
         public required float Amount { get; set; } = 0;
         public DateTime? ExpirationDate { get; set; } = null;
     }

@@ -21,6 +21,7 @@ namespace MyFridge_UserInterface_MAUI
             builder.Services.AddSingleton<CurrentUserService>();
             builder.Services.AddSingleton<UserService>();
             builder.Services.AddSingleton<IngredientService>();
+            builder.Services.AddSingleton<IngredientAmountService>();
             builder.Services.AddSingleton<RecipyService>();
             builder.Services.AddSingleton<UserViewModel>();
 

@@ -5,7 +5,8 @@
         xmlns:viewModel="clr-namespace:MyFridge_UserInterface_MAUI.ViewModel"
         x:Class="MyFridge_UserInterface_MAUI.Views.RecipyDetailPage"
         Title="Recipy Detail"
-        BackgroundColor="#f0f4f8">
+        BackgroundColor="#f0f4f8"
+        x:DataType="viewModel:RecipyDetailViewModel">
     
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -13,8 +14,7 @@
     </ContentPage.Resources>
     
     <ContentPage.Content>
-        <StackLayout Padding="20" 
-                     x:DataType="viewModel:RecipyDetailViewModel">
+        <StackLayout Padding="20">
             <StackLayout Orientation="Horizontal">
                 <Image x:Name="Image"
                        Source="dotnet_bot.png"
@@ -67,17 +67,19 @@
                                            FontAttributes="Bold"
                                            FontSize="Medium"
                                            Margin="6"/>
-                                    <Label Text="{Binding Ingredient.Amount}"
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Ingredient.Amount}"
                                            TextColor="{Binding AmountColor}"
                                            FontAttributes="Italic"
                                            FontSize="Small"
                                            VerticalOptions="End"
                                            Margin="2"/>
-                                    <Label Text="{Binding UnitStr}"
+                                        <Label Text="{Binding UnitStr}"
                                            TextColor="{Binding AmountColor}"
                                            FontAttributes="Italic"
                                            FontSize="Small"
                                            VerticalOptions="End"/>
+                                    </StackLayout>
                                 </StackLayout>
                             </Grid>
                         </ViewCell>

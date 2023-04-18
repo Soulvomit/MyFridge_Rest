@@ -1,4 +1,3 @@
-using MyFridge_UserInterface_MAUI.Service;
 using MyFridge_UserInterface_MAUI.ViewModel;
 
 namespace MyFridge_UserInterface_MAUI.Views;
@@ -17,7 +16,7 @@ public partial class RecipyPage : ContentPage
     {
         base.OnAppearing();
 
-        _vm.All = await RecipyDetailViewModel.GetAllRecipiesFromDB(_vm.RecipyService, _vm.CUserService);
+        _vm.All = await RecipyDetailViewModel.GetAllRecipiesFromDB(_vm.RecipyService, _vm.CUserService, _vm.IAService);
         _vm.Makeable = await RecipyDetailViewModel.GetMakeableRecipies(_vm.All, _vm.CUserService);
 
         OnRemoveFilterToggled(null, null);

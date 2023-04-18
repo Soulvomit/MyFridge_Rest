@@ -31,13 +31,13 @@ namespace MyFridge_Library_Data.Data.Repository
             return true;
         }
 
-        public async Task<UserAccount> GetByEmailAsync(string email)
+        public async Task<UserAccount?> GetByEmailAsync(string email)
         {
             UserAccount? entityInDb = await dbSet
                 .Where(user => user.Email == email)
                 .FirstOrDefaultAsync();
 
-            if (entityInDb == null) return null!;
+            if (entityInDb == null) return null;
 
             return entityInDb;
         }

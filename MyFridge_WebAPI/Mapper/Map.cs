@@ -100,6 +100,7 @@ namespace MyFridge_WebAPI.Mapper
             {
                 IngredientDto idto = FromIngredient(ingredientAmount.Ingredient!)!;
                 idto.Amount = ingredientAmount.Amount;
+                idto.ExpirationDate = ingredientAmount.ExpirationDate;
                 dto.Ingredients.Add(idto);
             }
             return dto;
@@ -127,6 +128,7 @@ namespace MyFridge_WebAPI.Mapper
                 IngredientAmount ingredientAmount = new IngredientAmount 
                 {
                     Ingredient = ToIngredient(idto),
+                    ExpirationDate = idto.ExpirationDate,
                     Amount = idto.Amount
                 };
                 user.IngredientAmounts.Add(ingredientAmount);
@@ -280,7 +282,7 @@ namespace MyFridge_WebAPI.Mapper
             {
                 Id = recipy.Id,
                 Name = recipy.Name,
-                Description = recipy.Description,
+                Description = recipy.Method,
                 ImageUrl = recipy.ImageUrl
             };
             foreach (IngredientAmount ingredientAmount in recipy.IngredientAmounts)
@@ -300,7 +302,7 @@ namespace MyFridge_WebAPI.Mapper
             {
                 Id = dto.Id,
                 Name = dto.Name,
-                Description = dto.Description,
+                Method = dto.Description,
                 ImageUrl = dto.ImageUrl
             };
 

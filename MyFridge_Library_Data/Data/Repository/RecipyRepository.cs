@@ -22,7 +22,7 @@ namespace MyFridge_Library_Data.Data.Repository
             if (entityInDb == null) return false;
 
             entityInDb.Name = updateEntity.Name;
-            entityInDb.Description = updateEntity.Description;
+            entityInDb.Method = updateEntity.Method;
             entityInDb.ImageUrl = updateEntity.ImageUrl;
 
             return true;
