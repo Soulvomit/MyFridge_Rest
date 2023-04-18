@@ -142,7 +142,7 @@ namespace MyFridge_Library_Data.Data
                 new Ingredient { Id = 115, Name = "Cornmeal", Unit = EUnit.Gram },
                 new Ingredient { Id = 116, Name = "Canned Tomatoes", Unit = EUnit.Gram },
                 new Ingredient { Id = 117, Name = "Tomato Paste", Unit = EUnit.Gram },
-                new Ingredient { Id = 117, Name = "Paprika", Unit = EUnit.Gram }
+                new Ingredient { Id = 118, Name = "Paprika", Unit = EUnit.Gram }
                 );
         }
         #endregion
@@ -287,7 +287,7 @@ namespace MyFridge_Library_Data.Data
                         3: When the eggs are almost set, sprinkle grated cheese on one side.
                         4: Fold the omelette in half and cook until the cheese is melted.
                         5: Serve hot.
-                    """,
+                        """,
                     IngredientAmounts = new List<IngredientAmount>()
                     {
                         new IngredientAmount() { IngredientId = 51, Amount = 3 },
@@ -306,7 +306,7 @@ namespace MyFridge_Library_Data.Data
                         3: In a large bowl, toss the lettuce with the dressing.
                         4: Top with croutons and extra grated Parmesan cheese.
                         5: Serve immediately.
-                    """,
+                        """,
                     IngredientAmounts = new List<IngredientAmount>()
                     {
                         new IngredientAmount() { IngredientId = 61, Amount = 200 },
@@ -327,8 +327,8 @@ namespace MyFridge_Library_Data.Data
                         2: Place a slice of cheddar cheese between the buttered sides of the bread slices.
                         3: Heat a non-stick pan over medium heat.
                         4: Place the sandwich in the pan and cook until golden brown on each side and cheese is melted.
-                                        5: Serve hot.
-                    """,
+                        5: Serve hot.
+                        """,
                     IngredientAmounts = new List<IngredientAmount>()
                     {
                         new IngredientAmount() { IngredientId = 74, Amount = 2 },
@@ -344,7 +344,7 @@ namespace MyFridge_Library_Data.Data
                         2: Warm taco shells in the oven for a few minutes.
                         3: Fill taco shells with seasoned beef, shredded lettuce, diced tomatoes, grated cheese, and a dollop of sour cream.
                         4: Serve immediately.
-                    """,
+                        """,
                     IngredientAmounts = new List<IngredientAmount>()
                     {
                         new IngredientAmount() { IngredientId = 2, Amount = 500 },
@@ -366,7 +366,7 @@ namespace MyFridge_Library_Data.Data
                         3: Pour a small amount of batter into the pan, cook until bubbles appear on the surface, then flip and cook until golden brown.
                         4: Repeat with the remaining batter.
                         5: Serve pancakes with maple syrup or your favorite toppings.
-                    """,
+                        """,
                     IngredientAmounts = new List<IngredientAmount>()
                     {
                         new IngredientAmount() { IngredientId = 14, Amount = 200 },
@@ -388,7 +388,7 @@ namespace MyFridge_Library_Data.Data
                         3: Use an immersion blender to blend the soup until smooth.
                         4: Stir in heavy cream and heat through.
                         5: Serve hot with crusty bread.
-                    """,
+                        """,
                     IngredientAmounts = new List<IngredientAmount>()
                     {
                         new IngredientAmount() { IngredientId = 4, Amount = 50 },
@@ -411,7 +411,7 @@ namespace MyFridge_Library_Data.Data
                         4: Stir in grated Parmesan cheese and cook until the sauce thickens.
                         5: Slice cooked chicken and add to the sauce. Mix in the cooked fettuccine.
                         6: Serve hot.
-                    """,
+                        """,
                     IngredientAmounts = new List<IngredientAmount>()
                     {
                         new IngredientAmount() { IngredientId = 5, Amount = 400 },
@@ -428,10 +428,10 @@ namespace MyFridge_Library_Data.Data
                 { 
                     Name = "Buttered Popcorn", 
                     Method = """
-                                    1: Cook popcorn in microwave for 3 mins. 
-                                    2: Add butter to popcorn and wait until melted. 
-                                    3: Done.
-                                    """, 
+                            1: Cook popcorn in microwave for 3 mins. 
+                            2: Add butter to popcorn and wait until melted. 
+                            3: Done.
+                            """, 
                     IngredientAmounts = new List<IngredientAmount>()
                     {
                         new IngredientAmount() { IngredientId = 7, Amount = 1 },
@@ -441,13 +441,12 @@ namespace MyFridge_Library_Data.Data
                 new Recipy() 
                 { 
                     Name = "Cafe Latte", 
-                    Method =   """
-                                    1: Boil Water. 
-                                    2: Add instant coffee. 
-                                    3: Whip milk. 
-                                    4: Add milk. 
-                                    5: Done.
-                                    """,
+                    Method = """
+                            1: Boil Water. 
+                            2: Add instant coffee. 
+                            3: Whip milk and to coffee. 
+                            4: Done.
+                            """,
                     IngredientAmounts = new List<IngredientAmount>()
                     {
                         new IngredientAmount() { IngredientId = 9, Amount = 50 },
