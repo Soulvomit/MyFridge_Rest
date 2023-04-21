@@ -7,23 +7,23 @@ namespace MyFridge_UserInterface_MAUI.Service
     {
         private List<IngredientDto> _ingredients = null;
 
-        public IngredientApiClient IngredientClient { get; private set; }
+        public IngredientApiClient Client { get; private set; }
 
         public IngredientService()
         {
             string baseAddr = "https://localhost:44364/";
-            IngredientClient = new IngredientApiClient(baseAddr);
+            Client = new IngredientApiClient(baseAddr);
         }
 
-        public async Task<List<IngredientDto>> GetIngredientsAsync()
+        public async Task<List<IngredientDto>> GetAllAsync()
         {
-            _ingredients = await IngredientClient.GetAllAsync();
+            _ingredients = await Client.GetAllAsync();
             return _ingredients;
         }
-        public async Task<List<IngredientDto>> GetIngredientsLazy()
+        public async Task<List<IngredientDto>> GetAllLazyAsync()
         {
             if (_ingredients == null)
-                return await GetIngredientsAsync();
+                return await GetAllAsync();
 
             return _ingredients;
         }

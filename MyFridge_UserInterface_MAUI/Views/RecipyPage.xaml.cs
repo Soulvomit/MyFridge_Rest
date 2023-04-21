@@ -4,7 +4,7 @@ namespace MyFridge_UserInterface_MAUI.Views;
 
 public partial class RecipyPage : ContentPage
 {
-    RecipyViewModel _vm;
+    private readonly RecipyViewModel _vm;
     public RecipyPage(RecipyViewModel vm)
     {
         InitializeComponent();
@@ -16,44 +16,26 @@ public partial class RecipyPage : ContentPage
     {
         base.OnAppearing();
 
-        _vm.All = await RecipyDetailViewModel.GetAllRecipiesFromDB(_vm.RecipyService, _vm.CUserService, _vm.IAService);
-        _vm.Makeable = await RecipyDetailViewModel.GetMakeableRecipies(_vm.All, _vm.CUserService);
+        await _vm.Refresh();
 
         OnRemoveFilterToggled(null, null);
     }
+
     private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
     {
-        if (IngredientFilterSwitch.IsToggled)
-        {
-            if (string.IsNullOrEmpty(e.NewTextValue))
-                RecipyView.ItemsSource = _vm.All.OrderBy(rvm => rvm.Recipy.Name);
-            else
-                RecipyView.ItemsSource = _vm.All
-                    .Where(rvm => rvm.Recipy.Name.ToLower().StartsWith(e.NewTextValue.ToLower()))
-                    .OrderBy(rvm => rvm.Recipy.Name);
-        }
-        else
-        {
-            if (string.IsNullOrEmpty(e.NewTextValue))
-                RecipyView.ItemsSource = _vm.Makeable.OrderBy(rvm => rvm.Recipy.Name);
-            else
-                RecipyView.ItemsSource = _vm.Makeable
-                    .Where(rvm => rvm.Recipy.Name.ToLower().StartsWith(e.NewTextValue.ToLower()))
-                    .OrderBy(rvm => rvm.Recipy.Name);
-        }
+        _vm.UpdateSearch(e.NewTextValue.ToLower(), IngredientFilterSwitch.IsToggled);
     }
+
     private void OnRemoveFilterToggled(object sender, EventArgs e)
     {
-        if (!IngredientFilterSwitch.IsToggled)
-            RecipyView.ItemsSource = _vm.Makeable.OrderBy(rvm => rvm.Recipy.Name);
-        else
-            RecipyView.ItemsSource = _vm.All.OrderBy(rvm => rvm.Recipy.Name);
+        _vm.UpdateFilter(IngredientFilterSwitch.IsToggled);
     }
-    private async void OnRecipyTapped(object sender, ItemTappedEventArgs e)
+
+    private async void OnRecipySelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (e.Item is RecipyDetailViewModel selectedRecipy)
+        if (e.CurrentSelection.FirstOrDefault() is RecipyDetailViewModel selectedRecipy)
             await Navigation.PushAsync(new RecipyDetailPage(selectedRecipy));
         //deselect the item
-        RecipyView.SelectedItem = null;
+        (sender as CollectionView).SelectedItem = null;
     }
 }

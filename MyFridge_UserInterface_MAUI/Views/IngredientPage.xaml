@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:view="clr-namespace:MyFridge_UserInterface_MAUI.Views"
              xmlns:viewModel="clr-namespace:MyFridge_UserInterface_MAUI.ViewModel"
              x:Class="MyFridge_UserInterface_MAUI.Views.IngredientPage"
              Title="Your Ingredients"
@@ -10,11 +9,9 @@
 
     <ScrollView>
         <StackLayout Padding="20">
-            <StackLayout>
-                <SearchBar x:Name="SearchBar" 
+            <SearchBar x:Name="SearchBar" 
                        Placeholder="Search"
                        TextChanged="OnSearchTextChanged"/>
-            </StackLayout>
             <CollectionView ItemsSource="{Binding IngredientDetails}"
                         SelectionMode="Single"
                         SelectionChanged="OnIngredientSelectionChanged">

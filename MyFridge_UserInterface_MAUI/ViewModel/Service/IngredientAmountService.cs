@@ -4,12 +4,12 @@ namespace MyFridge_UserInterface_MAUI.Service
 {
     public class IngredientAmountService
     {
-        public IngredientAmountApiClient IngredientAmountClient { get; private set; }
+        public IngredientAmountApiClient Client { get; private set; }
 
         public IngredientAmountService()
         {
             string baseAddr = "https://localhost:44364/";
-            IngredientAmountClient = new IngredientAmountApiClient(baseAddr);
+            Client = new IngredientAmountApiClient(baseAddr);
         }
     }
 }

@@ -4,14 +4,14 @@ using System.ComponentModel;
 
 namespace MyFridge_UserInterface_MAUI.ViewModel
 {
-    public class UserLoginViewModel: INotifyPropertyChanged
+    public class UserLoginViewModel : INotifyPropertyChanged
     {
         private readonly UserViewModel _uvm;
         private readonly CurrentUserService _cUserService;
         private string loginResultMsg;
         public string EntryEmail { get; set; }
         public string EntryPassword { get; set; }
-        public string LoginResultMsg 
+        public string LoginResultMsg
         {
             get => loginResultMsg;
             set
@@ -38,7 +38,7 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
 
         public async Task<bool> Login()
         {
-            UserAccountDto user = await _cUserService.UserClient.GetByEmailAsync(EntryEmail);
+            UserAccountDto user = await _cUserService.Client.GetByEmailAsync(EntryEmail);
 
             if (user.Id != 0)
             {

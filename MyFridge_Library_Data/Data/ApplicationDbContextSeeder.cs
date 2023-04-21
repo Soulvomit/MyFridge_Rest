@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MyFridge_Library_Data.Model;
+﻿using MyFridge_Library_Data.Model;
 using MyFridge_Library_Data.Model.Enum;
 
 namespace MyFridge_Library_Data.Data
@@ -142,7 +141,16 @@ namespace MyFridge_Library_Data.Data
                 new Ingredient { Id = 115, Name = "Cornmeal", Unit = EUnit.Gram },
                 new Ingredient { Id = 116, Name = "Canned Tomatoes", Unit = EUnit.Gram },
                 new Ingredient { Id = 117, Name = "Tomato Paste", Unit = EUnit.Gram },
-                new Ingredient { Id = 118, Name = "Paprika", Unit = EUnit.Gram }
+                new Ingredient { Id = 118, Name = "Paprika", Unit = EUnit.Gram },
+                new Ingredient { Id = 119, Name = "Mayonnaise", Unit = EUnit.Milliliter },
+                new Ingredient { Id = 120, Name = "Ketchup", Unit = EUnit.Milliliter },
+                new Ingredient { Id = 121, Name = "Mustard", Unit = EUnit.Milliliter },
+                new Ingredient { Id = 122, Name = "Croutons", Unit = EUnit.Gram },
+                new Ingredient { Id = 123, Name = "Syrup", Unit = EUnit.Milliliter },
+                new Ingredient { Id = 124, Name = "Maple Syrup", Unit = EUnit.Milliliter },
+                new Ingredient { Id = 125, Name = "Beef Broth", Unit = EUnit.Milliliter },
+                new Ingredient { Id = 126, Name = "Chicken Broth", Unit = EUnit.Milliliter },
+                new Ingredient { Id = 127, Name = "Vegetable Broth", Unit = EUnit.Milliliter }
                 );
         }
         #endregion
@@ -265,17 +273,18 @@ namespace MyFridge_Library_Data.Data
                         """,
                     IngredientAmounts = new List<IngredientAmount>()
                     {
-                        new IngredientAmount() { IngredientId = 22, Amount = 300 },
-                        new IngredientAmount() { IngredientId = 1, Amount = 100 },
-                        new IngredientAmount() { IngredientId = 57, Amount = 100 },
-                        new IngredientAmount() { IngredientId = 58, Amount = 100 },
-                        new IngredientAmount() { IngredientId = 52, Amount = 1 },
-                        new IngredientAmount() { IngredientId = 4, Amount = 50 },
-                        new IngredientAmount() { IngredientId = 24, Amount = 10 },
-                        new IngredientAmount() { IngredientId = 55, Amount = 50 },
-                        new IngredientAmount() { IngredientId = 3, Amount = 5 },
-                        new IngredientAmount() { IngredientId = 21, Amount = 5 },
-                        new IngredientAmount() { IngredientId = 51, Amount = 2 }
+                        new IngredientAmount() { IngredientId = 24, Amount = 75 },
+                        new IngredientAmount() { IngredientId = 22, Amount = 10 },
+                        new IngredientAmount() { IngredientId = 4, Amount = 25 },
+                        new IngredientAmount() { IngredientId = 27, Amount = 4 },
+                        new IngredientAmount() { IngredientId = 1, Amount = 25 },
+                        new IngredientAmount() { IngredientId = 51, Amount = 25 },
+                        new IngredientAmount() { IngredientId = 50, Amount = 25 },
+                        new IngredientAmount() { IngredientId = 52, Amount = 0.25f },
+                        new IngredientAmount() { IngredientId = 43, Amount = 10 },
+                        new IngredientAmount() { IngredientId = 3, Amount = 1.25f },
+                        new IngredientAmount() { IngredientId = 29, Amount = 0.5f },
+                        new IngredientAmount() { IngredientId = 18, Amount = 0.5f }
                     }
                 },
                 new Recipy()
@@ -290,11 +299,11 @@ namespace MyFridge_Library_Data.Data
                         """,
                     IngredientAmounts = new List<IngredientAmount>()
                     {
-                        new IngredientAmount() { IngredientId = 51, Amount = 3 },
-                        new IngredientAmount() { IngredientId = 3, Amount = 2 },
-                        new IngredientAmount() { IngredientId = 21, Amount = 2 },
-                        new IngredientAmount() { IngredientId = 55, Amount = 10 },
-                        new IngredientAmount() { IngredientId = 72, Amount = 50 }
+                        new IngredientAmount() { IngredientId = 18, Amount = 2 }, // Eggs
+                        new IngredientAmount() { IngredientId = 3, Amount = 2 }, // Salt
+                        new IngredientAmount() { IngredientId = 29, Amount = 2 }, // Pepper
+                        new IngredientAmount() { IngredientId = 21, Amount = 10 }, // Olive oil
+                        new IngredientAmount() { IngredientId = 72, Amount = 30 } // Grated Cheese
                     }
                 },
                 new Recipy()
@@ -309,17 +318,17 @@ namespace MyFridge_Library_Data.Data
                         """,
                     IngredientAmounts = new List<IngredientAmount>()
                     {
-                        new IngredientAmount() { IngredientId = 61, Amount = 200 },
-                        new IngredientAmount() { IngredientId = 60, Amount = 100 },
-                        new IngredientAmount() { IngredientId = 41, Amount = 30 },
-                        new IngredientAmount() { IngredientId = 24, Amount = 5 },
-                        new IngredientAmount() { IngredientId = 38, Amount = 5 },
-                        new IngredientAmount() { IngredientId = 40, Amount = 10 },
-                        new IngredientAmount() { IngredientId = 70, Amount = 50 },
-                        new IngredientAmount() { IngredientId = 54, Amount = 50 }
+                        new IngredientAmount() { IngredientId = 63, Amount = 67 }, // Romaine lettuce
+                        new IngredientAmount() { IngredientId = 119, Amount = 33 }, // Mayonnaise
+                        new IngredientAmount() { IngredientId = 40, Amount = 0.25f }, // Lemon juice
+                        new IngredientAmount() { IngredientId = 24, Amount = 2 },  // Garlic
+                        new IngredientAmount() { IngredientId = 38, Amount = 2 },  // Worcestershire sauce
+                        new IngredientAmount() { IngredientId = 121, Amount = 3 },  // Dijon mustard
+                        new IngredientAmount() { IngredientId = 70, Amount = 17 }, // Grated Parmesan cheese
+                        new IngredientAmount() { IngredientId = 122, Amount = 17 }  // Croutons
                     }
                 },
-                                new Recipy()
+                new Recipy()
                 {
                     Name = "Grilled Cheese Sandwich",
                     Method = """
@@ -331,30 +340,57 @@ namespace MyFridge_Library_Data.Data
                         """,
                     IngredientAmounts = new List<IngredientAmount>()
                     {
-                        new IngredientAmount() { IngredientId = 74, Amount = 2 },
-                        new IngredientAmount() { IngredientId = 8, Amount = 10 },
-                        new IngredientAmount() { IngredientId = 71, Amount = 40 }
+                        new IngredientAmount() { IngredientId = 26, Amount = 2 }, // Slice of bread
+                        new IngredientAmount() { IngredientId = 8, Amount = 10 },  // Butter
+                        new IngredientAmount() { IngredientId = 72, Amount = 40 } // Cheddar cheese
                     }
                 },
                 new Recipy()
                 {
-                    Name = "Tacos",
+                    Name = "Chicken and Vegetable Stir Fry",
                     Method = """
-                        1: Cook ground beef in a pan until browned. Add taco seasoning and water, simmer until thickened.
-                        2: Warm taco shells in the oven for a few minutes.
-                        3: Fill taco shells with seasoned beef, shredded lettuce, diced tomatoes, grated cheese, and a dollop of sour cream.
-                        4: Serve immediately.
+                        1: Cut the chicken breast into small pieces.
+                        2: Chop the carrots, bell pepper, onion, and broccoli.
+                        3: Heat vegetable oil in a wok or large frying pan over medium heat.
+                        4: Add the chopped vegetables and cook for 5 minutes, stirring frequently.
+                        5: Add the chicken pieces and cook until the chicken is cooked through.
+                        6: Add soy sauce and cook for an additional 2 minutes, stirring to combine.
+                        7: Serve over cooked rice.
                         """,
                     IngredientAmounts = new List<IngredientAmount>()
                     {
-                        new IngredientAmount() { IngredientId = 2, Amount = 500 },
-                        new IngredientAmount() { IngredientId = 33, Amount = 30 },
-                        new IngredientAmount() { IngredientId = 9, Amount = 50 },
-                        new IngredientAmount() { IngredientId = 78, Amount = 12 },
-                        new IngredientAmount() { IngredientId = 63, Amount = 100 },
-                        new IngredientAmount() { IngredientId = 47, Amount = 3 },
-                        new IngredientAmount() { IngredientId = 72, Amount = 100 },
-                        new IngredientAmount() { IngredientId = 75, Amount = 100 }
+                        new IngredientAmount() { IngredientId = 5, Amount = 150 }, // Chicken Breast
+                        new IngredientAmount() { IngredientId = 1, Amount = 100 }, // Carrot
+                        new IngredientAmount() { IngredientId = 52, Amount = 1 },  // Bell Pepper
+                        new IngredientAmount() { IngredientId = 4, Amount = 100 }, // Onion
+                        new IngredientAmount() { IngredientId = 53, Amount = 100 }, // Broccoli
+                        new IngredientAmount() { IngredientId = 22, Amount = 15 },  // Vegetable Oil
+                        new IngredientAmount() { IngredientId = 43, Amount = 30 },  // Soy Sauce
+                        new IngredientAmount() { IngredientId = 24, Amount = 150 }  // Rice
+                    }
+                },
+                new Recipy()
+                {
+                    Name = "Creamy Tomato Pasta",
+                    Method = """
+                        1: Cook pasta according to package instructions.
+                        2: In a large saucepan, heat olive oil over medium heat.
+                        3: Add chopped garlic and cook for 1 minute.
+                        4: Add canned tomatoes, salt, and black pepper. Simmer for 10 minutes.
+                        5: Stir in heavy cream and cook for another 5 minutes.
+                        6: Drain the cooked pasta and add it to the sauce, stirring to combine.
+                        7: Serve hot, garnished with grated parmesan cheese.
+                        """,
+                    IngredientAmounts = new List<IngredientAmount>()
+                    {
+                        new IngredientAmount() { IngredientId = 25, Amount = 100 }, // Pasta
+                        new IngredientAmount() { IngredientId = 21, Amount = 15 },  // Olive Oil
+                        new IngredientAmount() { IngredientId = 27, Amount = 10 },  // Garlic
+                        new IngredientAmount() { IngredientId = 116, Amount = 400 }, // Canned Tomatoes
+                        new IngredientAmount() { IngredientId = 3, Amount = 2 },  // Salt
+                        new IngredientAmount() { IngredientId = 29, Amount = 1 },  // Black Pepper
+                        new IngredientAmount() { IngredientId = 6, Amount = 120 },  // Heavy Cream
+                        new IngredientAmount() { IngredientId = 70, Amount = 20 }  // Parmesan Cheese
                     }
                 },
                 new Recipy()
@@ -369,14 +405,14 @@ namespace MyFridge_Library_Data.Data
                         """,
                     IngredientAmounts = new List<IngredientAmount>()
                     {
-                        new IngredientAmount() { IngredientId = 14, Amount = 200 },
-                        new IngredientAmount() { IngredientId = 76, Amount = 10 },
-                        new IngredientAmount() { IngredientId = 3, Amount = 5 },
-                        new IngredientAmount() { IngredientId = 35, Amount = 20 },
-                        new IngredientAmount() { IngredientId = 11, Amount = 250 },
-                        new IngredientAmount() { IngredientId = 51, Amount = 1 },
-                        new IngredientAmount() { IngredientId = 8, Amount = 50 },
-                        new IngredientAmount() { IngredientId = 77, Amount = 50 }
+                        new IngredientAmount() { IngredientId = 14, Amount = 50 }, // Flour
+                        new IngredientAmount() { IngredientId = 19, Amount = 1 }, // Baking powder
+                        new IngredientAmount() { IngredientId = 3, Amount = 1.25f }, // Salt
+                        new IngredientAmount() { IngredientId = 16, Amount = 5 }, // Sugar
+                        new IngredientAmount() { IngredientId = 11, Amount = 62.5f }, // Milk
+                        new IngredientAmount() { IngredientId = 18, Amount = 0.25f }, // Eggs
+                        new IngredientAmount() { IngredientId = 8, Amount = 12.5f }, // Butter
+                        new IngredientAmount() { IngredientId = 124, Amount = 50 }, // Maple syrup or other toppings
                     }
                 },
                 new Recipy()
@@ -384,21 +420,22 @@ namespace MyFridge_Library_Data.Data
                     Name = "Tomato Soup",
                     Method = """
                         1: In a pot, heat oil and cook chopped onion and garlic until softened.
-                        2: Add canned tomatoes, vegetable broth, salt, and pepper. Simmer for 20 minutes.
-                        3: Use an immersion blender to blend the soup until smooth.
-                        4: Stir in heavy cream and heat through.
-                        5: Serve hot with crusty bread.
+                        2: Add canned tomatoes, vegetable broth, salt, and pepper. 
+                        3: Simmer for 20 minutes.
+                        4: Use an immersion blender to blend the soup until smooth.
+                        5: Stir in heavy cream and heat through.
+                        6: Serve hot with crusty bread.
                         """,
                     IngredientAmounts = new List<IngredientAmount>()
                     {
-                        new IngredientAmount() { IngredientId = 4, Amount = 50 },
-                        new IngredientAmount() { IngredientId = 24, Amount = 10 },
-                        new IngredientAmount() { IngredientId = 19, Amount = 800 },
-                        new IngredientAmount() { IngredientId = 81, Amount = 500 },
-                        new IngredientAmount() { IngredientId = 3, Amount = 5 },
-                        new IngredientAmount() { IngredientId = 21, Amount = 5 },
-                        new IngredientAmount() { IngredientId = 6, Amount = 100 },
-                        new IngredientAmount() { IngredientId = 79, Amount = 100 }
+                        new IngredientAmount() { IngredientId = 4, Amount = 12.5f },
+                        new IngredientAmount() { IngredientId = 27, Amount = 2.5f },
+                        new IngredientAmount() { IngredientId = 116, Amount = 200 },
+                        new IngredientAmount() { IngredientId = 127, Amount = 125 },
+                        new IngredientAmount() { IngredientId = 3, Amount = 1.25f },
+                        new IngredientAmount() { IngredientId = 29, Amount = 1.25f },
+                        new IngredientAmount() { IngredientId = 6, Amount = 25 },
+                        new IngredientAmount() { IngredientId = 26, Amount = 1 }
                     }
                 },
                 new Recipy()
@@ -414,14 +451,81 @@ namespace MyFridge_Library_Data.Data
                         """,
                     IngredientAmounts = new List<IngredientAmount>()
                     {
-                        new IngredientAmount() { IngredientId = 5, Amount = 400 },
-                        new IngredientAmount() { IngredientId = 3, Amount = 5 },
-                        new IngredientAmount() { IngredientId = 21, Amount = 5 },
-                        new IngredientAmount() { IngredientId = 80, Amount = 300 },
-                        new IngredientAmount() { IngredientId = 8, Amount = 50 },
-                        new IngredientAmount() { IngredientId = 24, Amount = 10 },
-                        new IngredientAmount() { IngredientId = 6, Amount = 250 },
-                        new IngredientAmount() { IngredientId = 70, Amount = 100 }
+                        new IngredientAmount() { IngredientId = 5, Amount = 100 },
+                        new IngredientAmount() { IngredientId = 3, Amount = 1.25f },
+                        new IngredientAmount() { IngredientId = 21, Amount = 1.25f },
+                        new IngredientAmount() { IngredientId = 80, Amount = 75 },
+                        new IngredientAmount() { IngredientId = 8, Amount = 12.5f },
+                        new IngredientAmount() { IngredientId = 24, Amount = 2.5f },
+                        new IngredientAmount() { IngredientId = 6, Amount = 62.5f },
+                        new IngredientAmount() { IngredientId = 70, Amount = 25 }
+                    }
+                },
+                new Recipy()
+                {
+                    Name = "Chicken and Vegetable Pie",
+                    Method = """
+                            1: Preheat your oven to 200°C (390°F).
+                            2: Dice the carrot and onion. Cut the chicken breast into bite-sized pieces.
+                            3: In a skillet, melt 5g of butter over medium heat. Add the diced onion and carrot, and cook for 5 minutes until softened.
+                            4: Add the chicken breast to the skillet and cook until it's no longer pink on the outside, about 3 minutes.
+                            5: Stir in the thyme, rosemary, salt, and black pepper. Add the chicken broth and cook for another 3 minutes until slightly reduced.
+                            6: In a separate bowl, mix together the wheat flour, 5g of melted butter, and milk to form a dough.
+                            7: On a floured surface, roll out the dough to fit your individual pie dish. Place the dough in the pie dish, pressing it against the sides and bottom.
+                            8: Pour the chicken and vegetable mixture into the pie crust.
+                            9: Roll out the remaining dough and place it on top of the pie, sealing the edges with a fork or your fingers. Cut a few slits in the top crust to allow steam to escape.
+                            10: Bake the pie in the preheated oven for 25-30 minutes, or until the crust is golden brown. Remove from the oven and let it cool for a few minutes before serving. Enjoy your savory vegetable and chicken pie!
+                            """,
+                    IngredientAmounts = new List<IngredientAmount>()
+                    {
+                        new IngredientAmount() { IngredientId = 5, Amount = 100 }, // Chicken Breast
+                        new IngredientAmount() { IngredientId = 50, Amount = 50 }, // Peas
+                        new IngredientAmount() { IngredientId = 53, Amount = 50 }, // Broccoli
+                        new IngredientAmount() { IngredientId = 4, Amount = 25 }, // Onion
+                        new IngredientAmount() { IngredientId = 27, Amount = 5 }, // Garlic
+                        new IngredientAmount() { IngredientId = 65, Amount = 20 }, // Cheese
+                        new IngredientAmount() { IngredientId = 6, Amount = 60 }, // Heavy Cream
+                        new IngredientAmount() { IngredientId = 8, Amount = 15 }, // Butter
+                        new IngredientAmount() { IngredientId = 14, Amount = 60 }, // Wheat Flour
+                        new IngredientAmount() { IngredientId = 3, Amount = 1 }, // Salt
+                        new IngredientAmount() { IngredientId = 29, Amount = 1 } // Black Pepper
+                    }
+                },
+                new Recipy()
+                {
+                    Name = "Beef Lasagna",
+                    Method = """
+                            1: Preheat your oven to 190°C (375°F).
+                            2: Cook the lasagna noodles according to the package instructions until al dente. 
+                            3: Drain and set aside.
+                            4: In a skillet, heat the olive oil over medium heat. 
+                            5: Add the ground beef, salt, and black pepper. 
+                            6: Cook until the beef is browned, breaking it up into smaller pieces as it cooks. 
+                            7: Remove the skillet from heat and drain any excess fat.
+                            8: Stir the canned tomato into the cooked ground beef. 
+                            9: Add the oregano and basil, mixing well.
+                            10: In an individual-sized baking dish, spread a small layer of the beef and marinara mixture at the bottom. 
+                            11: Place a lasagna noodle over it, followed by a layer of ricotta cheese.
+                            12: Repeat the layering process with the beef mixture, lasagna noodles, and ricotta cheese until you have used all the noodles. 
+                            13: The top layer should be the beef mixture.
+                            14: Sprinkle the shredded mozzarella and grated Parmesan cheese over the top layer.
+                            15: Cover the baking dish with aluminum foil, ensuring it doesn't touch the cheese.
+                            16: Bake in the preheated oven for 25 minutes. 
+                            17: Then, remove the foil and bake for another 10-15 minutes, or until the cheese is melted and bubbly.
+                            18: Let the lasagna cool for a few minutes before serving. 
+                            19: Enjoy your beef lasagna!
+                            """,
+                    IngredientAmounts = new List<IngredientAmount>()
+                    {
+                        new IngredientAmount { IngredientId = 2, Amount = 200 },
+                        new IngredientAmount { IngredientId = 3, Amount = 3 },
+                        new IngredientAmount { IngredientId = 21, Amount = 21 },
+                        new IngredientAmount { IngredientId = 29, Amount = 1 },
+                        new IngredientAmount { IngredientId = 35, Amount = 2 },
+                        new IngredientAmount { IngredientId = 36, Amount = 2 },
+                        new IngredientAmount { IngredientId = 70, Amount = 25 },
+                        new IngredientAmount { IngredientId = 71, Amount = 50 },
+                        new IngredientAmount { IngredientId = 116, Amount = 200 }
                     }
                 },
                 new Recipy() 

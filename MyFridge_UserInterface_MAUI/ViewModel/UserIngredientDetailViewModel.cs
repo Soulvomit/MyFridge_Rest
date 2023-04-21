@@ -9,15 +9,15 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
         private readonly CurrentUserService _cUserService;
         private readonly IngredientAmountService _iaService;
         public IngredientDto Ingredient { get; set; }
-        public DateTime? ExpirationDate 
+        public DateTime? ExpirationDate
         {
-            get => Ingredient.ExpirationDate; 
+            get => Ingredient.ExpirationDate;
             set
             {
                 Ingredient.ExpirationDate = value;
 
                 OnPropertyChanged(nameof(ExpirationDate));
-            } 
+            }
         }
         public float Amount
         {
@@ -51,27 +51,27 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
                     return "ml";
                 else
                     if (Ingredient.Amount < 2)
-                        return "piece";
-                    else
-                        return "pieces";
+                    return "piece";
+                else
+                    return "pieces";
             }
         }
-        public UserIngredientDetailViewModel(CurrentUserService cUserService, 
+        public UserIngredientDetailViewModel(CurrentUserService cUserService,
             IngredientAmountService iaService)
         {
             _cUserService = cUserService;
             _iaService = iaService;
 
-            
+
         }
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public async Task Upsert() 
+        public async Task Upsert()
         {
-            Ingredient = await _iaService.IngredientAmountClient.UpsertAsync(Ingredient);
+            Ingredient = await _iaService.Client.UpsertAsync(Ingredient);
         }
         public async Task SetColor()
         {

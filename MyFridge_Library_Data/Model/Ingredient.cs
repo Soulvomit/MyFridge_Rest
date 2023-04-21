@@ -6,6 +6,7 @@ namespace MyFridge_Library_Data.Model
 {
     public class Ingredient : SimpleDatabaseItem
     {
+        //add category to this
         [Required, MaxLength(50)]
         public required string Name { get; set; }
         [Required]

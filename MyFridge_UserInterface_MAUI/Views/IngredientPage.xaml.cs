@@ -43,7 +43,7 @@ public partial class IngredientPage : ContentPage
             if (parsed)
             {
                 selectedIngredient.Ingredient.Amount = amount;
-                await _vm._cUserService.UserClient
+                await _vm._cUserService.Client
                     .AddIngredientAsync(selectedIngredient.Ingredient, _vm._cUserService.CurrentUserId);
                 await Navigation.PopAsync();
             }

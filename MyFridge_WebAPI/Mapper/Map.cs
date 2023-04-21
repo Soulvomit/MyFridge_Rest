@@ -98,10 +98,7 @@ namespace MyFridge_WebAPI.Mapper
             }
             foreach(IngredientAmount ingredientAmount in user.IngredientAmounts)
             {
-                IngredientDto idto = FromIngredient(ingredientAmount.Ingredient!)!;
-                idto.Amount = ingredientAmount.Amount;
-                idto.ExpirationDate = ingredientAmount.ExpirationDate;
-                dto.Ingredients.Add(idto);
+                dto.Ingredients.Add(FromIngredientAmount(ingredientAmount));
             }
             return dto;
         }

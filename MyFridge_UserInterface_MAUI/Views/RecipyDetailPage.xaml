@@ -28,9 +28,11 @@
                            Text="{Binding Recipy.Name}"
                            FontSize="Large"
                            FontAttributes="Bold"/>
-                    <Label x:Name="Description"
-                            Text="{Binding Recipy.Description}"
-                            FontSize="Medium"/>
+                    <ScrollView>
+                        <Label x:Name="Description"
+                                Text="{Binding Recipy.Description}"
+                                FontSize="Small"/>
+                    </ScrollView>
                 </StackLayout>
             </StackLayout>
             <ListView x:Name="IngredientView"

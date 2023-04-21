@@ -7,17 +7,17 @@ namespace MyFridge_UserInterface_MAUI.Service
     {
         private UserAccountDto _user = null;
         public int CurrentUserId { get; set; }
-        public UserAccountApiClient UserClient { get; private set; }
+        public UserAccountApiClient Client { get; private set; }
 
         public CurrentUserService()
         {
             string baseAddr = "https://localhost:44364/";
-            UserClient = new UserAccountApiClient(baseAddr);
+            Client = new UserAccountApiClient(baseAddr);
         }
 
         public async Task<UserAccountDto> GetUserAsync()
         {
-            _user = await UserClient.GetAsync(CurrentUserId);
+            _user = await Client.GetAsync(CurrentUserId);
             return _user;
         }
         public async Task<UserAccountDto> GetUserLazyAsync()

@@ -15,16 +15,17 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
         public IngredientService _ingredientService;
         private ObservableCollection<UserIngredientDetailViewModel> ingredientDetails;
 
-        public ObservableCollection<UserIngredientDetailViewModel> IngredientDetails { 
+        public ObservableCollection<UserIngredientDetailViewModel> IngredientDetails
+        {
             get => ingredientDetails;
-            private set 
+            private set
             {
                 ingredientDetails = value;
                 OnPropertyChanged(nameof(IngredientDetails));
-            } 
+            }
         }
         public UserIngredientViewModel(
-            CurrentUserService cUserService, 
+            CurrentUserService cUserService,
             IngredientService ingredientService,
             IngredientAmountService iaService)
         {

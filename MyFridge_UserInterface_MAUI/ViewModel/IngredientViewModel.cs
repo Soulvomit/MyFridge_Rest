@@ -22,7 +22,7 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
                 OnPropertyChanged(nameof(IngredientDetails));
             }
         }
-        public IngredientViewModel(CurrentUserService cUserService, 
+        public IngredientViewModel(CurrentUserService cUserService,
             IngredientService ingredientService,
             IngredientAmountService iaService)
         {
@@ -39,7 +39,7 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
         }
         public async Task GetIngredientDetailsAsync()
         {
-            allIngredients = await _ingredientService.GetIngredientsAsync();
+            allIngredients = await _ingredientService.GetAllAsync();
             IngredientDetails = ConvertIngredientDtos(allIngredients.OrderBy(i => i.Name).ToList());
         }
         public void GetIngredientDetailsLazyAsync()

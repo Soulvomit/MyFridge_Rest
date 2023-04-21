@@ -80,7 +80,7 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
 
         public UserViewModel(CurrentUserService cUserService, IngredientAmountService iaService)
         {
-            _cUserService = cUserService;          
+            _cUserService = cUserService;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -115,7 +115,7 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
             if (string.IsNullOrEmpty(User.Password)) return;
             if (!ulong.TryParse(User.PhoneNumber.ToString(), out ulong phonenum)) return;
 
-            await _cUserService.UserClient.UpsertAsync(User);
+            await _cUserService.Client.UpsertAsync(User);
         }
 
         public List<UserIngredientDetailViewModel> ConvertIngredientDtos()

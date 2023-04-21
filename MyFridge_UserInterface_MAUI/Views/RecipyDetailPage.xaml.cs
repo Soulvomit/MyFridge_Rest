@@ -12,7 +12,7 @@ public partial class RecipyDetailPage : ContentPage
 		_vm = vm;
         BindingContext = _vm;
     }
-    protected override void OnAppearing()
+    protected async override void OnAppearing()
     {
         base.OnAppearing();
 
@@ -23,7 +23,7 @@ public partial class RecipyDetailPage : ContentPage
 
         foreach(UserIngredientDetailViewModel ivm in ingredientsVms)
         {
-            ivm.SetColor();
+            await ivm.SetColor();
         }
 
         IngredientView.ItemsSource = ingredientsVms

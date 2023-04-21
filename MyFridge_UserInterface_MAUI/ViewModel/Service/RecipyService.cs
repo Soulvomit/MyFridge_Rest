@@ -7,23 +7,23 @@ namespace MyFridge_UserInterface_MAUI.Service
     {
         private List<RecipyDto> _recipies = null;
 
-        public RecipyApiClient RecipyClient { get; private set; }
+        public RecipyApiClient Client { get; private set; }
 
         public RecipyService()
         {
             string baseAddr = "https://localhost:44364/";
-            RecipyClient = new RecipyApiClient(baseAddr);
+            Client = new RecipyApiClient(baseAddr);
         }
 
-        public async Task<List<RecipyDto>> GetRecipiesAsync()
+        public async Task<List<RecipyDto>> GetAllAsync()
         {
-            _recipies = await RecipyClient.GetAllAsync();
+            _recipies = await Client.GetAllAsync();
             return _recipies;
         }
-        public async Task<List<RecipyDto>> GetRecipiesLazy()
+        public async Task<List<RecipyDto>> GetAllLazyAsync()
         {
             if (_recipies == null)
-                return await GetRecipiesAsync();
+                return await GetAllAsync();
 
             return _recipies;
         }
