@@ -9,8 +9,8 @@ namespace MyFridge_Library_MAUI_Client
 
         public IngredientApiClient(string baseAddress)
         {
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri(baseAddress);
+            _httpClient = new();
+            _httpClient.BaseAddress = new(baseAddress);
         }
         public async Task<List<IngredientDto>> GetAllAsync()
         {

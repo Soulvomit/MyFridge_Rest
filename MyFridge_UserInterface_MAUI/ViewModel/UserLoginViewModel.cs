@@ -1,16 +1,35 @@
 ﻿using MyFridge_Library_MAUI_DataTransfer.DataTransferObject;
 using MyFridge_UserInterface_MAUI.Service;
-using System.ComponentModel;
 
 namespace MyFridge_UserInterface_MAUI.ViewModel
 {
-    public class UserLoginViewModel : INotifyPropertyChanged
+    public class UserLoginViewModel : BindableObject
     {
-        private readonly UserViewModel _uvm;
+        private readonly UserViewModel _userViewModel;
         private readonly CurrentUserService _cUserService;
         private string loginResultMsg;
-        public string EntryEmail { get; set; }
-        public string EntryPassword { get; set; }
+        private string entryEmail;
+        private string entryPassword;
+        public string EntryEmail 
+        {
+            get => entryEmail;
+            set 
+            {
+                entryEmail = value;
+
+                OnPropertyChanged(nameof(EntryEmail));
+            }
+        }
+        public string EntryPassword 
+        {
+            get => entryPassword;
+            set
+            {
+                entryPassword = value;
+
+                OnPropertyChanged(nameof(EntryPassword));
+            }
+        }
         public string LoginResultMsg
         {
             get => loginResultMsg;
@@ -20,23 +39,16 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
                 OnPropertyChanged(nameof(LoginResultMsg));
             }
         }
-        public UserLoginViewModel(CurrentUserService cUserService, UserViewModel uvm)
+        public UserLoginViewModel(CurrentUserService cUserService, UserViewModel userViewModel)
         {
             _cUserService = cUserService;
-            _uvm = uvm;
+            _userViewModel = userViewModel;
 
             EntryEmail = "email@email.com";
             EntryPassword = "password";
-            LoginResultMsg = "Test";
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public async Task<bool> Login()
+        public async Task<bool> LoginAsync()
         {
             UserAccountDto user = await _cUserService.Client.GetByEmailAsync(EntryEmail);
 
@@ -44,7 +56,7 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
             {
                 if (EntryPassword == user.Password)
                 {
-                    await _uvm.Initialize(user.Id);
+                    await _userViewModel.InitializeAsync(user.Id);
 
                     return true;
                 }

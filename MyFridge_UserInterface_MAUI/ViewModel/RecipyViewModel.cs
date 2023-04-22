@@ -90,7 +90,7 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
             return all.AsEnumerable()
                 .Where(recipy => recipy.Ingredients
                     .All(recipyIngredient => user.Ingredients
-                        .Any(userIngredient => recipyIngredient.Id == userIngredient.Id &&
+                        .Any(userIngredient => recipyIngredient.Ingredient.Id == userIngredient.Ingredient.Id &&
                              recipyIngredient.Amount <= userIngredient.Amount)))
                 .ToList();
         }

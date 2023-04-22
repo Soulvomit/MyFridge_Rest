@@ -3,7 +3,7 @@
     public class GroceryDto
     {
         public int Id { get; set; }
-        public IngredientDto Ingredient { get; set; }
+        public IngredientAmountDto Ingredient { get; set; }
         public string Brand { get; set; }
         public string ItemIdentifier { get; set; }
         public float SalePrice { get; set; }

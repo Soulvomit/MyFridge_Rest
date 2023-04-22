@@ -5,7 +5,7 @@
         x:Class="MyFridge_UserInterface_MAUI.Views.UserIngredientDetailPage"
         Title="User Ingredient Detail"
         BackgroundColor="#f0f4f8"
-        x:DataType="viewModel:UserIngredientDetailViewModel">
+        x:DataType="viewModel:IngredientAmountDetailViewModel">
     
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -22,7 +22,7 @@
                        WidthRequest="100"
                        Margin="0, 0, 10, 0"/>
                 <Label VerticalOptions="CenterAndExpand"
-                        Text="{Binding Ingredient.Name}"
+                        Text="{Binding Name}"
                         FontSize="Large"
                         FontAttributes="Bold"/>
             </StackLayout>

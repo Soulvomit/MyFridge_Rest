@@ -1,3 +1,4 @@
+using MyFridge_Library_MAUI_DataTransfer.DataTransferObject;
 using MyFridge_UserInterface_MAUI.ViewModel;
 
 namespace MyFridge_UserInterface_MAUI.Views;
@@ -27,7 +28,7 @@ public partial class IngredientPage : ContentPage
     }
     private async void OnIngredientSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (e.CurrentSelection.FirstOrDefault() is UserIngredientDetailViewModel selectedIngredient)
+        if (e.CurrentSelection.FirstOrDefault() is IngredientDetailViewModel selectedIngredient)
         {
             bool parsed = uint.TryParse(
                 await DisplayPromptAsync(
@@ -42,9 +43,12 @@ public partial class IngredientPage : ContentPage
                 out uint amount);
             if (parsed)
             {
-                selectedIngredient.Ingredient.Amount = amount;
-                await _vm._cUserService.Client
-                    .AddIngredientAsync(selectedIngredient.Ingredient, _vm._cUserService.CurrentUserId);
+                IngredientAmountDto dto = new()
+                {
+                    Ingredient = selectedIngredient.Ingredient,
+                    Amount = amount
+                };
+                await _vm._cUserService.Client.AddIngredientAsync(dto, _vm._cUserService.CurrentUserId);
                 await Navigation.PopAsync();
             }
         }

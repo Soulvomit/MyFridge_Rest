@@ -14,7 +14,7 @@ namespace MyFridge_UserInterface_MAUI.Views
         }
         private async void OnLoginButtonClicked(object sender, EventArgs e)
         {
-            bool success = await _vm.Login();
+            bool success = await _vm.LoginAsync();
             if (success)
             {
                 await Shell.Current.GoToAsync($"//" + nameof(UserInfoPage));

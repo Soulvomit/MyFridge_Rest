@@ -18,11 +18,11 @@ namespace MyFridge_WebAPI.Controllers
             _logger = logger;
         }
         [HttpPost]
-        public async Task<JsonResult> UpsertAsync(int id, [FromBody] IngredientDto dto)
+        public async Task<JsonResult> UpsertAsync(int id, [FromBody]IngredientAmountDto dto)
         {
             if (!ModelState.IsValid) return new JsonResult(BadRequest());
 
-            bool success = await _uow.Recipies.AddIngredientAsync(id, Map.ToIngredient(dto), dto.Amount);
+            bool success = await _uow.Recipies.AddIngredientAsync(id, Map.ToIngredientAmount(dto)!);
 
             if (!success) return new JsonResult(NotFound());
 

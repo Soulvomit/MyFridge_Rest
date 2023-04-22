@@ -19,7 +19,7 @@ namespace MyFridge_WebAPI.Controllers
             _logger = logger;
         }
         [HttpPost]
-        public async Task<JsonResult> UpsertAsync([FromBody] IngredientDto dto)
+        public async Task<JsonResult> UpsertAsync([FromBody] IngredientAmountDto dto)
         {
             if (!ModelState.IsValid) return new JsonResult(BadRequest());
 
@@ -47,7 +47,7 @@ namespace MyFridge_WebAPI.Controllers
         [HttpGet]
         public async Task<JsonResult> GetAllAsync()
         {
-            List<IngredientDto> dtos = new List<IngredientDto>();
+            List<IngredientAmountDto> dtos = new List<IngredientAmountDto>();
             List<IngredientAmount> ingredientAmounts = await _uow.IngredientAmounts.GetAllAsync();
 
             foreach (IngredientAmount ingredientAmount in ingredientAmounts)

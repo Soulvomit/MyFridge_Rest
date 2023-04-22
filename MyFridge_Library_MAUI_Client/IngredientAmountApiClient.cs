@@ -12,17 +12,17 @@ namespace MyFridge_Library_MAUI_Client
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(baseAddress);
         }
-        public async Task<IngredientDto> UpsertAsync(IngredientDto dto)
+        public async Task<IngredientAmountDto> UpsertAsync(IngredientAmountDto dto)
         {
             var response = await _httpClient.PostAsJsonAsync($"api/IngredientAmount/Upsert", dto);
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<IngredientDto>();
+            return await response.Content.ReadFromJsonAsync<IngredientAmountDto>();
         }
-        public async Task<IngredientDto> GetAsync(int id)
+        public async Task<IngredientAmountDto> GetAsync(int id)
         {
             var response = await _httpClient.GetAsync($"api/IngredientAmount/Get?id={id}");
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<IngredientDto>();
+            return await response.Content.ReadFromJsonAsync<IngredientAmountDto>();
         }
     }
 }

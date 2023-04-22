@@ -16,25 +16,22 @@ public partial class RecipyDetailPage : ContentPage
     {
         base.OnAppearing();
 
-        Name.Text = _vm.Recipy.Name;
-        Description.Text = _vm.Recipy.Description;
-
-        List<UserIngredientDetailViewModel> ingredientsVms = _vm.ConvertIngredientDtos();
-
-        foreach(UserIngredientDetailViewModel ivm in ingredientsVms)
-        {
-            await ivm.SetColor();
-        }
-
-        IngredientView.ItemsSource = ingredientsVms
-            .OrderBy(ivm => ivm.Ingredient.Name)
+        List<IngredientAmountDetailViewModel> list = _vm.ConvertIngredientDtos()
+            .OrderBy(ivm => ivm.IngredientAmount.Ingredient.Name)
             .ToList();
+        foreach (IngredientAmountDetailViewModel ivm in list)
+        {
+            await ivm.UpdateColorAsync();
+            _vm.IngredientDetails.Add(ivm);
+        }
     }
-    private async void OnIngredientTapped(object sender, ItemTappedEventArgs e)
+    private async void OnDetailSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        //if (e.Item is IngredientDto selectedIngredient)
+        if (e.CurrentSelection.FirstOrDefault() is IngredientAmountDetailViewModel selectedIngredient)
+        {
             //await Navigation.PushAsync(new UserIngredientDetailPage(selectedIngredient));
+        }
         //deselect the item
-        IngredientView.SelectedItem = null;
+        (sender as CollectionView).SelectedItem = null;
     }
 }

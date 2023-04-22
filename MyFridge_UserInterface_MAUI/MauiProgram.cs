@@ -28,7 +28,7 @@ namespace MyFridge_UserInterface_MAUI
             builder.Services.AddTransient<UserLoginViewModel>();
             builder.Services.AddTransient<UserIngredientViewModel>();
             builder.Services.AddTransient<IngredientViewModel>();
-            builder.Services.AddTransient<UserIngredientDetailViewModel>();
+            builder.Services.AddTransient<IngredientAmountDetailViewModel>();
             builder.Services.AddTransient<RecipyViewModel>();
             builder.Services.AddTransient<RecipyDetailViewModel>();
 

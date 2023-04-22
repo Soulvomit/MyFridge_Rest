@@ -14,6 +14,6 @@ public partial class UserInfoPage : ContentPage
     }
     private async void OnSaveButtonClicked(object sender, EventArgs e)
     {
-        await _vm.Commit();
+        await _vm.SaveAsync();
     }
 }

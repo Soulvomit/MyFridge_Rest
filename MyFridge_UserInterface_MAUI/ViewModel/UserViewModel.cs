@@ -1,10 +1,10 @@
 ﻿using MyFridge_Library_MAUI_DataTransfer.DataTransferObject;
 using MyFridge_UserInterface_MAUI.Service;
-using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace MyFridge_UserInterface_MAUI.ViewModel
 {
-    public class UserViewModel : INotifyPropertyChanged
+    public class UserViewModel : BindableObject
     {
         private readonly CurrentUserService _cUserService;
         private readonly IngredientAmountService _iaService;
@@ -83,31 +83,25 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
             _cUserService = cUserService;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public async Task Initialize(int userId)
+        public async Task InitializeAsync(int userId)
         {
             _cUserService.CurrentUserId = userId;
             User = await _cUserService.GetUserAsync();
         }
 
-        public async Task Reinitialize()
+        public async Task ReinitializeAsync()
         {
             UserAccountDto user = await _cUserService.GetUserLazyAsync();
+            User = user;
             Firstname = user.Firstname;
             Lastname = user.Lastname;
             Email = user.Email;
             Password = user.Password;
             PhoneNumber = user.PhoneNumber;
-            BirthDate = user.BirthDate;
-            User = user;
+            BirthDate = user.BirthDate; 
         }
 
-        public async Task Commit()
+        public async Task SaveAsync()
         {
             if (string.IsNullOrEmpty(User.Firstname)) return;
             if (string.IsNullOrEmpty(User.Lastname)) return;
@@ -118,14 +112,14 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
             await _cUserService.Client.UpsertAsync(User);
         }
 
-        public List<UserIngredientDetailViewModel> ConvertIngredientDtos()
+        public ObservableCollection<IngredientAmountDetailViewModel> IngredientsToViewModel()
         {
-            List<UserIngredientDetailViewModel> viewModels = new();
-            foreach (IngredientDto dto in User.Ingredients)
+            ObservableCollection<IngredientAmountDetailViewModel> viewModels = new();
+            foreach (IngredientAmountDto dto in User.Ingredients)
             {
-                UserIngredientDetailViewModel viewModel = new(_cUserService, _iaService)
+                IngredientAmountDetailViewModel viewModel = new(_cUserService, _iaService)
                 {
-                    Ingredient = dto
+                    IngredientAmount = dto
                 };
                 viewModels.Add(viewModel);
             }

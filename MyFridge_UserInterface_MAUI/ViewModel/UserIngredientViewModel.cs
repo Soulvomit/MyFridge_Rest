@@ -1,21 +1,18 @@
 ﻿using MyFridge_Library_MAUI_DataTransfer.DataTransferObject;
 using MyFridge_UserInterface_MAUI.Service;
+using MyFridge_UserInterface_MAUI.Views;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 
 namespace MyFridge_UserInterface_MAUI.ViewModel
 {
-    public class UserIngredientViewModel : INotifyPropertyChanged
+    public class UserIngredientViewModel : BindableObject
     {
-        //private readonly IngredientAmountService _iaService;
-        //private readonly CurrentUserService _cUserService;
-        //private readonly IngredientService _ingredientService;
-        public IngredientAmountService _iaService;
-        public CurrentUserService _cUserService;
-        public IngredientService _ingredientService;
-        private ObservableCollection<UserIngredientDetailViewModel> ingredientDetails;
+        private readonly IngredientAmountService _iaService;
+        private readonly CurrentUserService _cUserService;
+        private readonly IngredientService _ingredientService;
+        private ObservableCollection<IngredientAmountDetailViewModel> ingredientDetails;
 
-        public ObservableCollection<UserIngredientDetailViewModel> IngredientDetails
+        public ObservableCollection<IngredientAmountDetailViewModel> IngredientDetails
         {
             get => ingredientDetails;
             private set
@@ -34,32 +31,27 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
             _iaService = iaService;
             ingredientDetails = new();
         }
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        public async Task GetIngredientDetailsAsync()
+        public async Task GetDetailsAsync()
         {
             UserAccountDto user = await _cUserService.GetUserAsync();
-            IngredientDetails = ConvertIngredientDtos(user.Ingredients.OrderBy(i => i.Name).ToList());
+            IngredientDetails = ConvertToViewModel(user.Ingredients.OrderBy(i => i.Ingredient.Name));
         }
 
-        public async Task GetIngredientDetailsLazyAsync()
+        public async Task GetDetailsLazyAsync()
         {
             UserAccountDto user = await _cUserService.GetUserLazyAsync();
-            IngredientDetails = ConvertIngredientDtos(user.Ingredients.OrderBy(i => i.Name).ToList());
+            IngredientDetails = ConvertToViewModel(user.Ingredients.OrderBy(i => i.Ingredient.Name));
 
         }
 
-        public async Task GetIngredientDetailsFilteredLazyAsync(string filter)
+        public async Task GetDetailsFilteredLazyAsync(string filter)
         {
             UserAccountDto user = await _cUserService.GetUserLazyAsync();
-            IngredientDetails = ConvertIngredientDtos(user.Ingredients
-                .Where(i => i.Name.ToLower().StartsWith(filter.ToLower()))
-                .OrderBy(i => i.Name).ToList());
+            IngredientDetails = ConvertToViewModel(user.Ingredients
+                .Where(i => i.Ingredient.Name.ToLower().StartsWith(filter.ToLower()))
+                .OrderBy(i => i.Ingredient.Name).ToList());
         }
-        public void UpdateDetails(List<UserIngredientDetailViewModel> newDetails)
+        public void UpdateDetails(List<IngredientAmountDetailViewModel> newDetails)
         {
             IngredientDetails.Clear();
             foreach (var item in newDetails)
@@ -67,18 +59,26 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
                 IngredientDetails.Add(item);
             }
         }
-        public ObservableCollection<UserIngredientDetailViewModel> ConvertIngredientDtos(List<IngredientDto> dtos)
+        public ObservableCollection<IngredientAmountDetailViewModel> ConvertToViewModel(IEnumerable<IngredientAmountDto> dtos)
         {
-            ObservableCollection<UserIngredientDetailViewModel> viewModels = new();
-            foreach (IngredientDto dto in dtos)
+            ObservableCollection<IngredientAmountDetailViewModel> viewModels = new();
+            foreach (IngredientAmountDto dto in dtos)
             {
-                UserIngredientDetailViewModel viewModel = new(_cUserService, _iaService)
+                IngredientAmountDetailViewModel viewModel = new(_cUserService, _iaService)
                 {
-                    Ingredient = dto
+                    IngredientAmount = dto
                 };
                 viewModels.Add(viewModel);
             }
             return viewModels;
+        }
+        public async Task NavigateToDetailAsync(INavigation nav, IngredientAmountDetailViewModel detail)
+        {
+            await nav.PushAsync(new UserIngredientDetailPage(detail));
+        }
+        public async Task NavigateToGroceriesAsync(INavigation nav)
+        {
+            await nav.PushAsync(new IngredientPage(new IngredientViewModel(_cUserService, _ingredientService)));
         }
     }
 }

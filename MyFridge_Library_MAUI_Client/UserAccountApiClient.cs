@@ -37,11 +37,11 @@ namespace MyFridge_Library_MAUI_Client
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<List<UserAccountDto>>();
         }
-        public async Task<IngredientDto> AddIngredientAsync(IngredientDto dto, int id)
+        public async Task<IngredientAmountDto> AddIngredientAsync(IngredientAmountDto dto, int id)
         {
             var response = await _httpClient.PostAsJsonAsync($"api/UserAccountIngredients/Upsert?id={id}", dto);
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<IngredientDto>();
+            return await response.Content.ReadFromJsonAsync<IngredientAmountDto>();
         }
 
         public async Task<bool> RemoveIngredientAsync(int id, int ingredientId)

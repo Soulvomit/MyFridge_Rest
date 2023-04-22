@@ -10,7 +10,8 @@
         public ulong PhoneNumber { get; set; }
         public DateTime BirthDate { get; set; }
         public AddressDto Address { get; set; }
-        public List<IngredientDto> Ingredients { get; set; } = new List<IngredientDto>();
+        public List<IngredientAmountDto> Ingredients { get; set; } 
+            = new List<IngredientAmountDto>();
         public List<OrderDto> Orders { get; set; } = new List<OrderDto>();
     }
 }

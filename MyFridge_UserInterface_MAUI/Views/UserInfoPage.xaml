@@ -3,9 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel="clr-namespace:MyFridge_UserInterface_MAUI.ViewModel"
              x:Class="MyFridge_UserInterface_MAUI.Views.UserInfoPage"
+             x:DataType="viewModel:UserViewModel"
              Title="Your Information"
-             BackgroundColor="#f0f4f8"
-             x:DataType="viewModel:UserViewModel">
+             BackgroundColor="#f0f4f8">
     
     <ScrollView>
         <StackLayout Padding="10">

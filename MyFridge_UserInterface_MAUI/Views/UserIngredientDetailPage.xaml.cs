@@ -4,8 +4,8 @@ namespace MyFridge_UserInterface_MAUI.Views;
 
 public partial class UserIngredientDetailPage : ContentPage
 {
-    private readonly UserIngredientDetailViewModel _vm;
-    public UserIngredientDetailPage(UserIngredientDetailViewModel vm)
+    private readonly IngredientAmountDetailViewModel _vm;
+    public UserIngredientDetailPage(IngredientAmountDetailViewModel vm)
     {
         InitializeComponent();
 
@@ -14,7 +14,7 @@ public partial class UserIngredientDetailPage : ContentPage
     }
     private async void OnSaveButtonClicked(object sender, EventArgs e)
     {
-        await _vm.Upsert();
+        await _vm.SaveAsync();
         await Navigation.PopAsync();
     }
 

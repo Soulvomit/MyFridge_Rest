@@ -16,7 +16,7 @@
                         SelectionMode="Single"
                         SelectionChanged="OnIngredientSelectionChanged">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="viewModel:UserIngredientDetailViewModel">
+                    <DataTemplate x:DataType="viewModel:IngredientDetailViewModel">
                         <Frame Grid.RowSpan="2"
                            Grid.Row="0"
                            Grid.Column="0"

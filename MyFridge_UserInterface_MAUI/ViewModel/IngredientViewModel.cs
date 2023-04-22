@@ -8,12 +8,11 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
     public class IngredientViewModel : INotifyPropertyChanged
     {
         private List<IngredientDto> allIngredients;
-        private ObservableCollection<UserIngredientDetailViewModel> ingredientDetails;
+        private ObservableCollection<IngredientDetailViewModel> ingredientDetails;
         //private readonly CurrentUserService _cUserService;
         public CurrentUserService _cUserService;
         private readonly IngredientService _ingredientService;
-        private readonly IngredientAmountService _iaService;
-        public ObservableCollection<UserIngredientDetailViewModel> IngredientDetails
+        public ObservableCollection<IngredientDetailViewModel> IngredientDetails
         {
             get => ingredientDetails;
             private set
@@ -23,12 +22,10 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
             }
         }
         public IngredientViewModel(CurrentUserService cUserService,
-            IngredientService ingredientService,
-            IngredientAmountService iaService)
+            IngredientService ingredientService)
         {
             _cUserService = cUserService;
             _ingredientService = ingredientService;
-            _iaService = iaService;
             ingredientDetails = new();
             allIngredients = new();
         }
@@ -54,12 +51,12 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
                 .Where(i => i.Name.ToLower().StartsWith(filter.ToLower()))
                 .OrderBy(i => i.Name).ToList());
         }
-        public ObservableCollection<UserIngredientDetailViewModel> ConvertIngredientDtos(List<IngredientDto> dtos)
+        public ObservableCollection<IngredientDetailViewModel> ConvertIngredientDtos(List<IngredientDto> dtos)
         {
-            ObservableCollection<UserIngredientDetailViewModel> viewModels = new();
+            ObservableCollection<IngredientDetailViewModel> viewModels = new();
             foreach (IngredientDto dto in dtos)
             {
-                UserIngredientDetailViewModel viewModel = new(_cUserService, _iaService)
+                IngredientDetailViewModel viewModel = new(_cUserService, _ingredientService)
                 {
                     Ingredient = dto
                 };
