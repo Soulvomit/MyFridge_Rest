@@ -1,6 +1,6 @@
 ﻿namespace MyFridge_Library_MAUI_DataTransfer.DataTransferObject
 {
-    public class RecipyDto
+    public class RecipeDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

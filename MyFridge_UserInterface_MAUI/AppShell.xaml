@@ -26,6 +26,11 @@
                 <Setter Property="FontSize" Value="16" />
                 <Setter Property="TextColor" Value="#4a4a4a" />
             </Style>
+            <Style TargetType="Editor">
+                <Setter Property="FontFamily" Value="Roboto" />
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="TextColor" Value="#4a4a4a" />
+            </Style>
             <Style TargetType="Entry">
                 <Setter Property="FontFamily" Value="Roboto" />
                 <Setter Property="FontSize" Value="16" />
@@ -55,7 +60,8 @@
         </ResourceDictionary>
     </Shell.Resources>
 
-    <ShellItem Route="UserLoginPage" FlyoutItemIsVisible="False">
+    <ShellItem Route="UserLoginPage" 
+               FlyoutItemIsVisible="False">
         <ShellContent ContentTemplate="{DataTemplate views:UserLoginPage}"/>
     </ShellItem>
 
@@ -65,11 +71,18 @@
             Icon="dotnet_bot.png"
             ContentTemplate="{DataTemplate views:UserLoginPage}"
             Route="UserLoginPage" />-->
-        <ShellContent
-            Title="Information"
-            Icon="dotnet_bot.png"
-            ContentTemplate="{DataTemplate views:UserInfoPage}"
-            Route="UserInfoPage" />
+        <Tab Title="User">
+            <ShellContent
+                Title="Information"
+                Icon="dotnet_bot.png"
+                ContentTemplate="{DataTemplate views:UserInfoPage}"
+                Route="UserInfoPage" />
+            <ShellContent
+                Title="Logout"
+                Icon="dotnet_bot.png"
+                ContentTemplate="{DataTemplate views:UserLogoutPage}"
+                Route="UserLogoutPage" />
+        </Tab>
         <ShellContent
             Title="Ingredients"
             Icon="dotnet_bot.png"
@@ -78,17 +91,17 @@
         <ShellContent
             Title="Recipies"
             Icon="dotnet_bot.png"
-            ContentTemplate="{DataTemplate views:RecipyPage}"
+            ContentTemplate="{DataTemplate views:RecipePage}"
             Route="RecipyPage" />
     </FlyoutItem>
-    
-    <!--<TabBar
-        x:Name="Tabby">
-        <ShellContent
+
+
+    <!--<TabBar IsVisible="True">
+        --><!--<ShellContent
             Title="Login"
             Icon="dotnet_bot.png"
             ContentTemplate="{DataTemplate views:UserLoginPage}"
-            Route="UserLoginPage" />
+            Route="UserLoginPage" />--><!--
         <ShellContent
             Title="Information"
             Icon="dotnet_bot.png"

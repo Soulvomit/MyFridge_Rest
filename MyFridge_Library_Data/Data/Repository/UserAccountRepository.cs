@@ -68,7 +68,7 @@ namespace MyFridge_Library_Data.Data.Repository
             }
             else
             {
-                IngredientAmount found = null;
+                IngredientAmount? found = null;
                 foreach (IngredientAmount ia in userEntityInDb.IngredientAmounts) 
                 {
                     if(ia.IngredientId == ingredientEntityInDb.Id)
@@ -112,7 +112,7 @@ namespace MyFridge_Library_Data.Data.Repository
             else
             {
                 IngredientAmount? found = userEntityInDb.IngredientAmounts.
-                                            FirstOrDefault(ia => ia.Id == addEntity.IngredientId); 
+                                            FirstOrDefault(ia => ia.IngredientId == addEntity.IngredientId); 
                 if (found != null) 
                     found.Amount += addEntity.Amount;
                 else

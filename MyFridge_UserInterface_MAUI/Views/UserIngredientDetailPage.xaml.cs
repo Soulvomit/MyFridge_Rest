@@ -4,20 +4,19 @@ namespace MyFridge_UserInterface_MAUI.Views;
 
 public partial class UserIngredientDetailPage : ContentPage
 {
-    private readonly IngredientAmountDetailViewModel _vm;
-    public UserIngredientDetailPage(IngredientAmountDetailViewModel vm)
+    private readonly IngredientAmountDetailViewModel _viewModel;
+    public UserIngredientDetailPage(IngredientAmountDetailViewModel viewModel)
     {
         InitializeComponent();
 
-        _vm = vm;
-        BindingContext = _vm;
+        _viewModel = viewModel;
+        BindingContext = _viewModel;
     }
     private async void OnSaveButtonClicked(object sender, EventArgs e)
     {
-        await _vm.SaveAsync();
-        await Navigation.PopAsync();
+        await _viewModel.RefreshAndSaveAsync();
+        await _viewModel.NavigateBack();
     }
-
     private void OnAmountCompleted(object sender, EventArgs e)
     {
         (sender as Entry).Unfocus();

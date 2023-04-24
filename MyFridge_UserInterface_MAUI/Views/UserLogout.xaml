@@ -3,43 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel="clr-namespace:MyFridge_UserInterface_MAUI.ViewModel"
              x:Class="MyFridge_UserInterface_MAUI.Views.UserLogoutPage"
-             Title="User Logout"
-             BackgroundColor="#f0f4f8"
-             Shell.TabBarIsVisible="False"
-             Shell.FlyoutBehavior="Disabled">
+             Loaded="OnLoaded">
 
-    <Shell.BackButtonBehavior>
+    <!--<Shell.BackButtonBehavior>
         <BackButtonBehavior IsEnabled="False" IsVisible="False"/>
-    </Shell.BackButtonBehavior>
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Style TargetType="Label">
-                <Setter Property="FontFamily" Value="Roboto" />
-                <Setter Property="FontSize" Value="16" />
-                <Setter Property="TextColor" Value="#4a4a4a" />
-            </Style>
-            <Style TargetType="Button">
-                <Setter Property="FontFamily" Value="Roboto" />
-                <Setter Property="FontSize" Value="16" />
-                <Setter Property="TextColor" Value="White" />
-                <Setter Property="BackgroundColor" Value="#6ab04c" />
-                <Setter Property="CornerRadius" Value="5" />
-                <Setter Property="Margin" Value="10" />
-            </Style>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
-    <StackLayout VerticalOptions="CenterAndExpand" 
-                 HorizontalOptions="CenterAndExpand">
-        <Label x:DataType="viewModel:UserViewModel"
-               Text="{Binding User.Email}"
-               FontFamily="Roboto" 
-               FontSize="24" 
-               TextColor="#4a4a4a" 
-               HorizontalOptions="Center" />
-        <Button Text="Logout" 
-                Clicked="OnLogoutButtonClicked"
-                Margin="10,50,10,0" />
-    </StackLayout>
+    </Shell.BackButtonBehavior>-->
+    
 </ContentPage>

@@ -7,78 +7,61 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
 {
     public class UserIngredientViewModel : BindableObject
     {
-        private readonly IngredientAmountService _iaService;
+        private readonly IngredientAmountService _ingredientAmountService;
         private readonly CurrentUserService _cUserService;
-        private readonly IngredientService _ingredientService;
-        private ObservableCollection<IngredientAmountDetailViewModel> ingredientDetails;
-
-        public ObservableCollection<IngredientAmountDetailViewModel> IngredientDetails
+        private IEnumerable<IngredientAmountDto> userIngredients;
+        private ObservableCollection<IngredientAmountDetailViewModel> userIngredientDetails;
+        public ObservableCollection<IngredientAmountDetailViewModel> UserIngredientDetails
         {
-            get => ingredientDetails;
+            get => userIngredientDetails;
             private set
             {
-                ingredientDetails = value;
-                OnPropertyChanged(nameof(IngredientDetails));
+                userIngredientDetails = value;
+                OnPropertyChanged(nameof(UserIngredientDetails));
             }
         }
-        public UserIngredientViewModel(
-            CurrentUserService cUserService,
-            IngredientService ingredientService,
-            IngredientAmountService iaService)
+        public UserIngredientViewModel(CurrentUserService cUserService, IngredientAmountService ingredientAmountService)
         {
             _cUserService = cUserService;
-            _ingredientService = ingredientService;
-            _iaService = iaService;
-            ingredientDetails = new();
+            _ingredientAmountService = ingredientAmountService;
+            userIngredientDetails = new();
         }
-        public async Task GetDetailsAsync()
+        public async Task RefreshUserIngredientsAsync()
         {
             UserAccountDto user = await _cUserService.GetUserAsync();
-            IngredientDetails = ConvertToViewModel(user.Ingredients.OrderBy(i => i.Ingredient.Name));
+            userIngredients = user.Ingredients;
+            UserIngredientDetails = ToViewModel(userIngredients.OrderBy(i => i.Ingredient.Name));
         }
 
-        public async Task GetDetailsLazyAsync()
+        public void GetUserIngredientsFilteredLazy(string filter)
         {
-            UserAccountDto user = await _cUserService.GetUserLazyAsync();
-            IngredientDetails = ConvertToViewModel(user.Ingredients.OrderBy(i => i.Ingredient.Name));
-
+            if(string.IsNullOrEmpty(filter))
+                UserIngredientDetails = ToViewModel(userIngredients.OrderBy(i => i.Ingredient.Name));
+            else
+                UserIngredientDetails = ToViewModel(userIngredients
+                    .Where(i => i.Ingredient.Name.ToLower().StartsWith(filter.ToLower()))
+                    .OrderBy(i => i.Ingredient.Name));
         }
-
-        public async Task GetDetailsFilteredLazyAsync(string filter)
+        public async Task PushIngredientDetailAsync(INavigation nav, IngredientAmountDetailViewModel detail)
         {
-            UserAccountDto user = await _cUserService.GetUserLazyAsync();
-            IngredientDetails = ConvertToViewModel(user.Ingredients
-                .Where(i => i.Ingredient.Name.ToLower().StartsWith(filter.ToLower()))
-                .OrderBy(i => i.Ingredient.Name).ToList());
+            await nav.PushAsync(new UserIngredientDetailPage(detail));
         }
-        public void UpdateDetails(List<IngredientAmountDetailViewModel> newDetails)
+        public async Task NavigateToGroceriesAsync()
         {
-            IngredientDetails.Clear();
-            foreach (var item in newDetails)
-            {
-                IngredientDetails.Add(item);
-            }
+            await Shell.Current.GoToAsync($"/" + nameof(IngredientPage));
         }
-        public ObservableCollection<IngredientAmountDetailViewModel> ConvertToViewModel(IEnumerable<IngredientAmountDto> dtos)
+        private ObservableCollection<IngredientAmountDetailViewModel> ToViewModel(IEnumerable<IngredientAmountDto> ingredients)
         {
             ObservableCollection<IngredientAmountDetailViewModel> viewModels = new();
-            foreach (IngredientAmountDto dto in dtos)
+            foreach (IngredientAmountDto ingredient in ingredients)
             {
-                IngredientAmountDetailViewModel viewModel = new(_cUserService, _iaService)
+                IngredientAmountDetailViewModel viewModel = new(_cUserService, _ingredientAmountService)
                 {
-                    IngredientAmount = dto
+                    IngredientAmount = ingredient
                 };
                 viewModels.Add(viewModel);
             }
             return viewModels;
-        }
-        public async Task NavigateToDetailAsync(INavigation nav, IngredientAmountDetailViewModel detail)
-        {
-            await nav.PushAsync(new UserIngredientDetailPage(detail));
-        }
-        public async Task NavigateToGroceriesAsync(INavigation nav)
-        {
-            await nav.PushAsync(new IngredientPage(new IngredientViewModel(_cUserService, _ingredientService)));
         }
     }
 }

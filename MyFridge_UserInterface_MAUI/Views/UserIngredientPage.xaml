@@ -21,9 +21,9 @@
                     FontSize="20"
                     FontAttributes="Bold" />
         </StackLayout>
-        <CollectionView ItemsSource="{Binding IngredientDetails}"
+        <CollectionView ItemsSource="{Binding UserIngredientDetails}"
                         SelectionMode="Single"
-                        SelectionChanged="OnDetailSelectionChanged">
+                        SelectionChanged="OnIngredientSelectionChanged">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewModel:IngredientAmountDetailViewModel">
                     <Frame Grid.RowSpan="2"

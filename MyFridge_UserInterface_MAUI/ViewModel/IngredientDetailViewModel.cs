@@ -1,13 +1,9 @@
 ﻿using MyFridge_Library_MAUI_DataTransfer.DataTransferObject;
-using MyFridge_UserInterface_MAUI.Service;
-using System.ComponentModel;
 
 namespace MyFridge_UserInterface_MAUI.ViewModel
 {
-    public class IngredientDetailViewModel : INotifyPropertyChanged
+    public class IngredientDetailViewModel : BindableObject
     {
-        private readonly CurrentUserService _cUserService;
-        private readonly IngredientService _ingredientService;
         public IngredientDto Ingredient { get; set; }
         public string Name
         {
@@ -19,8 +15,6 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
                 OnPropertyChanged(nameof(Name));
             }
         }
-        public Color NameColor { get; set; } = Colors.White;
-        public Color AmountColor { get; set; } = Colors.White;
         public string UnitStr
         {
             get
@@ -32,17 +26,6 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
                 else
                     return "pieces";
             }
-        }
-        public IngredientDetailViewModel(CurrentUserService cUserService,
-            IngredientService ingredientService)
-        {
-            _cUserService = cUserService;
-            _ingredientService = ingredientService;
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

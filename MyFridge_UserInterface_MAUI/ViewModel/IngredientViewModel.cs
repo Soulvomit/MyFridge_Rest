@@ -1,62 +1,68 @@
 ﻿using MyFridge_Library_MAUI_DataTransfer.DataTransferObject;
 using MyFridge_UserInterface_MAUI.Service;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 
 namespace MyFridge_UserInterface_MAUI.ViewModel
 {
-    public class IngredientViewModel : INotifyPropertyChanged
+    public class IngredientViewModel : BindableObject
     {
-        private List<IngredientDto> allIngredients;
-        private ObservableCollection<IngredientDetailViewModel> ingredientDetails;
-        //private readonly CurrentUserService _cUserService;
-        public CurrentUserService _cUserService;
+        private readonly CurrentUserService _currentUserService;
         private readonly IngredientService _ingredientService;
+        private IEnumerable<IngredientDto> ingredients;
+        private ObservableCollection<IngredientDetailViewModel> ingredientDetails;
         public ObservableCollection<IngredientDetailViewModel> IngredientDetails
         {
             get => ingredientDetails;
             private set
             {
                 ingredientDetails = value;
+
                 OnPropertyChanged(nameof(IngredientDetails));
             }
         }
-        public IngredientViewModel(CurrentUserService cUserService,
-            IngredientService ingredientService)
+        public IngredientViewModel(CurrentUserService currentUserService, IngredientService ingredientService)
         {
-            _cUserService = cUserService;
+            _currentUserService = currentUserService;
             _ingredientService = ingredientService;
             ingredientDetails = new();
-            allIngredients = new();
         }
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
+        public async Task RefreshIngredientsAsync()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            ingredients = await _ingredientService.GetAllAsync();
+            IngredientDetails = ToViewModel(ingredients.OrderBy(i => i.Name).ToList());
         }
-        public async Task GetIngredientDetailsAsync()
+        public void GetIngredientsFilteredLazy(string filter)
         {
-            allIngredients = await _ingredientService.GetAllAsync();
-            IngredientDetails = ConvertIngredientDtos(allIngredients.OrderBy(i => i.Name).ToList());
+            if (string.IsNullOrEmpty(filter)) 
+                IngredientDetails = ToViewModel(ingredients.OrderBy(i => i.Name).ToList());
+            else
+                IngredientDetails = ToViewModel(ingredients
+                    .Where(i => i.Name.ToLower().StartsWith(filter.ToLower()))
+                    .OrderBy(i => i.Name).ToList());
         }
-        public void GetIngredientDetailsLazyAsync()
+        public async Task AddGrocery(IngredientDetailViewModel ingredient, string amountResult)
         {
-            IngredientDetails =
-                ConvertIngredientDtos(allIngredients.OrderBy(i => i.Name).ToList());
+            bool parsed = uint.TryParse(amountResult, out uint amount);
+            if (parsed)
+            {
+                IngredientAmountDto dto = new()
+                {
+                    Ingredient = ingredient.Ingredient,
+                    Amount = amount
+                };
+                await _currentUserService.Client.AddIngredientAsync(dto, _currentUserService.CurrentUserId);
+            }
         }
-
-        public void GetIngredientDetailsFilteredLazyAsync(string filter)
+        public async Task NavigateBack()
         {
-            IngredientDetails = ConvertIngredientDtos(allIngredients
-                .Where(i => i.Name.ToLower().StartsWith(filter.ToLower()))
-                .OrderBy(i => i.Name).ToList());
+            await Shell.Current.GoToAsync($"..");
         }
-        public ObservableCollection<IngredientDetailViewModel> ConvertIngredientDtos(List<IngredientDto> dtos)
+        private ObservableCollection<IngredientDetailViewModel> ToViewModel(IEnumerable<IngredientDto> ingredients)
         {
             ObservableCollection<IngredientDetailViewModel> viewModels = new();
-            foreach (IngredientDto dto in dtos)
+            foreach (IngredientDto dto in ingredients)
             {
-                IngredientDetailViewModel viewModel = new(_cUserService, _ingredientService)
+                IngredientDetailViewModel viewModel = new()
                 {
                     Ingredient = dto
                 };

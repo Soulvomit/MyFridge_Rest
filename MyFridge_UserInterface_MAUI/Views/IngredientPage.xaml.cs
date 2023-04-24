@@ -1,56 +1,36 @@
-using MyFridge_Library_MAUI_DataTransfer.DataTransferObject;
 using MyFridge_UserInterface_MAUI.ViewModel;
 
 namespace MyFridge_UserInterface_MAUI.Views;
 
 public partial class IngredientPage : ContentPage
 {
-    private readonly IngredientViewModel _vm;
-    public IngredientPage(IngredientViewModel vm)
+    private readonly IngredientViewModel _viewModel;
+    public IngredientPage(IngredientViewModel viewModel)
     {
         InitializeComponent();
 
-        _vm = vm;
-        BindingContext = _vm;
+        _viewModel = viewModel;
+        BindingContext = _viewModel;
     }
     protected override async void OnAppearing()
     {
         base.OnAppearing();
 
-        await _vm.GetIngredientDetailsAsync();
+        await _viewModel.RefreshIngredientsAsync();
     }
     private void OnSearchTextChanged(object sender, TextChangedEventArgs e)
     {
-        if (string.IsNullOrEmpty(e.NewTextValue))
-            _vm.GetIngredientDetailsLazyAsync();
-        else
-            _vm.GetIngredientDetailsFilteredLazyAsync(e.NewTextValue);
+        _viewModel.GetIngredientsFilteredLazy(e.NewTextValue);
     }
     private async void OnIngredientSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (e.CurrentSelection.FirstOrDefault() is IngredientDetailViewModel selectedIngredient)
         {
-            bool parsed = uint.TryParse(
-                await DisplayPromptAsync(
-                    "Add Amount",
-                    "Enter the amount",
-                    "OK",
-                    "Cancel",
-                    "0",
-                    -1,
-                    Keyboard.Numeric,
-                    ""),
-                out uint amount);
-            if (parsed)
-            {
-                IngredientAmountDto dto = new()
-                {
-                    Ingredient = selectedIngredient.Ingredient,
-                    Amount = amount
-                };
-                await _vm._cUserService.Client.AddIngredientAsync(dto, _vm._cUserService.CurrentUserId);
-                await Navigation.PopAsync();
-            }
+            string amountResult = await DisplayPromptAsync( "Add Amount", "Enter the amount", "OK", 
+                                                            "Cancel", "0", -1, Keyboard.Numeric, "");
+            await _viewModel.AddGrocery(selectedIngredient, amountResult);
+            //navigate back
+            await _viewModel.NavigateBack();
         }
         //deselect the item
         (sender as CollectionView).SelectedItem = null;

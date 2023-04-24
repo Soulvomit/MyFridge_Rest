@@ -22,21 +22,21 @@ namespace MyFridge_UserInterface_MAUI
             builder.Services.AddSingleton<UserService>();
             builder.Services.AddSingleton<IngredientService>();
             builder.Services.AddSingleton<IngredientAmountService>();
-            builder.Services.AddSingleton<RecipyService>();
+            builder.Services.AddSingleton<RecipeService>();
             builder.Services.AddSingleton<UserViewModel>();
 
             builder.Services.AddTransient<UserLoginViewModel>();
             builder.Services.AddTransient<UserIngredientViewModel>();
             builder.Services.AddTransient<IngredientViewModel>();
             builder.Services.AddTransient<IngredientAmountDetailViewModel>();
-            builder.Services.AddTransient<RecipyViewModel>();
-            builder.Services.AddTransient<RecipyDetailViewModel>();
+            builder.Services.AddTransient<RecipeViewModel>();
+            builder.Services.AddTransient<RecipeDetailViewModel>();
 
             builder.Services.AddTransient<UserLoginPage>();
             builder.Services.AddTransient<UserInfoPage>();
             builder.Services.AddTransient<UserIngredientPage>();
             builder.Services.AddTransient<IngredientPage>();
-            builder.Services.AddTransient<RecipyPage>();
+            builder.Services.AddTransient<RecipePage>();
 
 #if DEBUG
 		    builder.Logging.AddDebug();

@@ -3,7 +3,7 @@ using MyFridge_Library_Data.Model;
 
 namespace MyFridge_Library_Data.Data.Repository.Interface
 {
-    public interface IRecipyRepository : IRepository<Recipy>
+    public interface IRecipeRepository : IRepository<Recipe>
    
     {
         public Task<bool> AddIngredientAsync(int id, Ingredient addEntity, float addAmount);

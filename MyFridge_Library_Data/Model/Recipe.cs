@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace MyFridge_Library_Data.Model
 {
-    public class Recipy : DatabaseItem
+    public class Recipe : DatabaseItem
     {
         [Required, MaxLength(50)]
         public required string Name { get; set; }

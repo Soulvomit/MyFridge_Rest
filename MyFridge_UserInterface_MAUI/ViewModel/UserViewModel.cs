@@ -6,30 +6,30 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
 {
     public class UserViewModel : BindableObject
     {
-        private readonly CurrentUserService _cUserService;
-        private readonly IngredientAmountService _iaService;
+        private readonly CurrentUserService _currentUserService;
+        private readonly IngredientAmountService _ingredientAmountService;
 
         public UserAccountDto User { get; private set; }
-        public string Firstname
+        public string FirstName
         {
-            get => User.Firstname;
+            get => User.FirstName;
             set
             {
                 if (string.IsNullOrEmpty(value)) return;
 
-                User.Firstname = value;
-                OnPropertyChanged(nameof(Firstname));
+                User.FirstName = value;
+                OnPropertyChanged(nameof(FirstName));
             }
         }
-        public string Lastname
+        public string LastName
         {
-            get => User.Lastname;
+            get => User.LastName;
             set
             {
                 if (string.IsNullOrEmpty(value)) return;
 
-                User.Lastname = value;
-                OnPropertyChanged(nameof(Lastname));
+                User.LastName = value;
+                OnPropertyChanged(nameof(LastName));
             }
         }
 
@@ -56,14 +56,14 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
                 OnPropertyChanged(nameof(Password));
             }
         }
-        public ulong PhoneNumber
+        public string PhoneNumber
         {
-            get => User.PhoneNumber;
+            get => User.PhoneNumber.ToString();
             set
             {
-                if (!ulong.TryParse(User.PhoneNumber.ToString(), out ulong phonenum)) return;
+                if (!ulong.TryParse(value, out ulong phoneNumber)) return;
 
-                User.PhoneNumber = value;
+                User.PhoneNumber = phoneNumber;
                 OnPropertyChanged(nameof(PhoneNumber));
             }
         }
@@ -80,36 +80,36 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
 
         public UserViewModel(CurrentUserService cUserService, IngredientAmountService iaService)
         {
-            _cUserService = cUserService;
+            _currentUserService = cUserService;
         }
 
         public async Task InitializeAsync(int userId)
         {
-            _cUserService.CurrentUserId = userId;
-            User = await _cUserService.GetUserAsync();
+            _currentUserService.CurrentUserId = userId;
+            User = await _currentUserService.GetUserAsync();
         }
 
         public async Task ReinitializeAsync()
         {
-            UserAccountDto user = await _cUserService.GetUserLazyAsync();
+            UserAccountDto user = await _currentUserService.GetUserLazyAsync();
             User = user;
-            Firstname = user.Firstname;
-            Lastname = user.Lastname;
+            FirstName = user.FirstName;
+            LastName = user.LastName;
             Email = user.Email;
             Password = user.Password;
-            PhoneNumber = user.PhoneNumber;
+            PhoneNumber = user.PhoneNumber.ToString();
             BirthDate = user.BirthDate; 
         }
 
         public async Task SaveAsync()
         {
-            if (string.IsNullOrEmpty(User.Firstname)) return;
-            if (string.IsNullOrEmpty(User.Lastname)) return;
+            if (string.IsNullOrEmpty(User.FirstName)) return;
+            if (string.IsNullOrEmpty(User.LastName)) return;
             if (string.IsNullOrEmpty(User.Email)) return;
             if (string.IsNullOrEmpty(User.Password)) return;
-            if (!ulong.TryParse(User.PhoneNumber.ToString(), out ulong phonenum)) return;
+            if (!ulong.TryParse(User.PhoneNumber.ToString(), out ulong phoneNumber)) return;
 
-            await _cUserService.Client.UpsertAsync(User);
+            await _currentUserService.Client.UpsertAsync(User);
         }
 
         public ObservableCollection<IngredientAmountDetailViewModel> IngredientsToViewModel()
@@ -117,7 +117,7 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
             ObservableCollection<IngredientAmountDetailViewModel> viewModels = new();
             foreach (IngredientAmountDto dto in User.Ingredients)
             {
-                IngredientAmountDetailViewModel viewModel = new(_cUserService, _iaService)
+                IngredientAmountDetailViewModel viewModel = new(_currentUserService, _ingredientAmountService)
                 {
                     IngredientAmount = dto
                 };

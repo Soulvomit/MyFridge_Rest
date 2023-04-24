@@ -11,7 +11,7 @@ namespace MyFridge_WebAPI.UoW.Interface
         IIngredientAmountRepository IngredientAmounts { get; set; }
         IGroceryRepository Groceries { get; set; }
         IOrderRepository Orders { get; set; }
-        IRecipyRepository Recipies { get; set; }
+        IRecipeRepository Recipes { get; set; }
 
         Task CompleteAsync();
     }

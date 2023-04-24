@@ -17,7 +17,7 @@ namespace MyFridge_WebAPI.UoW
         public IIngredientAmountRepository IngredientAmounts { get; set; }
         public IGroceryRepository Groceries { get; set; }
         public IOrderRepository Orders { get; set; }
-        public IRecipyRepository Recipies { get; set; }
+        public IRecipeRepository Recipes { get; set; }
         public UnitOfWork(ApplicationDbContext context, ILoggerFactory loggerFactory)
         {
             _context = context;
@@ -30,7 +30,7 @@ namespace MyFridge_WebAPI.UoW
             IngredientAmounts = new IngredientAmountRepository(_context, _logger);
             Groceries = new GroceryRepository(_context, _logger);
             Orders = new OrderRepository(_context, _logger);
-            Recipies = new RecipyRepository(_context, _logger);
+            Recipes = new RecipeRepository(_context, _logger);
 
             ApplicationDbContextSeeder.Seed(_context);
         }

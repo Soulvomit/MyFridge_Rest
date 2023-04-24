@@ -1,28 +1,14 @@
-using MyFridge_UserInterface_MAUI.Service;
-using MyFridge_UserInterface_MAUI.ViewModel;
-
 namespace MyFridge_UserInterface_MAUI.Views;
 
 public partial class UserLogoutPage : ContentPage
 {
-    private UserViewModel _vm;
-    public UserLogoutPage(UserViewModel vm)
+    public UserLogoutPage()
     {
         InitializeComponent();
-
-        _vm = vm;
-        BindingContext = _vm;
     }
 
-    protected override void OnAppearing()
+    private async void OnLoaded(object sender, EventArgs e)
     {
-        base.OnAppearing();
-    }
-
-    private async void OnLogoutButtonClicked(object sender, EventArgs e)
-    {
-        //UserService.Instance.UserVM = null;
-
-        await Navigation.PopAsync();
+        await Shell.Current.GoToAsync($"//" + nameof(UserLoginPage));
     }
 }

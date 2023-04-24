@@ -3,20 +3,20 @@ using System.Net.Http.Json;
 
 namespace MyFridge_Library_MAUI_Client
 {
-    public class RecipyApiClient
+    public class RecipeApiClient
     {
         private readonly HttpClient _httpClient;
 
-        public RecipyApiClient(string baseAddress)
+        public RecipeApiClient(string baseAddress)
         {
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri(baseAddress);
         }
-        public async Task<List<RecipyDto>> GetAllAsync()
+        public async Task<List<RecipeDto>> GetAllAsync()
         {
-            var response = await _httpClient.GetAsync($"api/Recipy/GetAll");
+            var response = await _httpClient.GetAsync($"api/Recipe/GetAll");
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<List<RecipyDto>>();
+            return await response.Content.ReadFromJsonAsync<List<RecipeDto>>();
         }
     }
 }

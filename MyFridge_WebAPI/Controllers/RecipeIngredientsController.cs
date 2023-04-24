@@ -8,11 +8,11 @@ namespace MyFridge_WebAPI.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class RecipyIngredientsController : ControllerBase
+    public class RecipeIngredientsController : ControllerBase
     {
         private readonly IUnitOfWork _uow;
-        private readonly ILogger<RecipyController> _logger;
-        public RecipyIngredientsController(IUnitOfWork uow, ILogger<RecipyController> logger)
+        private readonly ILogger<RecipeController> _logger;
+        public RecipeIngredientsController(IUnitOfWork uow, ILogger<RecipeController> logger)
         {
             _uow = uow;
             _logger = logger;
@@ -22,7 +22,7 @@ namespace MyFridge_WebAPI.Controllers
         {
             if (!ModelState.IsValid) return new JsonResult(BadRequest());
 
-            bool success = await _uow.Recipies.AddIngredientAsync(id, Map.ToIngredientAmount(dto)!);
+            bool success = await _uow.Recipes.AddIngredientAsync(id, Map.ToIngredientAmount(dto)!);
 
             if (!success) return new JsonResult(NotFound());
 
@@ -33,7 +33,7 @@ namespace MyFridge_WebAPI.Controllers
         [HttpGet]
         public async Task<JsonResult> GetAsync(int id, int iaId)
         {
-            Recipy? recipy = await _uow.Recipies.GetAsync(id);
+            Recipe? recipy = await _uow.Recipes.GetAsync(id);
             if (recipy == null) return new JsonResult(NotFound());
 
             IngredientAmount? ia = recipy.IngredientAmounts.FirstOrDefault(ia => ia.Id == iaId);
@@ -44,16 +44,16 @@ namespace MyFridge_WebAPI.Controllers
         [HttpGet]
         public async Task<JsonResult> GetAllAsync(int id)
         {
-            Recipy? recipy = await _uow.Recipies.GetAsync(id);
+            Recipe? recipy = await _uow.Recipes.GetAsync(id);
             if (recipy == null) return new JsonResult(NotFound());
 
-            return new JsonResult(Map.FromRecipy(recipy).Ingredients);
+            return new JsonResult(Map.FromRecipe(recipy).Ingredients);
         }
 
         [HttpDelete]
         public async Task<JsonResult> DeleteAsync(int id, int iaId)
         {
-            bool success = await _uow.Recipies.RemoveIngredientAsync(id, iaId);
+            bool success = await _uow.Recipes.RemoveIngredientAsync(id, iaId);
 
             if (!success) return new JsonResult(NotFound());
 

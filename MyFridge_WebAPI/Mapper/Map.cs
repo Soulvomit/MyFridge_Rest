@@ -84,8 +84,8 @@ namespace MyFridge_WebAPI.Mapper
             UserAccountDto dto = new UserAccountDto()
             {
                 Id = user.Id,
-                Firstname = user.Firstname,
-                Lastname = user.Lastname,
+                FirstName = user.Firstname,
+                LastName = user.Lastname,
                 Password = user.Password,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
@@ -109,8 +109,8 @@ namespace MyFridge_WebAPI.Mapper
             UserAccount user = new UserAccount()
             {
                 Id = dto.Id,
-                Firstname = dto.Firstname,
-                Lastname = dto.Lastname,
+                Firstname = dto.FirstName,
+                Lastname = dto.LastName,
                 Password = dto.Password,
                 Email = dto.Email,
                 PhoneNumber = dto.PhoneNumber,
@@ -261,11 +261,11 @@ namespace MyFridge_WebAPI.Mapper
         #endregion
 
         #region Recipy
-        public static RecipyDto? FromRecipy(Recipy? recipy)
+        public static RecipeDto? FromRecipe(Recipe? recipy)
         {
             if (recipy == null) return null;
 
-            RecipyDto dto = new RecipyDto()
+            RecipeDto dto = new RecipeDto()
             {
                 Id = recipy.Id,
                 Name = recipy.Name,
@@ -279,11 +279,11 @@ namespace MyFridge_WebAPI.Mapper
 
             return dto;
         }
-        public static Recipy? ToRecipy(RecipyDto? dto)
+        public static Recipe? ToRecipe(RecipeDto? dto)
         {
             if (dto == null) return null;
 
-            Recipy recipy = new Recipy()
+            Recipe recipy = new Recipe()
             {
                 Id = dto.Id,
                 Name = dto.Name,

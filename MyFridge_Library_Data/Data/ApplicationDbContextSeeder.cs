@@ -209,9 +209,9 @@ namespace MyFridge_Library_Data.Data
         #region RecipySeed
         public static void RecipySeed(ApplicationDbContext context)
         {
-            List<Recipy> tempRecipies = new List<Recipy>()
+            List<Recipe> tempRecipies = new List<Recipe>()
             {
-                new Recipy()
+                new Recipe()
                 {
                     Name = "Spaghetti Bolognese",
                     Method = """
@@ -237,7 +237,7 @@ namespace MyFridge_Library_Data.Data
                         new IngredientAmount() { IngredientId = 27, Amount = 6.25f } // Garlic
                     }
                 },
-                new Recipy()
+                new Recipe()
                 {
                     Name = "Grilled Chicken Salad",
                     Method = """
@@ -259,7 +259,7 @@ namespace MyFridge_Library_Data.Data
                         new IngredientAmount() { IngredientId = 52, Amount = 0.25f } // Bell Pepper
                     }
                 },
-                new Recipy()
+                new Recipe()
                 {
                     Name = "Fried Rice",
                     Method = """
@@ -287,7 +287,7 @@ namespace MyFridge_Library_Data.Data
                         new IngredientAmount() { IngredientId = 18, Amount = 0.5f }
                     }
                 },
-                new Recipy()
+                new Recipe()
                 {
                     Name = "Cheese Omelette",
                     Method = """
@@ -306,7 +306,7 @@ namespace MyFridge_Library_Data.Data
                         new IngredientAmount() { IngredientId = 72, Amount = 30 } // Grated Cheese
                     }
                 },
-                new Recipy()
+                new Recipe()
                 {
                     Name = "Caesar Salad",
                     Method = """
@@ -328,7 +328,7 @@ namespace MyFridge_Library_Data.Data
                         new IngredientAmount() { IngredientId = 122, Amount = 17 }  // Croutons
                     }
                 },
-                new Recipy()
+                new Recipe()
                 {
                     Name = "Grilled Cheese Sandwich",
                     Method = """
@@ -345,7 +345,7 @@ namespace MyFridge_Library_Data.Data
                         new IngredientAmount() { IngredientId = 72, Amount = 40 } // Cheddar cheese
                     }
                 },
-                new Recipy()
+                new Recipe()
                 {
                     Name = "Chicken and Vegetable Stir Fry",
                     Method = """
@@ -369,7 +369,7 @@ namespace MyFridge_Library_Data.Data
                         new IngredientAmount() { IngredientId = 24, Amount = 150 }  // Rice
                     }
                 },
-                new Recipy()
+                new Recipe()
                 {
                     Name = "Creamy Tomato Pasta",
                     Method = """
@@ -393,7 +393,7 @@ namespace MyFridge_Library_Data.Data
                         new IngredientAmount() { IngredientId = 70, Amount = 20 }  // Parmesan Cheese
                     }
                 },
-                new Recipy()
+                new Recipe()
                 {
                     Name = "Pancakes",
                     Method = """
@@ -415,7 +415,7 @@ namespace MyFridge_Library_Data.Data
                         new IngredientAmount() { IngredientId = 124, Amount = 50 }, // Maple syrup or other toppings
                     }
                 },
-                new Recipy()
+                new Recipe()
                 {
                     Name = "Tomato Soup",
                     Method = """
@@ -438,7 +438,7 @@ namespace MyFridge_Library_Data.Data
                         new IngredientAmount() { IngredientId = 26, Amount = 1 }
                     }
                 },
-                new Recipy()
+                new Recipe()
                 {
                     Name = "Chicken Alfredo",
                     Method = """
@@ -461,7 +461,7 @@ namespace MyFridge_Library_Data.Data
                         new IngredientAmount() { IngredientId = 70, Amount = 25 }
                     }
                 },
-                new Recipy()
+                new Recipe()
                 {
                     Name = "Chicken and Vegetable Pie",
                     Method = """
@@ -491,7 +491,7 @@ namespace MyFridge_Library_Data.Data
                         new IngredientAmount() { IngredientId = 29, Amount = 1 } // Black Pepper
                     }
                 },
-                new Recipy()
+                new Recipe()
                 {
                     Name = "Beef Lasagna",
                     Method = """
@@ -528,7 +528,7 @@ namespace MyFridge_Library_Data.Data
                         new IngredientAmount { IngredientId = 116, Amount = 200 }
                     }
                 },
-                new Recipy() 
+                new Recipe() 
                 { 
                     Name = "Buttered Popcorn", 
                     Method = """
@@ -542,7 +542,7 @@ namespace MyFridge_Library_Data.Data
                         new IngredientAmount() { IngredientId = 8, Amount = 100 }
                     },
                 },
-                new Recipy() 
+                new Recipe() 
                 { 
                     Name = "Cafe Latte", 
                     Method = """
