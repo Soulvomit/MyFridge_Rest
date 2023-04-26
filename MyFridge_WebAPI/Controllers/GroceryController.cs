@@ -45,6 +45,26 @@ namespace MyFridge_WebAPI.Controllers
             return new JsonResult(Map.FromGrocery(grocery));
         }
         [HttpGet]
+        public async Task<JsonResult> GetFilteredAsync(string filter, int minLength = 2)
+        {
+            Func<Grocery, bool> filterFunc = grocery =>
+                grocery.IngredientAmount.Ingredient.Name.ToLower().Contains(filter.ToLower()) ||
+                grocery.Brand.ToLower().Contains(filter.ToLower());
+
+            Func<Grocery, object> orderByFunc = grocery => grocery.IngredientAmount.Ingredient.Name;
+
+            List<GroceryDto> dtos = new();
+            List<Grocery>? filteredGroceries = await _uow.Groceries.Query(filterFunc, orderByFunc, filter, minLength);
+
+            if (filteredGroceries == null) return new JsonResult(NotFound());
+
+            foreach (Grocery grocery in filteredGroceries)
+            {
+                dtos.Add(Map.FromGrocery(grocery)!);
+            }
+            return new JsonResult(dtos);
+        }
+        [HttpGet]
         public async Task<JsonResult> GetAllAsync()
         {
             List<GroceryDto> dtos = new List<GroceryDto>();

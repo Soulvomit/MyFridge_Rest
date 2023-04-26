@@ -22,7 +22,7 @@ namespace MyFridge_WebAPI.Controllers
         {
             if (!ModelState.IsValid) return new JsonResult(BadRequest());
 
-            bool success = await _uow.Recipes.AddIngredientAsync(id, Map.ToIngredientAmount(dto)!);
+            bool success = await _uow.Recipes.AddIngredientAmountAsync(id, Map.ToIngredientAmount(dto)!);
 
             if (!success) return new JsonResult(NotFound());
 
@@ -53,7 +53,7 @@ namespace MyFridge_WebAPI.Controllers
         [HttpDelete]
         public async Task<JsonResult> DeleteAsync(int id, int iaId)
         {
-            bool success = await _uow.Recipes.RemoveIngredientAsync(id, iaId);
+            bool success = await _uow.Recipes.RemoveIngredientAmountAsync(id, iaId);
 
             if (!success) return new JsonResult(NotFound());
 

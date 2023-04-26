@@ -12,6 +12,8 @@ namespace MyFridge_Library_Data.Model
         public required virtual IngredientAmount? IngredientAmount { get; set; }
         [MaxLength(50)]
         public string? Brand { get; set; } = string.Empty;
+        [MaxLength(50)]
+        public string? Category { get; set; } = string.Empty;
         public float SalePrice { get; set; } = 0;
         [MaxLength(50)]
         public string? ItemIdentifier { get; set; } = string.Empty;

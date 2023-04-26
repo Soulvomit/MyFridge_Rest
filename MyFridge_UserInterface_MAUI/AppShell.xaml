@@ -4,7 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MyFridge_UserInterface_MAUI"
-    xmlns:views="clr-namespace:MyFridge_UserInterface_MAUI.Views"
+    xmlns:view="clr-namespace:MyFridge_UserInterface_MAUI.View"
     BackgroundColor="#f0f4f8"
     Shell.BackgroundColor="#f0f4f8"
     Shell.TitleColor="#f0f4f8"
@@ -62,7 +62,7 @@
 
     <ShellItem Route="UserLoginPage" 
                FlyoutItemIsVisible="False">
-        <ShellContent ContentTemplate="{DataTemplate views:UserLoginPage}"/>
+        <ShellContent ContentTemplate="{DataTemplate view:UserLoginPage}"/>
     </ShellItem>
 
     <FlyoutItem FlyoutDisplayOptions="AsMultipleItems">
@@ -75,23 +75,23 @@
             <ShellContent
                 Title="Information"
                 Icon="dotnet_bot.png"
-                ContentTemplate="{DataTemplate views:UserInfoPage}"
+                ContentTemplate="{DataTemplate view:UserInfoPage}"
                 Route="UserInfoPage" />
             <ShellContent
                 Title="Logout"
                 Icon="dotnet_bot.png"
-                ContentTemplate="{DataTemplate views:UserLogoutPage}"
+                ContentTemplate="{DataTemplate view:UserLogoutPage}"
                 Route="UserLogoutPage" />
         </Tab>
         <ShellContent
             Title="Ingredients"
             Icon="dotnet_bot.png"
-            ContentTemplate="{DataTemplate views:UserIngredientPage}"
+            ContentTemplate="{DataTemplate view:UserIngredientPage}"
             Route="UserIngredientPage" />
         <ShellContent
             Title="Recipies"
             Icon="dotnet_bot.png"
-            ContentTemplate="{DataTemplate views:RecipePage}"
+            ContentTemplate="{DataTemplate view:RecipePage}"
             Route="RecipyPage" />
     </FlyoutItem>
 
@@ -100,22 +100,22 @@
         --><!--<ShellContent
             Title="Login"
             Icon="dotnet_bot.png"
-            ContentTemplate="{DataTemplate views:UserLoginPage}"
+            ContentTemplate="{DataTemplate view:UserLoginPage}"
             Route="UserLoginPage" />--><!--
         <ShellContent
             Title="Information"
             Icon="dotnet_bot.png"
-            ContentTemplate="{DataTemplate views:UserInfoPage}"
+            ContentTemplate="{DataTemplate view:UserInfoPage}"
             Route="UserInfoPage" />
         <ShellContent
             Title="Ingredients"
             Icon="dotnet_bot.png"
-            ContentTemplate="{DataTemplate views:UserIngredientPage}"
+            ContentTemplate="{DataTemplate view:UserIngredientPage}"
             Route="UserIngredientPage" />
         <ShellContent
             Title="Recipies"
             Icon="dotnet_bot.png"
-            ContentTemplate="{DataTemplate views:RecipyPage}"
+            ContentTemplate="{DataTemplate view:RecipyPage}"
             Route="RecipyPage" />
     </TabBar>-->
 </Shell>

@@ -1,12 +1,11 @@
 ﻿using MyFridge_Library_MAUI_DataTransfer.DataTransferObject;
-using MyFridge_UserInterface_MAUI.Service;
+using MyFridge_UserInterface_MAUI.Service.UoW.Interface;
 
 namespace MyFridge_UserInterface_MAUI.ViewModel
 {
     public class UserLoginViewModel : BindableObject
     {
-        private readonly UserViewModel _userViewModel;
-        private readonly CurrentUserService _cUserService;
+        private readonly IUnitOfWork _uow;
         private string loginResultMsg;
         private string entryEmail;
         private string entryPassword;
@@ -16,7 +15,6 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
             set 
             {
                 entryEmail = value;
-
                 OnPropertyChanged(nameof(EntryEmail));
             }
         }
@@ -26,7 +24,6 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
             set
             {
                 entryPassword = value;
-
                 OnPropertyChanged(nameof(EntryPassword));
             }
         }
@@ -39,10 +36,9 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
                 OnPropertyChanged(nameof(LoginResultMsg));
             }
         }
-        public UserLoginViewModel(CurrentUserService cUserService, UserViewModel userViewModel)
+        public UserLoginViewModel(IUnitOfWork uow)
         {
-            _cUserService = cUserService;
-            _userViewModel = userViewModel;
+            _uow = uow;
 
             EntryEmail = "email@email.com";
             EntryPassword = "password";
@@ -50,14 +46,12 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
 
         public async Task<bool> LoginAsync()
         {
-            UserAccountDto user = await _cUserService.Client.GetByEmailAsync(EntryEmail);
+            UserAccountDto user = await _uow.UserClient.GetByEmailAsync(EntryEmail);
 
             if (user.Id != 0)
             {
                 if (EntryPassword == user.Password)
                 {
-                    await _userViewModel.InitializeAsync(user.Id);
-
                     return true;
                 }
                 else

@@ -58,45 +58,52 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\IngredientPage.xaml">
+	  <MauiXaml Update="View\GrocerytPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\RecipeDetailPage.xaml">
+	  <MauiXaml Update="View\Detail\DetailRecipePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\UserIngredientDetailPage.xaml">
+	  <MauiXaml Update="View\Detail\DetailUserIngredientPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\RecipePage.xaml">
+	  <MauiXaml Update="View\RecipePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\UserInfoPage.xaml">
+	  <MauiXaml Update="View\UserInfoPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\UserIngredientPage.xaml">
+	  <MauiXaml Update="View\UserIngredientPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\UserLogout.xaml">
+	  <MauiXaml Update="View\UserLogout.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\RecipeDetailPage.xaml.cs">
-	    <DependentUpon>RecipeDetailPage.xaml</DependentUpon>
+	  <Compile Update="View\Detail\DetailRecipePage.xaml.cs">
+	    <DependentUpon>DetailRecipePage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\RecipePage.xaml.cs">
+	  <Compile Update="View\GrocerytPage.xaml.cs">
+	    <DependentUpon>GrocerytPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="View\RecipePage.xaml.cs">
 	    <DependentUpon>RecipePage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\UserIngredientDetailPage.xaml.cs">
-	    <DependentUpon>UserIngredientDetailPage.xaml</DependentUpon>
+	  <Compile Update="View\Detail\DetailUserIngredientPage.xaml.cs">
+	    <DependentUpon>DetailUserIngredientPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\UserInfoPage.xaml.cs">
+	  <Compile Update="View\UserInfoPage.xaml.cs">
 	    <DependentUpon>UserInfoPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\UserLoginPage.xaml.cs">
+	  <Compile Update="View\UserLoginPage.xaml.cs">
 	    <DependentUpon>UserLoginPage.xaml</DependentUpon>
 	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Service\Navigation\Interface\" />
 	</ItemGroup>
 
 </Project>

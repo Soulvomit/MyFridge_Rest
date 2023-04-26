@@ -1,123 +1,103 @@
 ﻿using MyFridge_Library_MAUI_DataTransfer.DataTransferObject;
-using MyFridge_UserInterface_MAUI.Service;
+using MyFridge_UserInterface_MAUI.Service.UoW.Interface;
+using MyFridge_UserInterface_MAUI.ViewModel.Detail;
 using System.Collections.ObjectModel;
 
 namespace MyFridge_UserInterface_MAUI.ViewModel
 {
     public class UserViewModel : BindableObject
     {
-        private readonly CurrentUserService _currentUserService;
-        private readonly IngredientAmountService _ingredientAmountService;
-
-        public UserAccountDto User { get; private set; }
+        private readonly IUnitOfWork _uow;
         public string FirstName
         {
-            get => User.FirstName;
+            get => _uow.UserClient.Lazy.FirstName;
             set
             {
                 if (string.IsNullOrEmpty(value)) return;
 
-                User.FirstName = value;
+                _uow.UserClient.Lazy.FirstName = value;
                 OnPropertyChanged(nameof(FirstName));
             }
         }
         public string LastName
         {
-            get => User.LastName;
+            get => _uow.UserClient.Lazy.LastName;
             set
             {
                 if (string.IsNullOrEmpty(value)) return;
 
-                User.LastName = value;
+                _uow.UserClient.Lazy.LastName = value;
                 OnPropertyChanged(nameof(LastName));
             }
         }
 
         public string Email
         {
-            get => User.Email;
+            get => _uow.UserClient.Lazy.Email;
             set
             {
                 if (string.IsNullOrEmpty(value)) return;
 
-                User.Email = value;
+                _uow.UserClient.Lazy.Email = value;
                 OnPropertyChanged(nameof(Email));
             }
         }
 
         public string Password
         {
-            get => User.Password;
+            get => _uow.UserClient.Lazy.Password;
             set
             {
                 if (string.IsNullOrEmpty(value)) return;
 
-                User.Password = value;
+                _uow.UserClient.Lazy.Password = value;
                 OnPropertyChanged(nameof(Password));
             }
         }
         public string PhoneNumber
         {
-            get => User.PhoneNumber.ToString();
+            get => _uow.UserClient.Lazy.PhoneNumber.ToString();
             set
             {
                 if (!ulong.TryParse(value, out ulong phoneNumber)) return;
 
-                User.PhoneNumber = phoneNumber;
+                _uow.UserClient.Lazy.PhoneNumber = phoneNumber;
                 OnPropertyChanged(nameof(PhoneNumber));
             }
         }
 
         public DateTime BirthDate
         {
-            get => User.BirthDate;
+            get => _uow.UserClient.Lazy.BirthDate;
             set
             {
-                User.BirthDate = value;
+                _uow.UserClient.Lazy.BirthDate = value;
                 OnPropertyChanged(nameof(BirthDate));
             }
         }
 
-        public UserViewModel(CurrentUserService cUserService, IngredientAmountService iaService)
+        public UserViewModel(IUnitOfWork uow)
         {
-            _currentUserService = cUserService;
-        }
-
-        public async Task InitializeAsync(int userId)
-        {
-            _currentUserService.CurrentUserId = userId;
-            User = await _currentUserService.GetUserAsync();
-        }
-
-        public async Task ReinitializeAsync()
-        {
-            UserAccountDto user = await _currentUserService.GetUserLazyAsync();
-            User = user;
-            FirstName = user.FirstName;
-            LastName = user.LastName;
-            Email = user.Email;
-            Password = user.Password;
-            PhoneNumber = user.PhoneNumber.ToString();
-            BirthDate = user.BirthDate; 
+            _uow = uow;
         }
 
         public async Task SaveAsync()
         {
-            if (string.IsNullOrEmpty(User.FirstName)) return;
-            if (string.IsNullOrEmpty(User.LastName)) return;
-            if (string.IsNullOrEmpty(User.Email)) return;
-            if (string.IsNullOrEmpty(User.Password)) return;
-            if (!ulong.TryParse(User.PhoneNumber.ToString(), out ulong phoneNumber)) return;
+            if (string.IsNullOrEmpty(FirstName)) return;
+            if (string.IsNullOrEmpty(LastName)) return;
+            if (string.IsNullOrEmpty(Email)) return;
+            if (string.IsNullOrEmpty(Password)) return;
+            if (!ulong.TryParse(PhoneNumber.ToString(), out ulong phoneNumber)) return;
 
-            await _currentUserService.Client.UpsertAsync(User);
+            await _uow.UserClient.UpsertAsync(_uow.UserClient.Lazy);
         }
 
-        public ObservableCollection<IngredientAmountDetailViewModel> IngredientsToViewModel()
+        public ObservableCollection<DetailIngredientViewModel> IngredientsToViewModel()
         {
-            ObservableCollection<IngredientAmountDetailViewModel> viewModels = new();
-            foreach (IngredientAmountDto dto in User.Ingredients)
+            ObservableCollection<DetailIngredientViewModel> viewModels = new();
+            foreach (IngredientAmountDto dto in _uow.UserClient.Lazy.Ingredients)
             {
-                IngredientAmountDetailViewModel viewModel = new(_currentUserService, _ingredientAmountService)
+                DetailIngredientViewModel viewModel = new(_uow)
                 {
                     IngredientAmount = dto
                 };

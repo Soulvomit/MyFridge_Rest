@@ -29,68 +29,79 @@ namespace MyFridge_Library_Data.Data.Repository
         }
 
         #region Ingredients
-        public async Task<bool> AddIngredientAsync(int id, Ingredient addEntity, float addAmount)
+        public async Task<bool> AddIngredientAmountAsync(int id, IngredientAmount addEntity)
         {
-            Task<Recipe?> t1 = GetAsync(id);
-            Task<Ingredient?> t2 = _context.Ingredients
-                .Where(ingredient => ingredient.Id == addEntity.Id)
-                .FirstOrDefaultAsync();
+            Recipe? entityInDb = await GetAsync(id);
 
-            await Task.WhenAll(t1, t2);
+            if (entityInDb == null) return false;
 
-            Recipe? recipeEntityInDb = t1.Result;
-            Ingredient? ingredientEntityInDb = t2.Result;
+            entityInDb.IngredientAmounts.Add(addEntity);
+            return true;
+        }
+        public async Task<bool> BatchIngredientAmountAsync(int id, IngredientAmount addEntity)
+        {
+            Recipe? entityInDb = await GetAsync(id);
 
-            if (recipeEntityInDb == null) return false;
+            if (entityInDb == null) return false;
 
-            if (ingredientEntityInDb == null)
-            {
-                recipeEntityInDb.IngredientAmounts.Add(
-                    new IngredientAmount
-                    {
-                        Ingredient = addEntity,
-                        Amount = addAmount
-                    });
-            }
+            IngredientAmount? foundEntity = entityInDb.IngredientAmounts.
+                FirstOrDefault(ia => ia.Ingredient.Id == addEntity.Ingredient.Id);
+
+            if (foundEntity != null)
+                foundEntity.Amount += addEntity.Amount;
             else
-            {
-                recipeEntityInDb.IngredientAmounts.Add(
-                    new IngredientAmount
-                    {
-                        Ingredient = ingredientEntityInDb,
-                        Amount = addAmount
-                    });
-            }
+                entityInDb.IngredientAmounts.Add(addEntity);
 
             return true;
         }
-        public async Task<bool> AddIngredientAsync(int id, IngredientAmount addEntity)
+        public async Task<bool> RemoveAmountAsync(int id, int ingredientAmountId, float removeAmount, bool forceRemove = true)
         {
-            Task<Recipe?> t1 = GetAsync(id);
-            Task<IngredientAmount?> t2 = _context.IngredientAmounts
-                .Where(ingredient => ingredient.Id == addEntity.Id)
-                .FirstOrDefaultAsync();
+            Recipe? entityInDb = await GetAsync(id);
 
-            await Task.WhenAll(t1, t2);
+            if (entityInDb == null) return false;
 
-            Recipe? recipeEntityInDb = t1.Result;
-            IngredientAmount? ingredientAmountEntityInDb = t2.Result;
+            IngredientAmount? foundEntity = entityInDb.IngredientAmounts
+                .FirstOrDefault(ia => ia.Id == ingredientAmountId);
 
-            if (recipeEntityInDb == null) return false;
+            if (foundEntity == null) return false;
 
-            if (ingredientAmountEntityInDb == null)
-                recipeEntityInDb.IngredientAmounts.Add(addEntity);
-            else
-                recipeEntityInDb.IngredientAmounts.Add(ingredientAmountEntityInDb);
+            if (foundEntity.Amount >= removeAmount)
+            {
+                foundEntity.Amount -= removeAmount;
+
+                if (foundEntity.Amount == 0)
+                {
+                    entityInDb.IngredientAmounts.Remove(foundEntity);
+                    _context.IngredientAmounts.Remove(foundEntity);
+                }
+                return true;
+            }
+            if (foundEntity.Amount < removeAmount && forceRemove)
+            {
+                entityInDb.IngredientAmounts.Remove(foundEntity);
+                _context.IngredientAmounts.Remove(foundEntity);
+
+                return true;
+            }
+            return false;
+        }
+        public async Task<bool> RemoveIngredientAmountAsync(int id, IngredientAmount removeEntity)
+        {
+            Recipe? entityInDb = await GetAsync(id);
+
+            if (entityInDb == null) return false;
+
+            entityInDb.IngredientAmounts.Remove(removeEntity);
+            _context.IngredientAmounts.Remove(removeEntity);
 
             return true;
         }
-        public async Task<bool> RemoveIngredientAsync(int id, int iaId)
+        public async Task<bool> RemoveIngredientAmountAsync(int id, int ingredientAmountId)
         {
             Recipe? entityInDb = await GetAsync(id);
             if (entityInDb == null) return false;
 
-            IngredientAmount? iaEntityInDb = await _context.IngredientAmounts.FindAsync(iaId);
+            IngredientAmount? iaEntityInDb = await _context.IngredientAmounts.FindAsync(ingredientAmountId);
             if (iaEntityInDb == null) return false;
 
             entityInDb.IngredientAmounts.Remove(iaEntityInDb);
@@ -98,6 +109,62 @@ namespace MyFridge_Library_Data.Data.Repository
 
             return true;
         }
+        //public async Task<bool> AddIngredientAsync(int id, Ingredient addEntity, float addAmount)
+        //{
+        //    Task<Recipe?> t1 = GetAsync(id);
+        //    Task<Ingredient?> t2 = _context.Ingredients
+        //        .Where(ingredient => ingredient.Id == addEntity.Id)
+        //        .FirstOrDefaultAsync();
+
+        //    await Task.WhenAll(t1, t2);
+
+        //    Recipe? recipeEntityInDb = t1.Result;
+        //    Ingredient? ingredientEntityInDb = t2.Result;
+
+        //    if (recipeEntityInDb == null) return false;
+
+        //    if (ingredientEntityInDb == null)
+        //    {
+        //        recipeEntityInDb.IngredientAmounts.Add(
+        //            new IngredientAmount
+        //            {
+        //                Ingredient = addEntity,
+        //                Amount = addAmount
+        //            });
+        //    }
+        //    else
+        //    {
+        //        recipeEntityInDb.IngredientAmounts.Add(
+        //            new IngredientAmount
+        //            {
+        //                Ingredient = ingredientEntityInDb,
+        //                Amount = addAmount
+        //            });
+        //    }
+
+        //    return true;
+        //}
+        //public async Task<bool> AddIngredientAsync(int id, IngredientAmount addEntity)
+        //{
+        //    Task<Recipe?> t1 = GetAsync(id);
+        //    Task<IngredientAmount?> t2 = _context.IngredientAmounts
+        //        .Where(ingredient => ingredient.Id == addEntity.Id)
+        //        .FirstOrDefaultAsync();
+
+        //    await Task.WhenAll(t1, t2);
+
+        //    Recipe? recipeEntityInDb = t1.Result;
+        //    IngredientAmount? ingredientAmountEntityInDb = t2.Result;
+
+        //    if (recipeEntityInDb == null) return false;
+
+        //    if (ingredientAmountEntityInDb == null)
+        //        recipeEntityInDb.IngredientAmounts.Add(addEntity);
+        //    else
+        //        recipeEntityInDb.IngredientAmounts.Add(ingredientAmountEntityInDb);
+
+        //    return true;
+        //}
         #endregion
     }
 }

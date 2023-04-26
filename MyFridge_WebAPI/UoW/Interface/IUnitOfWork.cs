@@ -4,14 +4,14 @@ namespace MyFridge_WebAPI.UoW.Interface
 {
     public interface IUnitOfWork
     {
-        IAddressRepository Addresses { get; set; }
-        IAdminAccountRepository Admins { get; set; }
-        IUserAccountRepository Users { get; set; }
-        IIngredientRepository Ingredients { get; set; }
-        IIngredientAmountRepository IngredientAmounts { get; set; }
-        IGroceryRepository Groceries { get; set; }
-        IOrderRepository Orders { get; set; }
-        IRecipeRepository Recipes { get; set; }
+        public IAddressRepository Addresses { get; set; }
+        public IAdminAccountRepository Admins { get; set; }
+        public IUserAccountRepository Users { get; set; }
+        public IIngredientRepository Ingredients { get; set; }
+        public IIngredientAmountRepository IngredientAmounts { get; set; }
+        public IGroceryRepository Groceries { get; set; }
+        public IOrderRepository Orders { get; set; }
+        public IRecipeRepository Recipes { get; set; }
 
         Task CompleteAsync();
     }

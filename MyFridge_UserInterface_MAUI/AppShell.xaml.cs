@@ -1,4 +1,4 @@
-﻿using MyFridge_UserInterface_MAUI.Views;
+﻿using MyFridge_UserInterface_MAUI.View;
 
 namespace MyFridge_UserInterface_MAUI
 {
@@ -12,7 +12,7 @@ namespace MyFridge_UserInterface_MAUI
             Routing.RegisterRoute(nameof(UserLogoutPage), typeof(UserLogoutPage));
             Routing.RegisterRoute(nameof(UserInfoPage), typeof(UserInfoPage));
             Routing.RegisterRoute(nameof(UserIngredientPage), typeof(UserIngredientPage));
-            Routing.RegisterRoute(nameof(IngredientPage), typeof(IngredientPage));
+            Routing.RegisterRoute(nameof(GroceryPage), typeof(GroceryPage));
             Routing.RegisterRoute(nameof(RecipePage), typeof(RecipePage));
         }
     }

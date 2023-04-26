@@ -7,5 +7,6 @@
         public Task<bool> DeleteAsync(int id);
         public Task<T?> GetAsync(int id);
         public Task<List<T>> GetAllAsync();
+        public Task<List<T>?> Query(Func<T, bool> filterFunc, Func<T, object> orderByFunc, string filter, int minLength = 2);
     }
 }

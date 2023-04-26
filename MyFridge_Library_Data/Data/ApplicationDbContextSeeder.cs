@@ -14,14 +14,14 @@ namespace MyFridge_Library_Data.Data
                 IngredientSeed(context);
                 GrocerySeed(context);
                 OrderSeed(context);
-                RecipySeed(context);
+                RecipeSeed(context);
                 UserAccountSeed(context);
                 context.SaveChanges();
                 seeded = true;
             }
         }
 
-        #region
+        #region IngredientSeed
         public static void IngredientSeed(ApplicationDbContext context)
         {
             context.Ingredients.AddRange(
@@ -123,6 +123,7 @@ namespace MyFridge_Library_Data.Data
                 new Ingredient { Id = 96, Name = "Dried Figs", Unit = EUnit.Gram },
                 new Ingredient { Id = 97, Name = "Pecans", Unit = EUnit.Gram },
                 new Ingredient { Id = 98, Name = "Walnuts", Unit = EUnit.Gram },
+                new Ingredient { Id = 99, Name = "Hazelnuts", Unit = EUnit.Gram },
                 new Ingredient { Id = 100, Name = "Almonds", Unit = EUnit.Gram },
                 new Ingredient { Id = 101, Name = "Cashews", Unit = EUnit.Gram },
                 new Ingredient { Id = 102, Name = "Pine Nuts", Unit = EUnit.Gram },
@@ -160,18 +161,8 @@ namespace MyFridge_Library_Data.Data
         {
             List<Grocery> tempGroceries = new List<Grocery>()
             {
-                new Grocery()
-                {
-                    Brand = "VeggiesCo",
-                    SalePrice = 12,
-                    IngredientAmount = new IngredientAmount
-                    {
-                        Amount = 750,
-                        IngredientId = 4 
-                    }
-                },
-                new Grocery()
-                {
+                new Grocery() { Brand = "VeggiesCo", SalePrice = 12, IngredientAmount = new IngredientAmount { Amount = 750, IngredientId = 4 } },
+                new Grocery() {
                     Brand = "Meat N Greet",
                     SalePrice = 40,
                     IngredientAmount = new IngredientAmount
@@ -189,7 +180,155 @@ namespace MyFridge_Library_Data.Data
                         Amount = 1000,
                         IngredientId = 6
                     }
-                }
+                },
+                new Grocery() { Brand = "VeggiesCo", SalePrice = 1.50f, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 1 } },
+                new Grocery() { Brand = "MeatyDelights", SalePrice = 12, IngredientAmount = new IngredientAmount { Amount = 750, IngredientId = 2 } },
+                new Grocery() { Brand = "SaltKing", SalePrice = 0.50f, IngredientAmount = new IngredientAmount { Amount = 400, IngredientId = 3 } },
+                new Grocery() { Brand = "VeggiesCo", SalePrice = 1, IngredientAmount = new IngredientAmount { Amount = 300, IngredientId = 4 } },
+                new Grocery() { Brand = "FarmFresh", SalePrice = 8, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 5 } },
+                new Grocery() { Brand = "CreamyTreats", SalePrice = 4.50f, IngredientAmount = new IngredientAmount { Amount = 950, IngredientId = 6 } },
+                new Grocery() { Brand = "PopcornPalace", SalePrice = 3, IngredientAmount = new IngredientAmount { Amount = 5, IngredientId = 7 } },
+                new Grocery() { Brand = "ButterFarms", SalePrice = 2.50f, IngredientAmount = new IngredientAmount { Amount = 400, IngredientId = 8 } },
+                new Grocery() { Brand = "WholesomeBroths", SalePrice = 2, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 125 } },
+                new Grocery() { Brand = "WholesomeBroths", SalePrice = 2, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 126 } },
+                new Grocery() { Brand = "WholesomeBroths", SalePrice = 2, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 127 } },
+                new Grocery() { Brand = "VeggiesCo", SalePrice = 12, IngredientAmount = new IngredientAmount { Amount = 750, IngredientId = 4 } },
+                new Grocery() { Brand = "CarrotKing", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 1 } },
+                new Grocery() { Brand = "BeefyGoodness", SalePrice = 40, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 2 } },
+                new Grocery() { Brand = "SaltShaker", SalePrice = 2, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 3 } },
+                new Grocery() { Brand = "TastyChick", SalePrice = 22, IngredientAmount = new IngredientAmount { Amount = 800, IngredientId = 5 } },
+                new Grocery() { Brand = "CreamDelight", SalePrice = 10, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 6 } },
+                new Grocery() { Brand = "PopcornPalooza", SalePrice = 8, IngredientAmount = new IngredientAmount { Amount = 10, IngredientId = 7 } },
+                new Grocery() { Brand = "ButterBuddies", SalePrice = 7, IngredientAmount = new IngredientAmount { Amount = 400, IngredientId = 8 } },
+                new Grocery() { Brand = "AquaPure", SalePrice = 1, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 9 } },
+                new Grocery() { Brand = "CaffeineCrush", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 100, IngredientId = 10 } },
+                new Grocery() { Brand = "MilkMasters", SalePrice = 5, IngredientAmount = new IngredientAmount { Amount = 2000, IngredientId = 11 } },
+                new Grocery() { Brand = "AppleAvenue", SalePrice = 10, IngredientAmount = new IngredientAmount { Amount = 12, IngredientId = 12 } },
+                new Grocery() { Brand = "BananaBunch", SalePrice = 9, IngredientAmount = new IngredientAmount { Amount = 7, IngredientId = 13 } },
+                new Grocery() { Brand = "FlourFiesta", SalePrice = 8, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 14 } },
+                new Grocery() { Brand = "KefirKraze", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 750, IngredientId = 15 } },
+                new Grocery() { Brand = "SweetSensation", SalePrice = 3, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 16 } },
+                new Grocery() { Brand = "BrownSugarBakery", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 17 } },
+                new Grocery() { Brand = "Eggcellent", SalePrice = 12, IngredientAmount = new IngredientAmount { Amount = 18, IngredientId = 18 } },
+                new Grocery() { Brand = "BakingBoost", SalePrice = 3, IngredientAmount = new IngredientAmount { Amount = 250, IngredientId = 19 } },
+                new Grocery() { Brand = "SodaSupreme", SalePrice = 2, IngredientAmount = new IngredientAmount { Amount = 230, IngredientId = 20 } },
+                new Grocery() { Brand = "CheesyChoice", SalePrice = 15, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 21 } },
+                new Grocery() { Brand = "PastaPerfection", SalePrice = 10, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 22 } },
+                new Grocery() { Brand = "RiceRendezvous", SalePrice = 11, IngredientAmount = new IngredientAmount { Amount = 2000, IngredientId = 23 } },
+                new Grocery() { Brand = "BreadBounty", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 1, IngredientId = 24 } },
+                new Grocery() { Brand = "OliveOilOasis", SalePrice = 20, IngredientAmount = new IngredientAmount { Amount = 750, IngredientId = 25 } },
+                new Grocery() { Brand = "VinegarVoyage", SalePrice = 10, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 26 } },
+                new Grocery() { Brand = "HoneyHarvest", SalePrice = 18, IngredientAmount = new IngredientAmount { Amount = 450, IngredientId = 27 } },
+                new Grocery() { Brand = "SpiceSensation", SalePrice = 7, IngredientAmount = new IngredientAmount { Amount = 50, IngredientId = 28 } },
+                new Grocery() { Brand = "SoySauceSavvy", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 29 } },
+                new Grocery() { Brand = "MustardMarvel", SalePrice = 3, IngredientAmount = new IngredientAmount { Amount = 250, IngredientId = 30 } },
+                new Grocery() { Brand = "KetchupKingdom", SalePrice = 3, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 31 } },
+                new Grocery() { Brand = "MayoMagic", SalePrice = 5, IngredientAmount = new IngredientAmount { Amount = 450, IngredientId = 32 } },
+                new Grocery() { Brand = "LettuceLand", SalePrice = 8, IngredientAmount = new IngredientAmount { Amount = 300, IngredientId = 33 } },
+                new Grocery() { Brand = "TomatoTerritory", SalePrice = 5, IngredientAmount = new IngredientAmount { Amount = 600, IngredientId = 34 } },
+                new Grocery() { Brand = "CucumberCorner", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 400, IngredientId = 35 } },
+                new Grocery() { Brand = "PepperPatch", SalePrice = 7, IngredientAmount = new IngredientAmount { Amount = 200, IngredientId = 36 } },
+                new Grocery() { Brand = "OnionOrbit", SalePrice = 3, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 37 } },
+                new Grocery() { Brand = "GarlicGrove", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 250, IngredientId = 38 } },
+                new Grocery() { Brand = "LemonLagoon", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 5, IngredientId = 39 } },
+                new Grocery() { Brand = "OrangeOdyssey", SalePrice = 8, IngredientAmount = new IngredientAmount { Amount = 10, IngredientId = 40 } },
+                new Grocery() { Brand = "CheesyChoice", SalePrice = 15, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 21 } },
+                new Grocery() { Brand = "CheesyChoice", SalePrice = 8, IngredientAmount = new IngredientAmount { Amount = 200, IngredientId = 41 } },
+                new Grocery() { Brand = "PastaPerfection", SalePrice = 10, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 22 } },
+                new Grocery() { Brand = "PastaPerfection", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 42 } },
+                new Grocery() { Brand = "RiceRendezvous", SalePrice = 11, IngredientAmount = new IngredientAmount { Amount = 2000, IngredientId = 23 } },
+                new Grocery() { Brand = "RiceRendezvous", SalePrice = 7, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 43 } },
+                new Grocery() { Brand = "BreadBounty", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 1, IngredientId = 24 } },
+                new Grocery() { Brand = "BreadBounty", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 1, IngredientId = 44 } },
+                new Grocery() { Brand = "OliveOilOasis", SalePrice = 20, IngredientAmount = new IngredientAmount { Amount = 750, IngredientId = 25 } },
+                new Grocery() { Brand = "OliveOilOasis", SalePrice = 12, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 45 } },
+                new Grocery() { Brand = "VinegarVoyage", SalePrice = 10, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 26 } },
+                new Grocery() { Brand = "VinegarVoyage", SalePrice = 7, IngredientAmount = new IngredientAmount { Amount = 250, IngredientId = 46 } },
+                new Grocery() { Brand = "HoneyHarvest", SalePrice = 18, IngredientAmount = new IngredientAmount { Amount = 450, IngredientId = 27 } },
+                new Grocery() { Brand = "HoneyHarvest", SalePrice = 10, IngredientAmount = new IngredientAmount { Amount = 250, IngredientId = 47 } },
+                new Grocery() { Brand = "SpiceSensation", SalePrice = 7, IngredientAmount = new IngredientAmount { Amount = 50, IngredientId = 28 } },
+                new Grocery() { Brand = "SpiceSensation", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 25, IngredientId = 48 } },
+                new Grocery() { Brand = "SoySauceSavvy", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 29 } },
+                new Grocery() { Brand = "SoySauceSavvy", SalePrice = 2, IngredientAmount = new IngredientAmount { Amount = 250, IngredientId = 49 } },
+                new Grocery() { Brand = "MustardMarvel", SalePrice = 3, IngredientAmount = new IngredientAmount { Amount = 250, IngredientId = 30 } },
+                new Grocery() { Brand = "MustardMarvel", SalePrice = 2, IngredientAmount = new IngredientAmount { Amount = 100, IngredientId = 50 } },
+                new Grocery() { Brand = "KetchupKingdom", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 51 } },
+                new Grocery() { Brand = "KetchupKingdom", SalePrice = 2, IngredientAmount = new IngredientAmount { Amount = 250, IngredientId = 52 } },
+                new Grocery() { Brand = "SugarSupreme", SalePrice = 8, IngredientAmount = new IngredientAmount { Amount = 2000, IngredientId = 53 } },
+                new Grocery() { Brand = "SugarSupreme", SalePrice = 5, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 54 } },
+                new Grocery() { Brand = "SaltSanctuary", SalePrice = 3, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 55 } },
+                new Grocery() { Brand = "SaltSanctuary", SalePrice = 2, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 56 } },
+                new Grocery() { Brand = "PepperParadise", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 100, IngredientId = 57 } },
+                new Grocery() { Brand = "PepperParadise", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 50, IngredientId = 58 } },
+                new Grocery() { Brand = "MayoMagic", SalePrice = 5, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 59 } },
+                new Grocery() { Brand = "MayoMagic", SalePrice = 3, IngredientAmount = new IngredientAmount { Amount = 250, IngredientId = 60 } },
+                new Grocery() { Brand = "ButterBliss", SalePrice = 8, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 61 } },
+                new Grocery() { Brand = "ButterBliss", SalePrice = 5, IngredientAmount = new IngredientAmount { Amount = 250, IngredientId = 62 } },
+                new Grocery() { Brand = "EggEmporium", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 12, IngredientId = 63 } },
+                new Grocery() { Brand = "EggEmporium", SalePrice = 2, IngredientAmount = new IngredientAmount { Amount = 6, IngredientId = 64 } },
+                new Grocery() { Brand = "MilkMastery", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 65 } },
+                new Grocery() { Brand = "MilkMastery", SalePrice = 2, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 66 } },
+                new Grocery() { Brand = "YogurtYard", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 67 } },
+                new Grocery() { Brand = "YogurtYard", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 68 } },
+                new Grocery() { Brand = "FlourFinesse", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 2000, IngredientId = 69 } },
+                new Grocery() { Brand = "FlourFinesse", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 70 } },
+                new Grocery() { Brand = "BakingSodaBazaar", SalePrice = 2, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 71 } },
+                new Grocery() { Brand = "BakingSodaBazaar", SalePrice = 1, IngredientAmount = new IngredientAmount { Amount = 250, IngredientId = 72 } },
+                new Grocery() { Brand = "BakingPowderPalace", SalePrice = 3, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 73 } },
+                new Grocery() { Brand = "BakingPowderPalace", SalePrice = 2, IngredientAmount = new IngredientAmount { Amount = 250, IngredientId = 74 } },
+                new Grocery() { Brand = "VanillaVilla", SalePrice = 8, IngredientAmount = new IngredientAmount { Amount = 100, IngredientId = 75 } },
+                new Grocery() { Brand = "VanillaVilla", SalePrice = 5, IngredientAmount = new IngredientAmount { Amount = 50, IngredientId = 76 } },
+                new Grocery() { Brand = "CinnamonCity", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 100, IngredientId = 77 } },
+                new Grocery() { Brand = "CinnamonCity", SalePrice = 2, IngredientAmount = new IngredientAmount { Amount = 50, IngredientId = 78 } },
+                new Grocery() { Brand = "NutmegNook", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 100, IngredientId = 79 } },
+                new Grocery() { Brand = "NutmegNook", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 50, IngredientId = 80 } },
+                new Grocery() { Brand = "HoneyHaven", SalePrice = 10, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 81 } },
+                new Grocery() { Brand = "HoneyHaven", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 82 } },
+                new Grocery() { Brand = "MapleSyrupSanctum", SalePrice = 12, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 83 } },
+                new Grocery() { Brand = "MapleSyrupSanctum", SalePrice = 8, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 84 } },
+                new Grocery() { Brand = "OliveOilOasis", SalePrice = 10, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 85 } },
+                new Grocery() { Brand = "OliveOilOasis", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 86 } },
+                new Grocery() { Brand = "VinegarValley", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 87 } },
+                new Grocery() { Brand = "VinegarValley", SalePrice = 2, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 88 } },
+                new Grocery() { Brand = "LemonJuiceLagoon", SalePrice = 3, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 89 } },
+                new Grocery() { Brand = "LemonJuiceLagoon", SalePrice = 2, IngredientAmount = new IngredientAmount { Amount = 250, IngredientId = 90 } },
+                new Grocery() { Brand = "LimeJuiceLair", SalePrice = 3, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 91 } },
+                new Grocery() { Brand = "LimeJuiceLair", SalePrice = 2, IngredientAmount = new IngredientAmount { Amount = 250, IngredientId = 92 } },
+                new Grocery() { Brand = "SoySauceShack", SalePrice = 5, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 93 } },
+                new Grocery() { Brand = "SoySauceShack", SalePrice = 3, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 94 } },
+                new Grocery() { Brand = "TeriyakiTerrace", SalePrice = 7, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 95 } },
+                new Grocery() { Brand = "TeriyakiTerrace", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 96 } },
+                new Grocery() { Brand = "FishSauceFalls", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 97 } },
+                new Grocery() { Brand = "FishSauceFalls", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 98 } },
+                new Grocery() { Brand = "WorcestershireWorld", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 99 } },
+                new Grocery() { Brand = "WorcestershireWorld", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 100 } },
+                new Grocery() { Brand = "KetchupKingdom", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 101 } },
+                new Grocery() { Brand = "KetchupKingdom", SalePrice = 2, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 102 } },
+                new Grocery() { Brand = "MustardMetropolis", SalePrice = 3, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 103 } },
+                new Grocery() { Brand = "MustardMetropolis", SalePrice = 2, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 104 } },
+                new Grocery() { Brand = "MayoMeadow", SalePrice = 5, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 105 } },
+                new Grocery() { Brand = "MayoMeadow", SalePrice = 3, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 106 } },
+                new Grocery() { Brand = "HotSauceHills", SalePrice = 7, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 107 } },
+                new Grocery() { Brand = "HotSauceHills", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 108 } },
+                new Grocery() { Brand = "BBQSauceBeach", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 109 } },
+                new Grocery() { Brand = "BBQSauceBeach", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 110 } },
+                new Grocery() { Brand = "PeanutButterParadise", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 111 } },
+                new Grocery() { Brand = "PeanutButterParadise", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 112 } },
+                new Grocery() { Brand = "AlmondButterAlley", SalePrice = 10, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 113 } },
+                new Grocery() { Brand = "AlmondButterAlley", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 114 } },
+                new Grocery() { Brand = "CashewButterCove", SalePrice = 12, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 115 } },
+                new Grocery() { Brand = "CashewButterCove", SalePrice = 8, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 116 } },
+                new Grocery() { Brand = "TahiniTown", SalePrice = 9, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 117 } },
+                new Grocery() { Brand = "TahiniTown", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 118 } },
+                new Grocery() { Brand = "JamJunction", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 119 } },
+                new Grocery() { Brand = "JamJunction", SalePrice = 4, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 120 } },
+                new Grocery() { Brand = "JellyJubilee", SalePrice = 5, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 121 } },
+                new Grocery() { Brand = "JellyJubilee", SalePrice = 3, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 122 } },
+                new Grocery() { Brand = "PreservesPark", SalePrice = 7, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 123 } },
+                new Grocery() { Brand = "PreservesPark", SalePrice = 5, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 124 } },
+                new Grocery() { Brand = "MarmaladeMeadows", SalePrice = 8, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 125 } },
+                new Grocery() { Brand = "MarmaladeMeadows", SalePrice = 6, IngredientAmount = new IngredientAmount { Amount = 500, IngredientId = 126 } },
+                new Grocery() { Brand = "ChocolateChipsCreek", SalePrice = 7, IngredientAmount = new IngredientAmount { Amount = 1000, IngredientId = 127 } }
             };
             context.Groceries.AddRange(tempGroceries);
         }
@@ -206,10 +345,10 @@ namespace MyFridge_Library_Data.Data
         }
         #endregion
 
-        #region RecipySeed
-        public static void RecipySeed(ApplicationDbContext context)
+        #region RecipeSeed
+        public static void RecipeSeed(ApplicationDbContext context)
         {
-            List<Recipe> tempRecipies = new List<Recipe>()
+            List<Recipe> tempRecipes = new List<Recipe>()
             {
                 new Recipe()
                 {
@@ -559,7 +698,7 @@ namespace MyFridge_Library_Data.Data
                     }
                 }
             };
-            context.Recipies.AddRange(tempRecipies);
+            context.Recipies.AddRange(tempRecipes);
         }
         #endregion
 
@@ -570,8 +709,8 @@ namespace MyFridge_Library_Data.Data
             {
                 new UserAccount
                 {
-                    Firstname = "Jonas",
-                    Lastname = "Brown",
+                    FirstName = "Jonas",
+                    LastName = "Brown",
                     Password = "password",
                     Address = new Address()
                     {
@@ -612,8 +751,8 @@ namespace MyFridge_Library_Data.Data
                 },
                 new UserAccount
                 {
-                    Firstname = "Bertram Vandsted",
-                    Lastname = "Brown",
+                    FirstName = "Bertram Vandsted",
+                    LastName = "Brown",
                     Password = "password1",
                     Address = new Address()
                     {
@@ -631,8 +770,8 @@ namespace MyFridge_Library_Data.Data
                 },
                 new UserAccount
                 {
-                    Firstname = "Ada-Noelle Kirsten Vandsted",
-                    Lastname = "Brown",
+                    FirstName = "Ada-Noelle Kirsten Vandsted",
+                    LastName = "Brown",
                     Password = "password2",
                     Address = new Address()
                     {

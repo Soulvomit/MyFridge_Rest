@@ -1,52 +1,30 @@
-﻿using MyFridge_Library_MAUI_DataTransfer.DataTransferObject;
+﻿using MyFridge_Library_MAUI_Client.Base;
+using MyFridge_Library_MAUI_Client.Interface;
+using MyFridge_Library_MAUI_DataTransfer.DataTransferObject;
 using System.Net.Http.Json;
 
 namespace MyFridge_Library_MAUI_Client
 {
-    public class UserAccountApiClient
+    public class UserAccountApiClient : ApiClient<UserAccountDto>, IUserAccountApiClient
     {
-        private readonly HttpClient _httpClient;
-
-        public UserAccountApiClient(string baseAddress)
-        {
-            _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri(baseAddress);
-        }
-        public async Task<UserAccountDto> UpsertAsync(UserAccountDto dto)
-        {
-            var response = await _httpClient.PostAsJsonAsync($"api/UserAccount/Upsert", dto);
-            response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<UserAccountDto>();
-        }
-        public async Task<UserAccountDto> GetAsync(int id)
-        {
-            var response = await _httpClient.GetAsync($"api/UserAccount/Get?id={id}");
-            response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<UserAccountDto>();
-        }
+        public UserAccountApiClient(string baseAddress) : base(baseAddress) { }
 
         public async Task<UserAccountDto> GetByEmailAsync(string email)
         {
-            var response = await _httpClient.GetAsync($"api/UserAccount/GetByEmail?email={email}");
+            var response = await _httpClient.GetAsync($"api/{ResolveName}/GetByEmail?email={email}");
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<UserAccountDto>();
+            Lazy = await response.Content.ReadFromJsonAsync<UserAccountDto>();
+            return Lazy;
         }
-        public async Task<List<UserAccountDto>> GetAllAsync()
+        public async Task<IngredientAmountDto> AddIngredientAmountAsync(IngredientAmountDto dto, int id)
         {
-            var response = await _httpClient.GetAsync($"api/UserAccount/GetAll");
-            response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<List<UserAccountDto>>();
-        }
-        public async Task<IngredientAmountDto> AddIngredientAsync(IngredientAmountDto dto, int id)
-        {
-            var response = await _httpClient.PostAsJsonAsync($"api/UserAccountIngredients/Upsert?id={id}", dto);
+            var response = await _httpClient.PostAsJsonAsync($"api/{ResolveName}Ingredients/Upsert?id={id}", dto);
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<IngredientAmountDto>();
         }
-
-        public async Task<bool> RemoveIngredientAsync(int id, int ingredientId)
+        public async Task<bool> RemoveIngredientAmountAsync(int id, int ingredientId, int removeAmount, bool force = false)
         {
-            var response = await _httpClient.DeleteAsync($"api/UserAccountIngredients/Delete?id={id}&index={ingredientId}");
+            var response = await _httpClient.DeleteAsync($"api/{ResolveName}Ingredients/Delete?id={id}&ingredientAmountId={ingredientId}&removeAmount={removeAmount}&forceRemove={force}");
             response.EnsureSuccessStatusCode();
             return await response.Content.ReadFromJsonAsync<bool>();
         }

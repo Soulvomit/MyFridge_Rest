@@ -44,6 +44,26 @@ namespace MyFridge_WebAPI.Controllers
             return new JsonResult(Map.FromRecipe(recipe));
         }
         [HttpGet]
+        public async Task<JsonResult> GetFilteredAsync(string filter, int minLength = 2)
+        {
+            Func<Recipe, bool> filterFunc = recipe =>
+                recipe.Name.ToLower().Contains(filter.ToLower()) ||
+                recipe.IngredientAmounts.Any(ia => ia.Ingredient.Name.ToLower().Contains(filter.ToLower()));
+
+            Func<Recipe, object> orderByFunc = recipe => recipe.Name;
+
+            List<RecipeDto> dtos = new();
+            List<Recipe>? filteredRecipes = await _uow.Recipes.Query(filterFunc, orderByFunc, filter, minLength);
+
+            if (filteredRecipes == null) return new JsonResult(NotFound());
+
+            foreach (Recipe recipe in filteredRecipes)
+            {
+                dtos.Add(Map.FromRecipe(recipe));
+            }
+            return new JsonResult(dtos);
+        }
+        [HttpGet]
         public async Task<JsonResult> GetAllAsync()
         {
             List<RecipeDto> dtos = new List<RecipeDto>();

@@ -5,7 +5,7 @@ using MyFridge_WebAPI.UoW.Interface;
 
 namespace MyFridge_WebAPI.UoW
 {
-    public sealed class UnitOfWork : IUnitOfWork, IDisposable
+    public sealed class UnitOfWork : IUnitOfWork, IAsyncDisposable, IDisposable
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger _logger;
@@ -44,6 +44,12 @@ namespace MyFridge_WebAPI.UoW
         {
             _logger.Log(LogLevel.None, "disposing of context...");
             _context.Dispose();
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            _logger.Log(LogLevel.None, "disposing of context...");
+            await _context.DisposeAsync();
         }
     }
 }

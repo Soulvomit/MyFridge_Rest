@@ -1,22 +1,11 @@
-﻿using MyFridge_Library_MAUI_DataTransfer.DataTransferObject;
-using System.Net.Http.Json;
+﻿using MyFridge_Library_MAUI_Client.Base;
+using MyFridge_Library_MAUI_Client.Interface;
+using MyFridge_Library_MAUI_DataTransfer.DataTransferObject;
 
 namespace MyFridge_Library_MAUI_Client
 {
-    public class IngredientApiClient
+    public class IngredientApiClient : ApiClient<IngredientDto>, IIngredientApiClient
     {
-        private readonly HttpClient _httpClient;
-
-        public IngredientApiClient(string baseAddress)
-        {
-            _httpClient = new();
-            _httpClient.BaseAddress = new(baseAddress);
-        }
-        public async Task<List<IngredientDto>> GetAllAsync()
-        {
-            var response = await _httpClient.GetAsync($"api/Ingredient/GetAll");
-            response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<List<IngredientDto>>();
-        }
+        public IngredientApiClient(string baseAddress) : base(baseAddress) { }
     }
 }

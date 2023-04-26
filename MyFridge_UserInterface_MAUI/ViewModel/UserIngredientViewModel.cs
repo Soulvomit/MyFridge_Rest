@@ -1,17 +1,17 @@
 ﻿using MyFridge_Library_MAUI_DataTransfer.DataTransferObject;
-using MyFridge_UserInterface_MAUI.Service;
-using MyFridge_UserInterface_MAUI.Views;
+using MyFridge_UserInterface_MAUI.Service.UoW.Interface;
+using MyFridge_UserInterface_MAUI.View;
+using MyFridge_UserInterface_MAUI.View.Detail;
+using MyFridge_UserInterface_MAUI.ViewModel.Detail;
 using System.Collections.ObjectModel;
 
 namespace MyFridge_UserInterface_MAUI.ViewModel
 {
     public class UserIngredientViewModel : BindableObject
     {
-        private readonly IngredientAmountService _ingredientAmountService;
-        private readonly CurrentUserService _cUserService;
-        private IEnumerable<IngredientAmountDto> userIngredients;
-        private ObservableCollection<IngredientAmountDetailViewModel> userIngredientDetails;
-        public ObservableCollection<IngredientAmountDetailViewModel> UserIngredientDetails
+        private readonly IUnitOfWork _uow;
+        private ObservableCollection<DetailIngredientViewModel> userIngredientDetails;
+        public ObservableCollection<DetailIngredientViewModel> UserIngredientDetails
         {
             get => userIngredientDetails;
             private set
@@ -20,42 +20,41 @@ namespace MyFridge_UserInterface_MAUI.ViewModel
                 OnPropertyChanged(nameof(UserIngredientDetails));
             }
         }
-        public UserIngredientViewModel(CurrentUserService cUserService, IngredientAmountService ingredientAmountService)
+        public UserIngredientViewModel(IUnitOfWork uow)
         {
-            _cUserService = cUserService;
-            _ingredientAmountService = ingredientAmountService;
+            _uow = uow;
             userIngredientDetails = new();
         }
         public async Task RefreshUserIngredientsAsync()
         {
-            UserAccountDto user = await _cUserService.GetUserAsync();
-            userIngredients = user.Ingredients;
-            UserIngredientDetails = ToViewModel(userIngredients.OrderBy(i => i.Ingredient.Name));
+            UserAccountDto user = await _uow.UserClient.GetAsync(_uow.UserClient.Lazy.Id);
+            UserIngredientDetails = ToViewModel(user.Ingredients.OrderBy(i => i.Ingredient.Name));
         }
 
         public void GetUserIngredientsFilteredLazy(string filter)
         {
             if(string.IsNullOrEmpty(filter))
-                UserIngredientDetails = ToViewModel(userIngredients.OrderBy(i => i.Ingredient.Name));
+                UserIngredientDetails = ToViewModel(_uow.UserClient.Lazy.Ingredients
+                    .OrderBy(i => i.Ingredient.Name));
             else
-                UserIngredientDetails = ToViewModel(userIngredients
+                UserIngredientDetails = ToViewModel(_uow.UserClient.Lazy.Ingredients
                     .Where(i => i.Ingredient.Name.ToLower().StartsWith(filter.ToLower()))
                     .OrderBy(i => i.Ingredient.Name));
         }
-        public async Task PushIngredientDetailAsync(INavigation nav, IngredientAmountDetailViewModel detail)
+        public async Task PushIngredientDetailAsync(INavigation nav, DetailIngredientViewModel detail)
         {
-            await nav.PushAsync(new UserIngredientDetailPage(detail));
+            await nav.PushAsync(new DetailUserIngredientPage(detail));
         }
         public async Task NavigateToGroceriesAsync()
         {
-            await Shell.Current.GoToAsync($"/" + nameof(IngredientPage));
+            await Shell.Current.GoToAsync($"/" + nameof(GroceryPage));
         }
-        private ObservableCollection<IngredientAmountDetailViewModel> ToViewModel(IEnumerable<IngredientAmountDto> ingredients)
+        private ObservableCollection<DetailIngredientViewModel> ToViewModel(IEnumerable<IngredientAmountDto> ingredients)
         {
-            ObservableCollection<IngredientAmountDetailViewModel> viewModels = new();
+            ObservableCollection<DetailIngredientViewModel> viewModels = new();
             foreach (IngredientAmountDto ingredient in ingredients)
             {
-                IngredientAmountDetailViewModel viewModel = new(_cUserService, _ingredientAmountService)
+                DetailIngredientViewModel viewModel = new(_uow)
                 {
                     IngredientAmount = ingredient
                 };

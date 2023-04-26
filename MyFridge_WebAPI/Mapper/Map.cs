@@ -11,7 +11,7 @@ namespace MyFridge_WebAPI.Mapper
         {
             if (address == null) return null;
 
-            AddressDto dto = new AddressDto()
+            AddressDto dto = new()
             {
                 Id = address.Id,
                 Street = address.Street,
@@ -28,7 +28,7 @@ namespace MyFridge_WebAPI.Mapper
         {
             if (dto == null) return null;
 
-            Address address = new Address()
+            Address address = new()
             {
                 Id = dto.Id,
                 Street = dto.Street,
@@ -48,11 +48,11 @@ namespace MyFridge_WebAPI.Mapper
         {
             if (admin == null) return null;
 
-            AdminAccountDto dto = new AdminAccountDto()
+            AdminAccountDto dto = new()
             {
                 Id = admin.Id,
-                Firstname = admin.Firstname,
-                Lastname = admin.Lastname,
+                FirstName = admin.FirstName,
+                LastName = admin.LastName,
                 Password = admin.Password,
                 EmployeeNumber = admin.EmployeeNumber
             };
@@ -63,11 +63,11 @@ namespace MyFridge_WebAPI.Mapper
         {
             if (dto == null) return null;
 
-            AdminAccount admin = new AdminAccount()
+            AdminAccount admin = new()
             {
                 Id = dto.Id,
-                Firstname = dto.Firstname,
-                Lastname = dto.Lastname,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
                 Password = dto.Password,
                 EmployeeNumber = dto.EmployeeNumber
             };
@@ -81,11 +81,11 @@ namespace MyFridge_WebAPI.Mapper
         {
             if (user == null) return null;
 
-            UserAccountDto dto = new UserAccountDto()
+            UserAccountDto dto = new()
             {
                 Id = user.Id,
-                FirstName = user.Firstname,
-                LastName = user.Lastname,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 Password = user.Password,
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
@@ -106,11 +106,11 @@ namespace MyFridge_WebAPI.Mapper
         {
             if (dto == null) return null;
 
-            UserAccount user = new UserAccount()
+            UserAccount user = new()
             {
                 Id = dto.Id,
-                Firstname = dto.FirstName,
-                Lastname = dto.LastName,
+                FirstName = dto.FirstName,
+                LastName = dto.LastName,
                 Password = dto.Password,
                 Email = dto.Email,
                 PhoneNumber = dto.PhoneNumber,
@@ -133,11 +133,12 @@ namespace MyFridge_WebAPI.Mapper
         {
             if (grocery == null) return null;
 
-            GroceryDto dto = new GroceryDto
+            GroceryDto dto = new()
             {
                 Id = grocery.Id,
                 Brand = grocery.Brand,
                 SalePrice = grocery.SalePrice,
+                Category = grocery.Category,
                 ItemIdentifier = grocery.ItemIdentifier,
                 ImageUrl = grocery.ImageUrl,
                 Ingredient = FromIngredientAmount(grocery.IngredientAmount)
@@ -148,11 +149,12 @@ namespace MyFridge_WebAPI.Mapper
         {
             if (dto == null) return null;
 
-            Grocery grocery = new Grocery
+            Grocery grocery = new()
             {
                 Id = dto.Id,
                 Brand = dto.Brand,
                 SalePrice = dto.SalePrice,
+                Category = dto.Category,
                 ItemIdentifier = dto.ItemIdentifier,
                 ImageUrl = dto.ImageUrl,
                 IngredientAmount = ToIngredientAmount(dto.Ingredient)
@@ -167,12 +169,11 @@ namespace MyFridge_WebAPI.Mapper
         {
             if (ingredient == null) return null;
 
-            IngredientDto dto = new IngredientDto()
+            IngredientDto dto = new()
             {
                 Id = ingredient.Id,
                 Name = ingredient.Name,
-                Unit = (int)ingredient.Unit,
-                ImageUrl = ingredient.ImageUrl
+                Unit = (int)ingredient.Unit
             };
 
             return dto;
@@ -181,12 +182,11 @@ namespace MyFridge_WebAPI.Mapper
         {
             if (dto == null) return null;
 
-            Ingredient ingredient = new Ingredient()
+            Ingredient ingredient = new()
             {
                 Id = dto.Id,
                 Name = dto.Name,
-                Unit = (EUnit)dto.Unit,
-                ImageUrl= dto.ImageUrl
+                Unit = (EUnit)dto.Unit
             };
 
             return ingredient;
@@ -195,7 +195,7 @@ namespace MyFridge_WebAPI.Mapper
         {
             if (ingredientAmount == null) return null;
 
-            IngredientAmountDto dto = new IngredientAmountDto()
+            IngredientAmountDto dto = new()
             {
                 Id = ingredientAmount.Id,
                 Ingredient = FromIngredient(ingredientAmount.Ingredient),
@@ -209,7 +209,7 @@ namespace MyFridge_WebAPI.Mapper
         {
             if (dto == null) return null;
 
-            IngredientAmount ingredient = new IngredientAmount
+            IngredientAmount ingredient = new()
             {
                 Id = dto.Id,
                 Ingredient = ToIngredient(dto.Ingredient),
@@ -226,7 +226,7 @@ namespace MyFridge_WebAPI.Mapper
         {
             if (order == null) return null;
 
-            OrderDto dto = new OrderDto()
+            OrderDto dto = new()
             {
                 Id = order.Id,
                 Created = order.CreationTime,
@@ -243,7 +243,7 @@ namespace MyFridge_WebAPI.Mapper
         {
             if (dto == null) return null;
 
-            Order order = new Order()
+            Order order = new()
             {
                 Id = dto.Id,
                 Status = (EOrderStatus)dto.Status
@@ -261,18 +261,18 @@ namespace MyFridge_WebAPI.Mapper
         #endregion
 
         #region Recipy
-        public static RecipeDto? FromRecipe(Recipe? recipy)
+        public static RecipeDto? FromRecipe(Recipe? recipe)
         {
-            if (recipy == null) return null;
+            if (recipe == null) return null;
 
-            RecipeDto dto = new RecipeDto()
+            RecipeDto dto = new()
             {
-                Id = recipy.Id,
-                Name = recipy.Name,
-                Description = recipy.Method,
-                ImageUrl = recipy.ImageUrl
+                Id = recipe.Id,
+                Name = recipe.Name,
+                Description = recipe.Method,
+                ImageUrl = recipe.ImageUrl
             };
-            foreach (IngredientAmount ingredientAmount in recipy.IngredientAmounts)
+            foreach (IngredientAmount ingredientAmount in recipe.IngredientAmounts)
             {
                 dto.Ingredients.Add(FromIngredientAmount(ingredientAmount));
             }
@@ -283,7 +283,7 @@ namespace MyFridge_WebAPI.Mapper
         {
             if (dto == null) return null;
 
-            Recipe recipy = new Recipe()
+            Recipe recipe = new()
             {
                 Id = dto.Id,
                 Name = dto.Name,
@@ -293,9 +293,9 @@ namespace MyFridge_WebAPI.Mapper
 
             foreach (IngredientAmountDto idto in dto.Ingredients)
             {
-                recipy.IngredientAmounts.Add(ToIngredientAmount(idto));
+                recipe.IngredientAmounts.Add(ToIngredientAmount(idto));
             }
-            return recipy;
+            return recipe;
         }
         #endregion
     }

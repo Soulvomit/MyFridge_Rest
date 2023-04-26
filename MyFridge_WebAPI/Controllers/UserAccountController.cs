@@ -64,6 +64,26 @@ namespace MyFridge_WebAPI.Controllers
             return new JsonResult(Map.FromUserAccount(user)!.Orders);
         }
         [HttpGet]
+        public async Task<JsonResult> GetFilteredAsync(string filter, int minLength = 2)
+        {
+            Func<UserAccount, bool> filterFunc = user =>
+                user.FirstName.ToLower().Contains(filter.ToLower()) ||
+                user.LastName.ToLower().Contains(filter.ToLower());
+
+            Func<UserAccount, object> orderByFunc = user => user.LastName + " " + user.FirstName;
+
+            List<UserAccountDto> dtos = new();
+            List<UserAccount>? filteredUsers = await _uow.Users.Query(filterFunc, orderByFunc, filter, minLength);
+
+            if (filteredUsers == null) return new JsonResult(NotFound());
+
+            foreach (UserAccount user in filteredUsers)
+            {
+                dtos.Add(Map.FromUserAccount(user));
+            }
+            return new JsonResult(dtos);
+        }
+        [HttpGet]
         public async Task<JsonResult> GetAllAsync()
         {
             List<UserAccountDto> dtos = new List<UserAccountDto>();

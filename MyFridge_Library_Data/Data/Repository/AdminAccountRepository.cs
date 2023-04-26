@@ -20,8 +20,8 @@ namespace MyFridge_Library_Data.Data.Repository
 
             if (entityInDb == null) return false;
 
-            entityInDb.Firstname = updateEntity.Firstname;
-            entityInDb.Lastname = updateEntity.Lastname;
+            entityInDb.FirstName = updateEntity.FirstName;
+            entityInDb.LastName = updateEntity.LastName;
             entityInDb.Password = updateEntity.Password;
             entityInDb.EmployeeNumber = updateEntity.EmployeeNumber;
 

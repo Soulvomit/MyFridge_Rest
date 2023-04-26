@@ -6,8 +6,10 @@ namespace MyFridge_Library_Data.Data.Repository.Interface
     public interface IRecipeRepository : IRepository<Recipe>
    
     {
-        public Task<bool> AddIngredientAsync(int id, Ingredient addEntity, float addAmount);
-        public Task<bool> AddIngredientAsync(int id, IngredientAmount addEntity);
-        public Task<bool> RemoveIngredientAsync(int id, int iaId);
+        public Task<bool> BatchIngredientAmountAsync(int id, IngredientAmount addEntity);
+        public Task<bool> AddIngredientAmountAsync(int id, IngredientAmount addEntity);
+        public Task<bool> RemoveAmountAsync(int id, int ingredientAmountId, float removeAmount, bool forceRemove = true);
+        public Task<bool> RemoveIngredientAmountAsync(int id, IngredientAmount removeEntity);
+        public Task<bool> RemoveIngredientAmountAsync(int id, int ingredientAmountId);
     }
 }

@@ -33,15 +33,18 @@ namespace MyFridge_WebAPI.Controllers
             return new JsonResult(dto);
         }
         [HttpGet]
-        public async Task<JsonResult> GetAsync(int id, int iaId)
+        public async Task<JsonResult> GetAsync(int id, int ingredientAmountId)
         {
             UserAccount? user = await _uow.Users.GetAsync(id);
+
             if (user == null) return new JsonResult(NotFound());
 
-            IngredientAmount? ia = user.IngredientAmounts.FirstOrDefault(ia => ia.Id == iaId);
-            if (ia == null) return new JsonResult(NotFound());
+            IngredientAmount? ingredientAmount = user.IngredientAmounts
+                .FirstOrDefault(ingredientAmount => ingredientAmount.Id == ingredientAmountId);
+            
+            if (ingredientAmount == null) return new JsonResult(NotFound());
 
-            return new JsonResult(Map.FromIngredientAmount(ia));
+            return new JsonResult(Map.FromIngredientAmount(ingredientAmount));
         }
         [HttpGet]
         public async Task<JsonResult> GetAllAsync(int id)
@@ -53,11 +56,10 @@ namespace MyFridge_WebAPI.Controllers
             return new JsonResult(Map.FromUserAccount(user).Ingredients);
         }
         [HttpDelete]
-        public async Task<JsonResult> DeleteAsync(int id, int iaId, float removeAmount, 
-            bool forceRemove = true)
+        public async Task<JsonResult> DeleteAsync(int id, int ingredientAmountId, float removeAmount, bool forceRemove = true)
         {
             bool success = 
-                await _uow.Users.RemoveIngredientAmountAsync(id, iaId, removeAmount, forceRemove);
+                await _uow.Users.RemoveAmountAsync(id, ingredientAmountId, removeAmount, forceRemove);
 
             if (!success) return new JsonResult(NotFound());
 

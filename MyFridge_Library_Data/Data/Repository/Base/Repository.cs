@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using MyFridge_Library_Data.Data.Repository.Interface.Base;
 
 namespace MyFridge_Library_Data.Data.Repository.Base
@@ -49,6 +49,26 @@ namespace MyFridge_Library_Data.Data.Repository.Base
         public virtual async Task<List<T>> GetAllAsync()
         {
             return await dbSet.ToListAsync();
+        }
+
+        public virtual async Task<List<T>?> Query(Func<T, bool> filterFunc, Func<T, object> orderByFunc, string filter, int minLength = 2)
+        {
+            if (filter.Length < minLength)
+            {
+                return null;
+            }
+
+            //get all the entities from the DbSet
+            List<T> allEntities = await dbSet.ToListAsync();
+
+            //filter the entities using the provided filter function
+            List<T> filteredEntities = allEntities.Where(filterFunc).ToList();
+
+            //sort the filtered entities using the provided order by function if provided
+            //if (orderByFunc != null)
+            List<T> sortedEntities = filteredEntities.OrderBy(orderByFunc).ToList();
+
+            return sortedEntities;
         }
     }
 }
