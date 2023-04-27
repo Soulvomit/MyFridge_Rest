@@ -7,11 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyFridge_WebAPI", "MyFridge
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyFridge_Library_Data", "MyFridge_Library_Data\MyFridge_Library_Data.csproj", "{CF493830-24F7-4E8A-B92C-29D5AF77B4F6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyFridge_Library_MAUI_DataTransfer", "MyFridge_Library_MAUI_DataTransfer\MyFridge_Library_MAUI_DataTransfer.csproj", "{80D7C0BE-4B15-467C-B0BF-1485D6997540}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyFridge_UserInterface_MAUI", "MyFridge_UserInterface_MAUI\MyFridge_UserInterface_MAUI.csproj", "{E24E8DC8-DD00-4742-84E4-A14ED4DEC7C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyFridge_Library_MAUI_Client", "MyFridge_Library_MAUI_Client\MyFridge_Library_MAUI_Client.csproj", "{A17533CC-7A04-4F99-9512-917106E50723}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyFridge_Library_MAUI_Client", "MyFridge_Library_MAUI_Client\MyFridge_Library_MAUI_Client.csproj", "{A17533CC-7A04-4F99-9512-917106E50723}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,10 +25,6 @@ Global
 		{CF493830-24F7-4E8A-B92C-29D5AF77B4F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF493830-24F7-4E8A-B92C-29D5AF77B4F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF493830-24F7-4E8A-B92C-29D5AF77B4F6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80D7C0BE-4B15-467C-B0BF-1485D6997540}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80D7C0BE-4B15-467C-B0BF-1485D6997540}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80D7C0BE-4B15-467C-B0BF-1485D6997540}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80D7C0BE-4B15-467C-B0BF-1485D6997540}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E24E8DC8-DD00-4742-84E4-A14ED4DEC7C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E24E8DC8-DD00-4742-84E4-A14ED4DEC7C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E24E8DC8-DD00-4742-84E4-A14ED4DEC7C5}.Debug|Any CPU.Deploy.0 = Debug|Any CPU

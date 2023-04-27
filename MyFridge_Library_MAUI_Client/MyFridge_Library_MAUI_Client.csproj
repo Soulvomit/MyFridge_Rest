@@ -17,8 +17,4 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\MyFridge_Library_MAUI_DataTransfer\MyFridge_Library_MAUI_DataTransfer.csproj" />
-	</ItemGroup>
-
 </Project>

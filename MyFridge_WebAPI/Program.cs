@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using MyFridge_Library_Data.Data;
-using MyFridge_WebAPI.UoW;
-using MyFridge_WebAPI.UoW.Interface;
+using MyFridge_Library_Data.DataContext;
+using MyFridge_WebAPI.Service.Mapper;
+using MyFridge_WebAPI.Service.Mapper.Interface;
+using MyFridge_WebAPI.Service.Data;
+using MyFridge_WebAPI.Service.Data.Interface;
 
 namespace MyFridge_WebAPI
 {
@@ -15,8 +17,10 @@ namespace MyFridge_WebAPI
             builder.Services.AddDbContext<ApplicationDbContext>(options => options
                                                             .UseLazyLoadingProxies(true)
                                                             .UseInMemoryDatabase("InMemoryDatabase"));
+            //add mapper service
+            builder.Services.AddSingleton<IMapperService, MapperService>();
             //add unit of work service
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IDataService, DataService>();
 
             //add controllers
             builder.Services.AddControllers();

@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MyFridge_Library_Data\MyFridge_Library_Data.csproj" />
-    <ProjectReference Include="..\MyFridge_Library_MAUI_DataTransfer\MyFridge_Library_MAUI_DataTransfer.csproj" />
+    <ProjectReference Include="..\MyFridge_Library_MAUI_Client\MyFridge_Library_MAUI_Client.csproj" />
   </ItemGroup>
 
 </Project>

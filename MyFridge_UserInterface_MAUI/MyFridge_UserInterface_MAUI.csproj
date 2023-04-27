@@ -54,56 +54,48 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\MyFridge_Library_MAUI_Client\MyFridge_Library_MAUI_Client.csproj" />
-	  <ProjectReference Include="..\MyFridge_Library_MAUI_DataTransfer\MyFridge_Library_MAUI_DataTransfer.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="View\GrocerytPage.xaml">
+	  <MauiXaml Update="Mvvms\View\GrocerytPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\Detail\DetailRecipePage.xaml">
+	  <MauiXaml Update="Mvvms\View\Detail\DetailRecipePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\Detail\DetailUserIngredientPage.xaml">
+	  <MauiXaml Update="Mvvms\View\Detail\DetailUserIngredientPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\RecipePage.xaml">
+	  <MauiXaml Update="Mvvms\View\RecipePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\UserInfoPage.xaml">
+	  <MauiXaml Update="Mvvms\View\UserInfoPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\UserIngredientPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="View\UserLogout.xaml">
+	  <MauiXaml Update="Mvvms\View\UserIngredientPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="View\Detail\DetailRecipePage.xaml.cs">
+	  <Compile Update="Mvvms\View\Detail\DetailRecipePage.xaml.cs">
 	    <DependentUpon>DetailRecipePage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="View\GrocerytPage.xaml.cs">
+	  <Compile Update="Mvvms\View\GrocerytPage.xaml.cs">
 	    <DependentUpon>GrocerytPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="View\RecipePage.xaml.cs">
+	  <Compile Update="Mvvms\View\RecipePage.xaml.cs">
 	    <DependentUpon>RecipePage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="View\Detail\DetailUserIngredientPage.xaml.cs">
+	  <Compile Update="Mvvms\View\Detail\DetailUserIngredientPage.xaml.cs">
 	    <DependentUpon>DetailUserIngredientPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="View\UserInfoPage.xaml.cs">
+	  <Compile Update="Mvvms\View\UserInfoPage.xaml.cs">
 	    <DependentUpon>UserInfoPage.xaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="View\UserLoginPage.xaml.cs">
+	  <Compile Update="Mvvms\View\UserLoginPage.xaml.cs">
 	    <DependentUpon>UserLoginPage.xaml</DependentUpon>
 	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Service\Navigation\Interface\" />
 	</ItemGroup>
 
 </Project>
